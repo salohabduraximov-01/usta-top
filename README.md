@@ -1,72 +1,58 @@
-# Usta-Top.uz - Toshkentdagi ishonchli ustalar katalogi
+# Usta-Top.uz - Toshkentdagi ishonchli ustalar portali
 
-Toshkent shahri uchun maishiy xizmatlar, ta'mirlash va professional ustalarni topishga mo‘ljallangan zamonaviy, responsiv va yuqori konversiyali veb-platforma.
+Toshkent shahri uchun maishiy xizmatlar, ta'mirlash va professional ustalarni topishga mo‘ljallangan zamonaviy, ko‘p sahifali (multi-page), Dark Mode qo‘llab-quvvatlovchi va sayt ichidagi xabar almashish (Chat) hamda 5 yulduzli sharh tizimiga ega veb-platforma.
 
-## 🌟 Asosiy xususiyatlar va imkoniyatlar
+---
 
-1. **Header / Navigatsiya:**
-   - Logotip: Kalit (wrench) belgisi bilan "Usta-Top.uz"
-   - Bo‘limlar: Ustalar, Xizmatlar narxi, Qanday ishlaydi?, Savollar
-   - "Usta sifatida qo‘shilish" CTA tugmasi
-   - Telegram kanaliga to‘g‘ridan-to‘g‘ri havola
-   - Smartfonlar uchun qulay burger menyu va pastki qotirilgan menyu (Bottom Navigation)
+## 🌟 Yangilangan imkoniyatlar
 
-2. **Hero Qidiruv va Filtratsiya:**
-   - Sarlavha: *"Toshkentdagi ishonchli va tekshirilgan ustalarni 5 daqiqada toping"*
-   - Dinamik filtrlar:
-     * **Xizmat turi:** Barchasi, Santexnik, Elektrik, Konditsioner ustasi, Maishiy texnika, Mebel yig‘uvchi, Bir soatlik usta.
-     * **Tuman:** Barcha tumanlar, Yakkasaroy, Chilonzor, Yunusobod, Mirzo Ulug‘bek, Shayxontohur, Sergeli, Olmazor, Uchtepa, Mirobod, Yashnobod.
-     * **Real vaqtli matnli qidiruv:** Kalit so'zlar bo'yicha (masalan: "kran", "freon", "rozetka", "lyustra", "Akmal").
-     * **Tezkor kategoriyalar (Quick Pills):** 1-bosish bilan saralash.
-   - Ishonch ko'rsatkichlari: 500+ tekshirilgan ustalar, 12 000+ bajarilgan ishlar, 4.9/5 o‘rtacha baho, 0% komissiya.
+1. **Ko‘proq ustalar (Har bir tumanda kamida 4 ta mutaxassis):**
+   - Jami 40 ta tekshirilgan usta profillari:
+     * **Chilonzor** (4+ usta)
+     * **Yunusobod** (4+ usta)
+     * **Mirzo Ulug‘bek** (4+ usta)
+     * **Yakkasaroy** (4+ usta)
+     * **Shayxontohur** (4+ usta)
+     * **Sergeli** (4+ usta)
+     * **Olmazor** (4+ usta)
+     * **Uchtepa** (4+ usta)
+     * **Mirobod** (4+ usta)
+     * **Yashnobod** (4+ usta)
+   - Santexnik, elektrik, konditsioner ustasi, maishiy texnika, mebel yig‘uvchi va bir soatlik universal ustalar.
 
-3. **Interaktiv Usta Kartalari:**
-   - 8 ta to‘liq toshkentlik usta profillari:
-     * Akmal Karimov (Santexnik, Chilonzor)
-     * Sardor Toshmatov (Elektrik, Mirzo Ulug‘bek)
-     * Bobur Alimov (Konditsioner ustasi, Yunusobod)
-     * Jasur Qodirov (Maishiy texnika, Yakkasaroy)
-     * Dilshodbek Rahimov (Mebel yig‘uvchi, Shayxontohur)
-     * Otabek Nazarov (Bir soatlik usta, Sergeli)
-     * Farrux Yusupov (Santexnika va kotyol ustasi, Olmazor)
-     * Jamshid Bekmirzayev (Elektrik va LED tizimlari, Chilonzor)
-   - Kartada:
-     * Rasmlar va "Tekshirilgan usta" nishoni
-     * 2-3 ta asosiy xizmat narxi ko‘rsatilgan mini-preyskurant
-     * "Qo‘ng‘iroq qilish" tugmasi -> telefon modalini ochadi, raqamdan 1 bosishda nusxa olish va terish imkoniyati
-     * "Telegramdan yozish" tugmasi -> avtomatik xushmuomala xabar bilan Telegramga o'tish
-     * "Batafsil / Narxlar" tugmasi -> to‘liq preyskurant, usta tajribasi va mijozlar sharhlari modali
+2. **🎨 Tuman tanlash uchun zamonaviy dizayn (Chiplar / Kartochkalar):**
+   - Oddiy quruq dropdown o‘rniga Toshkentning barcha tumanlari uchun estetik, interaktiv chiplar paneli.
+   - Har bir chipda tuman nomi, lokatsiya belgisi va o‘sha hududdagi ustalar soni (`Chilonzor (4)`, `Yunusobod (4)`...).
+   - Bosilganda yorqin to‘q sariq rangli faol holat va yumshoq animatsiya.
 
-4. **"Qanday ishlaydi?" Bo‘limi:**
-   - 1-qadam: Xizmat va tumanni tanlang
-   - 2-qadam: Narx va reyting bo‘yicha solishtiring
-   - 3-qadam: To‘g‘ridan-to‘g‘ri bog‘laning (vositachilarsiz)
+3. **💬 Sayt ichidagi Chat va Bog‘lanish tizimi (Telegram va telefon olib tashlandi):**
+   - Tashqi havolalarsiz, barcha muloqot to‘g‘ridan-to‘g‘ri saytning o‘zida amalga oshiriladi.
+   - Usta kartasidagi **"Usta bilan bog‘lanish (Chat)"** tugmasi orqali interaktiv xabar oynasi ochiladi.
+   - Xabar yuborilgach, usta tomonidan real-vaqtda javob qaytariladi (simulyatsiya).
+   - Xabarlar `localStorage` da saqlanadi.
+   - Tezkor murojaat tugmalari (*"💧 Suv toshdi"*, *"⚡ Tok o‘chdi"*, *"❄️ Konditsioner"*).
 
-5. **Xizmatlar Narxi (Toshkent 2026 Preyskuranti):**
-   - Santexnika, elektr, konditsioner, maishiy texnika, mebel va mayda ta'mirlar bo‘yicha o‘rtacha shaffof narxlar jadvali.
+4. **⭐ 5 Yulduzli Baholash va Sharh (Komment) qoldirish:**
+   - Har bir usta kartasida **"⭐ Baho / Komment"** tugmasi.
+   - Interaktiv 5 ta yulduzcha (hover qilinganda va bosilganda oltin rangda yonadi).
+   - Ism va sharh matnini yozib qoldirish imkoniyati.
+   - Yozilgan sharh darhol usta profilida paydo bo‘ladi, `localStorage` da saqlanadi va ustaning o‘rtacha reytingi avtomatik qayta hisoblanadi.
 
-6. **Usta sifatida ro‘yxatdan o‘tish:**
-   - Ism-familiya, telefon (+998 maskasi bilan), mutaxassislik, tuman, tajriba kiritish anketasi
-   - Muvaffaqiyatli ariza oynasi va Toast xabarnomasi
+5. **🌙 Tungi rejim (Dark Mode):**
+   - Navbar va mobil menyuda **☀️ / 🌙** almashtirish tugmasi.
+   - Foydalanuvchi tanlovi `localStorage` da saqlanadi.
 
-7. **Ko‘p beriladigan savollar (FAQ):**
-   - Interaktiv akkordeon orqali narxlar, shoshilinch chaqiruv va kafolatlar haqida ma'lumot.
+6. **🗑 Keraksiz bo‘limlar olib tashlandi:**
+   - Foydalanuvchi so‘rovi bilan "Savollar" (FAQ) bo‘limi va Telegram/telefon havolalari butunlay olib tashlandi.
 
-8. **Footer:**
-   - Toshkent manzili, telefon raqam, Telegram kanal va mualliflik huquqi (© 2026 Usta-Top.uz).
+---
 
-## 🚀 Qanday ishga tushiriladi?
-
-Hech qanday murakkab kutubxona yoki server o‘rnatish shart emas!
-`index.html` faylini istalgan brauzerda (Google Chrome, Microsoft Edge, Safari, Firefox) ikki marta bosib ochishingiz kifoya:
+## 🚀 Ishga tushirish
 
 ```bash
-# Windows Explorer orqali ochish:
+# Bosh sahifani ochish
 start index.html
-```
 
-## 🛠 Texnologiyalar
-- **HTML5 & Semantic Markup**
-- **Tailwind CSS** (CDN orqali, chiroyli ranglar palitrasi: to'q ko'k `#1E3A8A` va yorqin to'q sariq `#F97316`)
-- **Vanilla JavaScript (ES6+)** - tejamkor, yengil va juda tez ishlaydi
-- **Google Fonts** (`Plus Jakarta Sans`)
+# Yoki to'g'ridan-to'g'ri ustalar katalogini ochish
+start ustalar.html
+```

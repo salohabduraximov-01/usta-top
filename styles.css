@@ -1,4 +1,4 @@
-/* Usta-Top.uz - Maxsus stillar va animatsiyalar */
+/* Usta-Top.uz - Maxsus stillar, animatsiyalar va Dark Mode */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
@@ -14,6 +14,13 @@ body {
   background-color: #F8FAFC;
   color: #0F172A;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode asosiy body stillari */
+html.dark body {
+  background-color: #0F172A;
+  color: #F1F5F9;
 }
 
 /* Custom Scrollbar */
@@ -24,12 +31,21 @@ body {
 ::-webkit-scrollbar-track {
   background: #F1F5F9;
 }
+html.dark ::-webkit-scrollbar-track {
+  background: #1E293B;
+}
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
   border-radius: 4px;
 }
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
 }
 
 /* Modal and Backdrop Animations */
@@ -101,11 +117,18 @@ body {
   }
 }
 
-/* Glassmorphism */
+/* Glassmorphism Navigation */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+html.dark .glass-nav {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(51, 65, 85, 0.6);
 }
 
 /* Card hover glow */
@@ -114,19 +137,33 @@ body {
 }
 .card-hover-effect:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px -8px rgba(30, 58, 138, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 32px -8px rgba(30, 58, 138, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+}
+html.dark .card-hover-effect:hover {
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
 }
 
 /* Active tab highlight */
 .tab-active {
   background-color: #1E3A8A;
   color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
+}
+html.dark .tab-active {
+  background-color: #3B82F6;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
 }
 
 /* Input focus styles */
 .custom-input:focus {
   outline: none;
-  border-color: #1E3A8A;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Smooth theme transitions */
+button, a, input, select {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, transform;
+  transition-duration: 200ms;
 }

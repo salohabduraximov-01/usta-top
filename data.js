@@ -1,21 +1,77 @@
 // Usta-Top.uz - Haqiqiy ma'lumotlar bazasi (Toshkent ustalari va xizmat narxlari)
 
 const CATEGORIES = [
-  { id: 'barchasi', name: 'Barchasi', icon: 'grid' },
-  { id: 'santexnik', name: 'Santexnik', icon: 'wrench' },
-  { id: 'elektrik', name: 'Elektrik', icon: 'zap' },
-  { id: 'konditsioner', name: 'Konditsioner ustasi', icon: 'wind' },
-  { id: 'maishiy', name: 'Maishiy texnika', icon: 'cpu' },
-  { id: 'mebel', name: 'Mebel yig‘uvchi', icon: 'hammer' },
-  { id: 'universal', name: 'Bir soatlik usta', icon: 'tool' }
+  { 
+    id: 'barchasi', 
+    name: 'Barchasi', 
+    icon: 'grid',
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80',
+    description: 'Barcha mutaxassisliklar va xizmatlar ro‘yxati',
+    mastersCount: '30+ usta',
+    startingPrice: "35 000 so'mdan"
+  },
+  { 
+    id: 'santexnik', 
+    name: 'Santexnik', 
+    icon: 'wrench',
+    image: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&q=80',
+    description: 'Kran, unitaz, quvurlar, vanna va isitish tizimlari ta’miri',
+    mastersCount: '10+ usta',
+    startingPrice: "60 000 so'mdan"
+  },
+  { 
+    id: 'elektrik', 
+    name: 'Elektrik', 
+    icon: 'zap',
+    image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80',
+    description: 'Rozetka, lyustra, shit montaji, qisqa tutashuv va simlar',
+    mastersCount: '8+ usta',
+    startingPrice: "35 000 so'mdan"
+  },
+  { 
+    id: 'konditsioner', 
+    name: 'Konditsioner ustasi', 
+    icon: 'wind',
+    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80',
+    description: 'Freon quyish, chuqur tozalash, montaj va ta’mirlash',
+    mastersCount: '6+ usta',
+    startingPrice: "100 000 so'mdan"
+  },
+  { 
+    id: 'maishiy', 
+    name: 'Maishiy texnika', 
+    icon: 'cpu',
+    image: 'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=600&q=80',
+    description: 'Kir yuvish mashinasi, muzlatgich, gaz plita, changyutgich',
+    mastersCount: '6+ usta',
+    startingPrice: "50 000 so'mdan"
+  },
+  { 
+    id: 'mebel', 
+    name: 'Mebel yig‘uvchi', 
+    icon: 'hammer',
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80',
+    description: 'Shkaf-kupe, oshxona garnituri, krovat yig‘ish va sozlash',
+    mastersCount: '5+ usta',
+    startingPrice: "50 000 so'mdan"
+  },
+  { 
+    id: 'universal', 
+    name: 'Bir soatlik usta', 
+    icon: 'tool',
+    image: 'https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80',
+    description: 'Televizor ilish, korniz, qulf almashtirish, mayda ta’mir',
+    mastersCount: '6+ usta',
+    startingPrice: "40 000 so'mdan"
+  }
 ];
 
 const DISTRICTS = [
   'Barcha tumanlar',
-  'Yakkasaroy',
   'Chilonzor',
   'Yunusobod',
   'Mirzo Ulug‘bek',
+  'Yakkasaroy',
   'Shayxontohur',
   'Sergeli',
   'Olmazor',
@@ -24,355 +80,55 @@ const DISTRICTS = [
   'Yashnobod'
 ];
 
+// Toshkent tumanlari haqida ma'lumot va har birida kamida 3-4 usta
 const MASTERS_DATA = [
+  // --- CHILONZOR TUMANI ---
   {
     id: 1,
     name: 'Akmal Karimov',
     initials: 'AK',
-    profession: 'Santexnik va isitish ustasi',
+    profession: 'Santexnik va isitish mutaxassisi',
     categoryId: 'santexnik',
     district: 'Chilonzor',
-    districtsServed: ['Chilonzor', 'Uchtepa', 'Yakkasaroy', 'Olmazor'],
+    districtsServed: ['Chilonzor', 'Uchtepa', 'Yakkasaroy'],
     experience: 8,
     rating: 4.9,
     reviewsCount: 142,
     completedOrders: 530,
     urgent: true,
-    phone: '+998 90 123 45 67',
-    telegram: 'akmal_santexnik',
     avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
-    bio: "8 yillik tajribaga ega professional santexnik. Har qanday murakkablikdagi quvur, smesitel, unitaz, dush kabinalari va isitish batareyalarini o'rnatish hamda ta'mirlash. Ishimga 6 oylik kafolat beraman. Chilonzor va yaqin tumanlarga 25-30 daqiqada yetib boraman.",
+    bio: "8 yillik tajribaga ega professional santexnik. Har qanday murakkablikdagi quvur, smesitel, unitaz, dush kabinalari va isitish batareyalarini ta'mirlayman. 6 oylik rasmiy kafolat beraman.",
     popularServices: [
       { name: 'Kran va smesitel almashtirish', price: "80 000 so'm" },
       { name: 'Unitaz o‘rnatish yoki ta’mirlash', price: "150 000 so'm" },
-      { name: 'Chaqiruv (ish bajarilsa)', price: 'Bepul' }
+      { name: 'Diagnostika (ish bajarilsa)', price: 'Bepul' }
     ],
     fullPriceList: [
       { service: 'Kran va smesitel almashtirish', time: '30-45 daqiqa', price: "80 000 so'm" },
       { service: 'Unitaz montaji va sozlash', time: '1-1.5 soat', price: "150 000 so'm" },
       { service: 'Tiqilib qolgan quvurni ochish (prochistka)', time: '30 daqiqa', price: "100 000 so'm" },
-      { service: 'Suv sizib chiqishini bartaraf qilish', time: '40 daqiqa', price: "120 000 so'm" },
-      { service: 'Vanna va dush kabinasi o‘rnatish', time: '2-3 soat', price: "300 000 so'm" },
-      { service: 'Kanalizatsiya quvurlarini almashtirish', time: 'Kelishuv asosida', price: "250 000 so'mdan" },
-      { service: 'Avariya holatida shoshilinch chaqiruv', time: '20-30 daqiqa', price: "Bepul" }
+      { service: 'Suv sizib chiqishini bartaraf qilish', time: '40 daqiqa', price: "120 000 so'm" }
     ],
     reviews: [
-      {
-        author: 'Nodirbek Sobirov',
-        date: '12-noyabr, 2026',
-        rating: 5,
-        district: 'Chilonzor',
-        text: 'Akmal aka chaqiruvdan so‘ng 25 daqiqada yetib keldi. Oshxonadagi suv oqayotgan quvurni tezda sifatli yangisiga almashtirdi. Juda tartibli, toza ishlaydigan usta. Katta rahmat!'
-      },
-      {
-        author: 'Madina Umarova',
-        date: '5-noyabr, 2026',
-        rating: 5,
-        district: 'Uchtepa',
-        text: 'Unitaz va dush smesitelini almashtirib berdilar. Ishidan juda mamnunman, narxi ham oldindan qancha aytilgan bo‘lsa shunday bo‘ldi.'
-      },
-      {
-        author: 'Aziz Qobilov',
-        date: '28-oktyabr, 2026',
-        rating: 4.8,
-        district: 'Yakkasaroy',
-        text: 'Quvurdagi tiqilishni maxsus tros bilan ochib berdilar. Ishidan qoniqdik, tavsiya qilaman.'
-      }
+      { author: 'Nodirbek Sobirov', date: '12-noyabr, 2026', rating: 5, district: 'Chilonzor', text: 'Chaqiruvdan so‘ng 25 daqiqada yetib keldi. Quvurni sifatli almashtirdi, juda toza ishlaydi.' },
+      { author: 'Madina Umarova', date: '5-noyabr, 2026', rating: 5, district: 'Chilonzor', text: 'Unitaz va dush smesitelini almashtirib berdilar. Ishidan juda mamnunman.' }
     ]
   },
   {
     id: 2,
-    name: 'Sardor Toshmatov',
-    initials: 'ST',
-    profession: 'Elektrik va avtomatika ustasi',
-    categoryId: 'elektrik',
-    district: 'Mirzo Ulug‘bek',
-    districtsServed: ['Mirzo Ulug‘bek', 'Yunusobod', 'Yashnobod', 'Mirobod'],
-    experience: 11,
-    rating: 5.0,
-    reviewsCount: 198,
-    completedOrders: 780,
-    urgent: true,
-    phone: '+998 93 987 65 43',
-    telegram: 'sardor_elektrik',
-    avatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80',
-    bio: "11 yillik tajribaga ega 4-darajali professional elektrik. Xonadonlar, kottejlar va ofislarda to‘liq elektr tarmog‘ini montaj qilish, elektr shitlari yig‘ish, kuchlanish releylari va qisqa tutashuvlarni aniqlash. Xavfsizlikka 100% kafolat.",
-    popularServices: [
-      { name: 'Rozetka va vikluchatel montaji', price: "40 000 so'm" },
-      { name: 'Katta lyustra va bra o‘rnatish', price: "90 000 so'm" },
-      { name: 'Elektr shiti va avtomatlar yig‘ish', price: "250 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Rozetka / vikluchatel almashtirish (1 dona)', time: '15 daqiqa', price: "40 000 so'm" },
-      { service: 'Lyustra va zamonaviy shift chiroqlari montaji', time: '40 daqiqa', price: "90 000 so'm" },
-      { service: 'Elektr shiti va avtomatika (UZO, Zubr)', time: '2 soat', price: "250 000 so'mdan" },
-      { service: 'Qisqa tutashuv va nosozlikni aniqlash', time: '30-50 daqiqa', price: "120 000 so'm" },
-      { service: 'Gipsokarton ichiga LED nuqta chiroqlar o‘rnatish', time: '1 soat', price: "35 000 so'm/dona" },
-      { service: 'Xonadonni noldan to‘liq sim tortish', time: '3-5 kun', price: "Kelishuv asosida" },
-      { service: 'Chaqiruv va maslahat', time: 'Tezkor', price: 'Bepul' }
-    ],
-    reviews: [
-      {
-        author: 'Shahzod Karimov',
-        date: '14-noyabr, 2026',
-        rating: 5,
-        district: 'Mirzo Ulug‘bek',
-        text: 'Uyimizda tok birdan o‘chib sim hidi chiqayotgan edi. Sardor akaga qo‘ng‘iroq qildik, yarim soatda kelib shikastlangan kabelni topib tuzatdi. Haqiqiy usta!'
-      },
-      {
-        author: 'Dilorom Ergasheva',
-        date: '8-noyabr, 2026',
-        rating: 5,
-        district: 'Yashnobod',
-        text: 'Katta billur lyustrani baland shiftga juda mustahkam qilib osib berdi. O‘zi bilan barcha asboblari bor ekan.'
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Bobur Alimov',
-    initials: 'BA',
-    profession: 'Konditsioner va iqlim texnikasi',
-    categoryId: 'konditsioner',
-    district: 'Yunusobod',
-    districtsServed: ['Yunusobod', 'Shayxontohur', 'Olmazor', 'Mirzo Ulug‘bek'],
-    experience: 7,
-    rating: 4.8,
-    reviewsCount: 89,
-    completedOrders: 410,
-    urgent: false,
-    phone: '+998 97 456 12 30',
-    telegram: 'bobur_klimat',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-    bio: "Midea, Artel, Gree, LG, Samsung va boshqa barcha turdagi split konditsionerlarni o'rnatish, ta'mirlash, freon quyish va antibakterial tozalash. Har bir xizmatga sifat kafolati taqdim etiladi.",
-    popularServices: [
-      { name: 'Freon quyish (R410A / R22)', price: "180 000 so'm" },
-      { name: 'Antibakterial chuqur tozalash', price: "120 000 so'm" },
-      { name: 'Konditsioner montaji', price: "350 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Konditsionerni to‘liq kimyoviy va bug‘li yuvish', time: '1 soat', price: "120 000 so'm" },
-      { service: 'Freon quyish va qochqinni tekshirish', time: '40 daqiqa', price: "180 000 so'm" },
-      { service: 'Konditsioner o‘rnatish (standart montaj)', time: '2-3 soat', price: "350 000 so'm" },
-      { service: 'Konditsionerni demontaj qilish (ko‘chirish)', time: '1 soat', price: "150 000 so'm" },
-      { service: 'Elektron plata va datchiklarni sozlash', time: '1.5 soat', price: "200 000 so'm" },
-      { service: 'Chaqiruv va diagnostika', time: 'Tezkor', price: "Bepul (ta'mir bilan)" }
-    ],
-    reviews: [
-      {
-        author: 'Umidjon Salimov',
-        date: '10-noyabr, 2026',
-        rating: 5,
-        district: 'Yunusobod',
-        text: 'Konditsioner sovuq bermay faqat shamol haydayotgan edi. Bobur usta kelib tekshirdi, freon sizib chiqishini bartaraf qilib to‘ldirib berdi. Rahmat!'
-      },
-      {
-        author: 'Malika Rahimova',
-        date: '2-noyabr, 2026',
-        rating: 4.7,
-        district: 'Olmazor',
-        text: 'Konditsionerni yuvib, hidlarini yo‘qotib berdilar. Xizmat madaniyati yuqori ekan.'
-      }
-    ]
-  },
-  {
-    id: 4,
-    name: 'Jasur Qodirov',
-    initials: 'JQ',
-    profession: 'Maishiy texnika (Kir yuvish, muzlatgich)',
-    categoryId: 'maishiy',
-    district: 'Yakkasaroy',
-    districtsServed: ['Yakkasaroy', 'Mirobod', 'Sergeli', 'Chilonzor'],
-    experience: 9,
-    rating: 4.9,
-    reviewsCount: 115,
-    completedOrders: 620,
-    urgent: true,
-    phone: '+998 91 333 44 55',
-    telegram: 'jasur_servis',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-    bio: "LG, Samsung, Bosch, Indesit, Beko rusumidagi kir yuvish va idish yuvish mashinalari, quritgichlar hamda muzlatgichlarni uyingizning o‘zida ta'mirlayman. Ehtiyot qismlar original va 1 yil kafolat bilan.",
-    popularServices: [
-      { name: 'Kir yuvish mashinasi nasosini almashtirish', price: "130 000 so'm" },
-      { name: 'TEN (isitgich) yangilash', price: "140 000 so'm" },
-      { name: 'Muzlatgich freon quyish / termostat', price: "160 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Suv to‘kmaslik muammosi (nasos / filtr)', time: '40 daqiqa', price: "130 000 so'm" },
-      { service: 'Suv isitmaslik muammosi (TEN almashtirish)', time: '45 daqiqa', price: "140 000 so'm" },
-      { service: 'Podshipnik va krestovina almashtirish', time: '3-4 soat', price: "280 000 so'm" },
-      { service: 'Elektron boshqaruv blokini (plata) ta’mirlash', time: '1 kun', price: "220 000 so'mdan" },
-      { service: 'Muzlatgich termostati va datchiklari', time: '1 soat', price: "160 000 so'm" },
-      { service: 'Diagnostika (ta’mirlash amalga oshirilsa)', time: '30 daqiqa', price: 'Bepul' }
-    ],
-    reviews: [
-      {
-        author: 'Nilufar Qosimova',
-        date: '15-noyabr, 2026',
-        rating: 5,
-        district: 'Yakkasaroy',
-        text: 'Kir yuvish mashinamiz siqish paytida qattiq gumburlab silkinayotgan edi. Jasur usta podshipniklarini bir kunda almashtirib, jim ishlaydigan qilib berdi.'
-      },
-      {
-        author: 'Alisher Vohidov',
-        date: '4-noyabr, 2026',
-        rating: 5,
-        district: 'Mirobod',
-        text: 'Muzlatgichimiz sovuq bermay qolgandi. Freon quydi va filtrni yangiladi, yarim soatda muammo yechildi. Minnatdormiz!'
-      }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Dilshodbek Rahimov',
-    initials: 'DR',
-    profession: 'Mebel yig‘uvchi va restavratsiya',
-    categoryId: 'mebel',
-    district: 'Shayxontohur',
-    districtsServed: ['Shayxontohur', 'Olmazor', 'Chilonzor', 'Yunusobod'],
-    experience: 6,
-    rating: 4.8,
-    reviewsCount: 76,
-    completedOrders: 320,
-    urgent: false,
-    phone: '+998 94 777 88 99',
-    telegram: 'dilshod_mebel',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
-    bio: "Oshxona mebellari, shkaf-kupelar, krovatlar, ofis stollari va har qanday korpusli mebellarni ehtiyotkorlik bilan yig'ish va o'rnatish. Ilmoqlar, datchiklar va fasadlarni tekislash bo'yicha 6 yillik tajriba.",
-    popularServices: [
-      { name: 'Shkaf-kupe yig‘ish va o‘rnatish', price: "180 000 so'm" },
-      { name: 'Oshxona mebeli montaji', price: "250 000 so'm/m" },
-      { name: 'Mebel eshiklari va ilmoqlarini sozlash', price: "60 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Shkaf-kupe va garderob yig‘ish', time: '2-3 soat', price: "180 000 so'm" },
-      { service: 'Oshxona garnituri montaji (navesnoy + pastki)', time: 'Kun bo‘yi', price: "250 000 so'm/metr" },
-      { service: 'Ikki kishilik krovat va tumbalar', time: '1.5 soat', price: "120 000 so'm" },
-      { service: 'Ofis stoli va kreslolarni yig‘ish', time: '40 daqiqa', price: "70 000 so'm" },
-      { service: 'Eski mebellarni demontaj qilish (ko‘chirishga)', time: '2 soat', price: "130 000 so'm" },
-      { service: 'Chaqiruv va o‘lchash', time: 'Kelishuv', price: 'Bepul' }
-    ],
-    reviews: [
-      {
-        author: 'Jamshid Yo‘ldoshev',
-        date: '9-noyabr, 2026',
-        rating: 5,
-        district: 'Shayxontohur',
-        text: 'Katta shkaf sotib olgandik, detallari juda ko‘p edi. Dilshodbek 3 soat ichida birorta tirnalishsiz tekis qilib yig‘ib berdi. Qoyil!'
-      },
-      {
-        author: 'Lola Saidova',
-        date: '30-oktyabr, 2026',
-        rating: 4.8,
-        district: 'Olmazor',
-        text: 'Oshxona eshiklarining barcha ilmoqlarini yumshoq yopiladigan vakuumli ilmoqlarga almashtirib berdilar.'
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Otabek Nazarov',
-    initials: 'ON',
-    profession: 'Bir soatlik usta (Mayda maishiy ta’mirlar)',
-    categoryId: 'universal',
-    district: 'Sergeli',
-    districtsServed: ['Sergeli', 'Yakkasaroy', 'Bektemir', 'Mirobod'],
-    experience: 5,
-    rating: 4.9,
-    reviewsCount: 92,
-    completedOrders: 490,
-    urgent: true,
-    phone: '+998 99 811 22 33',
-    telegram: 'otabek_handyman',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
-    bio: "Xonadoningizdagi barcha mayda-chuyda ta'mirlash ishlari: televizor kronshteynlari, parda kornizlari, ko'zgular va kartinalarni osish, eshik qulflarini almashtirish, silikon tortish va plintus montaji. Soatbay yoki ish hajmiga qarab ishlayman.",
-    popularServices: [
-      { name: 'Televizor kronshteyni va polkalar ilish', price: "70 000 so'm" },
-      { name: 'Eshik qulfi yoki tutqichini yangilash', price: "90 000 so'm" },
-      { name: 'Parda kornizini o‘rnatish', price: "80 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Televizor devoriy kronshteyni montaji', time: '30 daqiqa', price: "70 000 so'm" },
-      { service: 'Parda kornizi (alyumin / plastik) o‘rnatish', time: '40 daqiqa', price: "80 000 so'm" },
-      { service: 'Eshik qulfi, lichinka yoki tutqichni almashtirish', time: '45 daqiqa', price: "90 000 so'm" },
-      { service: 'Devorga ko‘zgu, kartina, soat ilish (1-3 dona)', time: '30 daqiqa', price: "50 000 so'm" },
-      { service: 'Vanna va rakovina chetiga silikon tortish', time: '30 daqiqa', price: "60 000 so'm" },
-      { service: 'Soatbay universal usta xizmati', time: '1 soat', price: "100 000 so'm" }
-    ],
-    reviews: [
-      {
-        author: 'Feruza Ahmedova',
-        date: '11-noyabr, 2026',
-        rating: 5,
-        district: 'Sergeli',
-        text: 'Yangi kvartiraga ko‘chganimizda 3 ta korniz, katta oyna va televizorni juda mustahkam qilib osib berdi. Changsiz va toza ishladi.'
-      },
-      {
-        author: 'Bekzod Norov',
-        date: '27-oktyabr, 2026',
-        rating: 4.9,
-        district: 'Bektemir',
-        text: 'Temir eshik qulfimiz tiqilib qolayotgandi. Otabek aka qulfni yechib, tozalab, moylab sozlab berdi. Yangi qulfga pul sarflamadik.'
-      }
-    ]
-  },
-  {
-    id: 7,
-    name: 'Farrux Yusupov',
-    initials: 'FY',
-    profession: 'Santexnika va isitish qozonlari (Kotyol)',
-    categoryId: 'santexnik',
-    district: 'Olmazor',
-    districtsServed: ['Olmazor', 'Shayxontohur', 'Yunusobod', 'Uchtepa'],
-    experience: 12,
-    rating: 5.0,
-    reviewsCount: 210,
-    completedOrders: 890,
-    urgent: true,
-    phone: '+998 90 555 11 22',
-    telegram: 'farrux_plumbing',
-    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80',
-    bio: "12 yillik tajribaga ega usta. Xususiy hovlilar va ko'p qavatli uylarda 2 konturli isitish qozonlari (gazoviy kotyol), issiq pol, suv nasoslari va osmos toza suv filtrlarini o'rnatish hamda servis xizmati.",
-    popularServices: [
-      { name: 'Isitish qozonini (kotyol) sozlash', price: "200 000 so'm" },
-      { name: 'Osmos suv filtri o‘rnatish', price: "120 000 so'm" },
-      { name: 'Kran va mikser almashtirish', price: "75 000 so'm" }
-    ],
-    fullPriceList: [
-      { service: 'Gazoviy kotyol profilaktikasi va ta’miri', time: '1-2 soat', price: "200 000 so'mdan" },
-      { service: 'Ichimlik suvi filtri (osmos) montaji', time: '1 soat', price: "120 000 so'm" },
-      { service: 'Issiq pol va batareyalar montaji', time: 'Kelishuv', price: "150 000 so'm/nuqta" },
-      { service: 'Avariya quvur yorilishini payvandlash', time: '40 daqiqa', price: "150 000 so'm" },
-      { service: 'Smesitel, dush ustunini o‘rnatish', time: '30 daqiqa', price: "75 000 so'm" },
-      { service: 'Chaqiruv va konsultatsiya', time: 'Tezkor', price: 'Bepul' }
-    ],
-    reviews: [
-      {
-        author: 'Davron Mirzayev',
-        date: '13-noyabr, 2026',
-        rating: 5,
-        district: 'Olmazor',
-        text: 'Qish oldidan kotyolimiz xato berib o‘chib qolayotgandi. Farrux aka kelib datchigini tozalab, bosimini to‘g‘rilab berdi. Uyimiz issiq, katta rahmat!'
-      }
-    ]
-  },
-  {
-    id: 8,
     name: 'Jamshid Bekmirzayev',
     initials: 'JB',
-    profession: 'Elektrik va zamonaviy LED tizimlari',
+    profession: 'Elektrik va LED tizimlari ustasi',
     categoryId: 'elektrik',
     district: 'Chilonzor',
-    districtsServed: ['Chilonzor', 'Yakkasaroy', 'Uchtepa', 'Mirobod'],
-    experience: 8,
-    rating: 4.8,
-    reviewsCount: 64,
-    completedOrders: 310,
-    urgent: false,
-    phone: '+998 93 444 77 11',
-    telegram: 'jamshid_elektro',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    bio: "Zamonaviy yoritish, yashirin shift LED lentalari, smart-relelar, Wi-Fi o'chirgichlar va kuchlanishdan himoya qiluvchi avtomatlar o'rnatish bo'yicha mutaxassis. Har doim toza va aniq ishlayman.",
+    districtsServed: ['Chilonzor', 'Uchtepa', 'Yakkasaroy'],
+    experience: 7,
+    rating: 4.9,
+    reviewsCount: 110,
+    completedOrders: 430,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+    bio: "Interyer yoritish tizimlari: shift va mebellar uchun yashirin LED profillar, kuchlanish releylari (Zubr) va elektr shitlarini estetik tartibga keltirish.",
     popularServices: [
       { name: 'LED lenta va podsvetka montaji', price: "45 000 so'm/m" },
       { name: 'Kuchlanish relesi (Zubr) montaji', price: "90 000 so'm" },
@@ -381,18 +137,1029 @@ const MASTERS_DATA = [
     fullPriceList: [
       { service: 'Shift va mebellarga LED lenta montaji', time: '1-2 soat', price: "45 000 so'm/metr" },
       { service: 'Kuchlanish relesi (Zubr / Tomzn)', time: '30 daqiqa', price: "90 000 so'm" },
-      { service: 'Avtomat uzgich (avtomat) yangilash', time: '20 daqiqa', price: "50 000 so'm" },
-      { service: 'Aqlli kalitlar va sensorlar o‘rnatish', time: '40 daqiqa', price: "70 000 so'm" },
-      { service: 'Chaqiruv', time: '30 daqiqa', price: 'Bepul' }
+      { service: 'Avtomat uzgich (avtomat) yangilash', time: '20 daqiqa', price: "50 000 so'm" }
     ],
     reviews: [
-      {
-        author: 'Sanjar Mahmudov',
-        date: '6-noyabr, 2026',
-        rating: 5,
-        district: 'Chilonzor',
-        text: 'Mehmonxonaga yashirin LED profil va lenta o‘rnatib berdi. Ranglari telefon orqali boshqariladigan bo‘ldi, natijadan juda mamnunmiz.'
-      }
+      { author: 'Sanjar Mahmudov', date: '6-noyabr, 2026', rating: 5, district: 'Chilonzor', text: 'Mehmonxonaga yashirin LED profil va lenta o‘rnatib berdi. Natijadan mamnunmiz.' }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Baxtiyor Saidov',
+    initials: 'BS',
+    profession: 'Konditsioner montaji va xizmati',
+    categoryId: 'konditsioner',
+    district: 'Chilonzor',
+    districtsServed: ['Chilonzor', 'Yakkasaroy', 'Uchtepa'],
+    experience: 9,
+    rating: 4.8,
+    reviewsCount: 94,
+    completedOrders: 380,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80',
+    bio: "Konditsionerlarni qishki va yozgi mavsumga tayyorlash, freon gaz quyish, kimyoviy dori bilan yuvish va platalarni sozlash mutaxassisi.",
+    popularServices: [
+      { name: 'Antibakterial yuvish', price: "110 000 so'm" },
+      { name: 'Freon to‘ldirish (R410A)', price: "170 000 so'm" },
+      { name: 'Konditsioner montaji', price: "340 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Konditsioner yuvish', time: '40 daqiqa', price: "110 000 so'm" },
+      { service: 'Freon gaz quyish', time: '30 daqiqa', price: "170 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Lobar Karimova', date: '1-noyabr, 2026', rating: 5, district: 'Chilonzor', text: 'Konditsionerni zo‘r qilib yuvib berdi, hamma hidi ketdi.' }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Sherzod Rahimov',
+    initials: 'SR',
+    profession: 'Mebel ustasi va yig‘uvchi',
+    categoryId: 'mebel',
+    district: 'Chilonzor',
+    districtsServed: ['Chilonzor', 'Uchtepa', 'Yakkasaroy'],
+    experience: 6,
+    rating: 4.8,
+    reviewsCount: 76,
+    completedOrders: 290,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    bio: "Oshxona mebellari, shkaf-kupe, bolalar mebellarini yig‘ish va o‘rnatish. Mebel eshiklari ilmoqlarini sozlash.",
+    popularServices: [
+      { name: 'Shkaf-kupe montaji', price: "190 000 so'm" },
+      { name: 'Oshxona mebeli ilish', price: "240 000 so'm/m" },
+      { name: 'Eshik ilmoqlarini sozlash', price: "50 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Shkaf-kupe yig‘ish', time: '3 soat', price: "190 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Anvar Zokirov', date: '25-oktyabr, 2026', rating: 5, district: 'Chilonzor', text: 'Yangi mebelni juda aniq va tekis yig‘ib berdi.' }
+    ]
+  },
+
+  // --- YUNUSOBOD TUMANI ---
+  {
+    id: 5,
+    name: 'Bobur Alimov',
+    initials: 'BA',
+    profession: 'Konditsioner ustasi (Iqlim mutaxassisi)',
+    categoryId: 'konditsioner',
+    district: 'Yunusobod',
+    districtsServed: ['Yunusobod', 'Mirzo Ulug‘bek', 'Olmazor'],
+    experience: 7,
+    rating: 4.9,
+    reviewsCount: 115,
+    completedOrders: 420,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80',
+    bio: "Konditsionerlarni ta'mirlash, montaj va demontaj qilish, R410A / R22 freon quyish hamda maxsus dori bilan yuvish.",
+    popularServices: [
+      { name: 'Freon quyish (R410A)', price: "180 000 so'm" },
+      { name: 'Antibakterial tozalash', price: "120 000 so'm" },
+      { name: 'Konditsioner montaji', price: "350 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Freon to‘ldirish', time: '30 daqiqa', price: "180 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Jamoliddin Sh', date: '14-oktyabr, 2026', rating: 5, district: 'Yunusobod', text: 'Konditsioner muzday sovutyapti, noxush hidlar ham yo‘qoldi.' }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Mansur Qosimov',
+    initials: 'MQ',
+    profession: 'Professional usta elektrik',
+    categoryId: 'elektrik',
+    district: 'Yunusobod',
+    districtsServed: ['Yunusobod', 'Mirzo Ulug‘bek', 'Olmazor'],
+    experience: 10,
+    rating: 5.0,
+    reviewsCount: 160,
+    completedOrders: 620,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    bio: "Yunusobod tumanida 10 yillik tajribali elektrik. Elektr shitlari, lyustra montaji, kuchlanish o‘zgarishidan himoya vositalari montaji.",
+    popularServices: [
+      { name: 'Elektr shiti yig‘ish', price: "240 000 so'm" },
+      { name: 'Rozetka montaji', price: "35 000 so'm" },
+      { name: 'Qisqa tutashuvni tuzatish', price: "110 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Elektr shiti montaji', time: '2 soat', price: "240 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Dilshod B', date: '9-noyabr, 2026', rating: 5, district: 'Yunusobod', text: 'Avtomatlarni tezda almashtirib, tokni tikladi.' }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Alisher Nurmatov',
+    initials: 'AN',
+    profession: 'Santexnik va quvurlar ustasi',
+    categoryId: 'santexnik',
+    district: 'Yunusobod',
+    districtsServed: ['Yunusobod', 'Olmazor', 'Shayxontohur'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 102,
+    completedOrders: 410,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=400&q=80',
+    bio: "Quvur yorilishi, tiqilishlar, vanna, unitaz va isitish batareyalarini almashtirish bo‘yicha ishonchli mutaxassis.",
+    popularServices: [
+      { name: 'Tiqilishni ochish', price: "95 000 so'm" },
+      { name: 'Smesitel o‘rnatish', price: "75 000 so'm" },
+      { name: 'Suv filtri o‘rnatish', price: "120 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Kran almashtirish', time: '30 daqiqa', price: "75 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Sirojiddin M', date: '3-noyabr, 2026', rating: 5, district: 'Yunusobod', text: 'Oshxona kranini 20 daqiqada sifatli yangilab berdi.' }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Rustam Mirzayev',
+    initials: 'RM',
+    profession: 'Maishiy texnika (kir yuvish/muzlatgich)',
+    categoryId: 'maishiy',
+    district: 'Yunusobod',
+    districtsServed: ['Yunusobod', 'Mirzo Ulug‘bek'],
+    experience: 11,
+    rating: 4.9,
+    reviewsCount: 145,
+    completedOrders: 580,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    bio: "Avtomat kir yuvish mashinalari (Samsung, LG, Artel) va muzlatgichlarni joyida kafolat bilan ta'mirlash.",
+    popularServices: [
+      { name: 'Kir yuvish nasosi almashtirish', price: "135 000 so'm" },
+      { name: 'TEN isitgich yangilash', price: "140 000 so'm" },
+      { name: 'Muzlatgich freon quyish', price: "160 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Diagnostika', time: '20 daqiqa', price: "Bepul" }
+    ],
+    reviews: [
+      { author: 'Nigora A', date: '11-noyabr, 2026', rating: 5, district: 'Yunusobod', text: 'Kir yuvish mashinasi suv to‘kmayotgandi, nasosini tezda tuzatdi.' }
+    ]
+  },
+
+  // --- MIRZO ULUG‘BEK TUMANI ---
+  {
+    id: 9,
+    name: 'Sardor Toshmatov',
+    initials: 'ST',
+    profession: 'Elektrik va avtomatika muhandisi',
+    categoryId: 'elektrik',
+    district: 'Mirzo Ulug‘bek',
+    districtsServed: ['Mirzo Ulug‘bek', 'Yunusobod', 'Yashnobod'],
+    experience: 11,
+    rating: 5.0,
+    reviewsCount: 198,
+    completedOrders: 780,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    bio: "11 yillik tajribaga ega 4-darajali professional elektrik. Elektr shitlari, kuchlanish releylari va qisqa tutashuvlarni tezkor bartaraf qilish.",
+    popularServices: [
+      { name: 'Rozetka va vikluchatel montaji', price: "40 000 so'm" },
+      { name: 'Katta lyustra o‘rnatish', price: "90 000 so'm" },
+      { name: 'Elektr shiti va avtomatlar', price: "250 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Rozetka montaji', time: '15 daqiqa', price: "40 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Rustam Karimov', date: '10-noyabr, 2026', rating: 5, district: 'Mirzo Ulug‘bek', text: 'Kuygan simlarni maxsus asbob bilan topib to‘g‘riladi. Haqiqiy usta!' }
+    ]
+  },
+  {
+    id: 10,
+    name: 'Farhod Fayzullayev',
+    initials: 'FF',
+    profession: 'Santexnik va isitish batareyalari',
+    categoryId: 'santexnik',
+    district: 'Mirzo Ulug‘bek',
+    districtsServed: ['Mirzo Ulug‘bek', 'Yashnobod', 'Mirobod'],
+    experience: 9,
+    rating: 4.9,
+    reviewsCount: 130,
+    completedOrders: 490,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    bio: "Suv sizib chiqishini aniqlash, smesitel, kran, dush trap va quvurlar almashtirish.",
+    popularServices: [
+      { name: 'Kran almashtirish', price: "80 000 so'm" },
+      { name: 'Unitaz o‘rnatish', price: "160 000 so'm" },
+      { name: 'Quvur kavsharlash (payka)', price: "120 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Unitaz montaji', time: '1 soat', price: "160 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Otabek T', date: '7-noyabr, 2026', rating: 5, district: 'Mirzo Ulug‘bek', text: 'Vanna kranini sifatli o‘rnatib berdi.' }
+    ]
+  },
+  {
+    id: 11,
+    name: 'Umidjon Vohidov',
+    initials: 'UV',
+    profession: 'Konditsioner montaji va ta’miri',
+    categoryId: 'konditsioner',
+    district: 'Mirzo Ulug‘bek',
+    districtsServed: ['Mirzo Ulug‘bek', 'Yunusobod'],
+    experience: 7,
+    rating: 4.8,
+    reviewsCount: 88,
+    completedOrders: 320,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
+    bio: "Konditsionerlarni devorga ilish, truba tortish, freon to‘ldirish va dori bilan yuvish.",
+    popularServices: [
+      { name: 'Freon R410A quyish', price: "175 000 so'm" },
+      { name: 'Konditsionerni yuvish', price: "115 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Konditsioner yuvish', time: '45 daqiqa', price: "115 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Malika R', date: '29-oktyabr, 2026', rating: 5, district: 'Mirzo Ulug‘bek', text: 'Konditsionerni toza qilib yuvdi, juda yaxshi usta.' }
+    ]
+  },
+  {
+    id: 12,
+    name: 'Nodir Karimov',
+    initials: 'NK',
+    profession: 'Universal bir soatlik usta',
+    categoryId: 'universal',
+    district: 'Mirzo Ulug‘bek',
+    districtsServed: ['Mirzo Ulug‘bek', 'Yashnobod'],
+    experience: 5,
+    rating: 4.7,
+    reviewsCount: 92,
+    completedOrders: 360,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=400&q=80',
+    bio: "Televizor ilish, korniz montaji, qulf almashtirish, polkalar osish kabi barcha mayda xonadon ta'mirlari.",
+    popularServices: [
+      { name: 'Televizor kronshteyni', price: "70 000 so'm" },
+      { name: 'Parda kornizi ilish', price: "80 000 so'm" },
+      { name: 'Eshik qulfini yangilash', price: "90 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Televizor montaji', time: '30 daqiqa', price: "70 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Farhod B', date: '4-noyabr, 2026', rating: 5, district: 'Mirzo Ulug‘bek', text: 'Katta televizorni devorga juda mustahkam ilib berdi.' }
+    ]
+  },
+
+  // --- YAKKASAROY TUMANI ---
+  {
+    id: 13,
+    name: 'Jasur Qodirov',
+    initials: 'JQ',
+    profession: 'Maishiy texnika mutaxassisi',
+    categoryId: 'maishiy',
+    district: 'Yakkasaroy',
+    districtsServed: ['Yakkasaroy', 'Mirobod', 'Chilonzor'],
+    experience: 9,
+    rating: 4.8,
+    reviewsCount: 167,
+    completedOrders: 610,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    bio: "Avtomat kir yuvish mashinalari, quritgichlar va muzlatgichlarni uyingizda tezkor ta'mirlash. Original ehtiyot qismlar.",
+    popularServices: [
+      { name: 'Kir yuvish nasosini yangilash', price: "130 000 so'm" },
+      { name: 'Isitgich (TEN) almashtirish', price: "140 000 so'm" },
+      { name: 'Muzlatgich termostati', price: "150 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Nasos montaji', time: '40 daqiqa', price: "130 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Dilorom Rahimova', date: '8-noyabr, 2026', rating: 5, district: 'Yakkasaroy', text: 'Kir yuvish mashinamni tezda tuzatib berdi.' }
+    ]
+  },
+  {
+    id: 14,
+    name: 'Elyor Jo‘rayev',
+    initials: 'EJ',
+    profession: 'Santexnik va kanalizatsiya ustasi',
+    categoryId: 'santexnik',
+    district: 'Yakkasaroy',
+    districtsServed: ['Yakkasaroy', 'Mirobod', 'Chilonzor'],
+    experience: 8,
+    rating: 4.9,
+    reviewsCount: 114,
+    completedOrders: 430,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80',
+    bio: "Kanalizatsiya tiqilishlarini ochish, quvurlarni almashtirish va vanna montaji.",
+    popularServices: [
+      { name: 'Quvurdagi tiqilishni ochish', price: "90 000 so'm" },
+      { name: 'Kran ta’mirlash', price: "70 000 so'm" },
+      { name: 'Dush smesiteli montaji', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Tiqilishni ochish', time: '30 daqiqa', price: "90 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Aziz Q', date: '2-noyabr, 2026', rating: 5, district: 'Yakkasaroy', text: 'Tiqilib qolgan quvurni maxsus uskunada 15 daqiqada ochdi.' }
+    ]
+  },
+  {
+    id: 15,
+    name: 'Doniyor Sobirov',
+    initials: 'DS',
+    profession: 'Elektrik va yoritish montaji',
+    categoryId: 'elektrik',
+    district: 'Yakkasaroy',
+    districtsServed: ['Yakkasaroy', 'Mirobod'],
+    experience: 7,
+    rating: 4.8,
+    reviewsCount: 85,
+    completedOrders: 310,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=400&q=80',
+    bio: "Kvartiralarda sim tortish, rozetkalar, lyustralar va bra chiroqlarini o‘rnatish.",
+    popularServices: [
+      { name: 'Rozetka o‘rnatish', price: "35 000 so'm" },
+      { name: 'Lyustra montaji', price: "85 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Lyustra montaji', time: '40 daqiqa', price: "85 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Shaxnoza K', date: '1-noyabr, 2026', rating: 5, district: 'Yakkasaroy', text: 'Chiroqlarni chiroyli qilib o‘rnatib berdilar.' }
+    ]
+  },
+  {
+    id: 16,
+    name: 'Azizbek Shukurov',
+    initials: 'AS',
+    profession: 'Mebel yig‘ish va o‘rnatish',
+    categoryId: 'mebel',
+    district: 'Yakkasaroy',
+    districtsServed: ['Yakkasaroy', 'Chilonzor'],
+    experience: 6,
+    rating: 4.7,
+    reviewsCount: 65,
+    completedOrders: 250,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    bio: "Shkaf-kupe, oshxona, stol-stul yig‘ish. Furnituralarni sozlash.",
+    popularServices: [
+      { name: 'Shkaf yig‘ish', price: "180 000 so'm" },
+      { name: 'Kravat yig‘ish', price: "120 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Shkaf yig‘ish', time: '2 soat', price: "180 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Javohir E', date: '28-oktyabr, 2026', rating: 5, district: 'Yakkasaroy', text: 'Yotoqxona mebelini sifatli yig‘di.' }
+    ]
+  },
+
+  // --- SHAYXONTOHUR TUMANI ---
+  {
+    id: 17,
+    name: 'Dilshodbek Rahimov',
+    initials: 'DR',
+    profession: 'Mebel yig‘uvchi professional usta',
+    categoryId: 'mebel',
+    district: 'Shayxontohur',
+    districtsServed: ['Shayxontohur', 'Olmazor', 'Chilonzor'],
+    experience: 6,
+    rating: 4.9,
+    reviewsCount: 89,
+    completedOrders: 310,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    bio: "Har qanday turdagi mebellarni chizmasi bo‘yicha sifatli yig‘ish: shkaf-kupe, oshxona mebellari, ikki qavatli kravatlar.",
+    popularServices: [
+      { name: 'Shkaf-kupe yig‘ish', price: "180 000 so'm" },
+      { name: 'Oshxona mebeli montaji', price: "250 000 so'm/m" },
+      { name: 'Mebel eshiklarini sozlash', price: "60 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Shkaf montaji', time: '2 soat', price: "180 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Shaxboz Ergashov', date: '1-noyabr, 2026', rating: 5, district: 'Shayxontohur', text: 'Ehtiyotkorlik bilan chiroyli qilib yig‘ib berdilar.' }
+    ]
+  },
+  {
+    id: 18,
+    name: 'Shavkat Ismoilov',
+    initials: 'SI',
+    profession: 'Santexnik va isitish qozoni ustasi',
+    categoryId: 'santexnik',
+    district: 'Shayxontohur',
+    districtsServed: ['Shayxontohur', 'Olmazor', 'Uchtepa'],
+    experience: 11,
+    rating: 4.9,
+    reviewsCount: 140,
+    completedOrders: 540,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=400&q=80',
+    bio: "Isitish qozonlari (kotyol) va quvurlar bo‘yicha 11 yillik tajriba. Avariya chaqiruvlariga tezkor yetib borish.",
+    popularServices: [
+      { name: 'Kotyol ta’miri', price: "200 000 so'm" },
+      { name: 'Smesitel almashtirish', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Kotyol profilaktikasi', time: '1.5 soat', price: "200 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Ravshan K', date: '10-noyabr, 2026', rating: 5, district: 'Shayxontohur', text: 'Kotyolimizni nosozligini tezda topib to‘g‘riladi.' }
+    ]
+  },
+  {
+    id: 19,
+    name: 'Olimjon Hotamov',
+    initials: 'OH',
+    profession: 'Elektrik va montaj mutaxassisi',
+    categoryId: 'elektrik',
+    district: 'Shayxontohur',
+    districtsServed: ['Shayxontohur', 'Chilonzor'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 95,
+    completedOrders: 370,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80',
+    bio: "Shit yig‘ish, avtomatlarni yangilash va qisqa tutashuvlarni bartaraf etish.",
+    popularServices: [
+      { name: 'Avtomat yangilash', price: "45 000 so'm" },
+      { name: 'Lyustra montaji', price: "85 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Avtomat montaji', time: '20 daqiqa', price: "45 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Sobir T', date: '30-oktyabr, 2026', rating: 5, district: 'Shayxontohur', text: 'Avtomatlarni sozlab, xavfsiz holatga keltirdi.' }
+    ]
+  },
+  {
+    id: 20,
+    name: 'Javlon Yo‘ldoshev',
+    initials: 'JY',
+    profession: 'Bir soatlik usta va mayda ta’mir',
+    categoryId: 'universal',
+    district: 'Shayxontohur',
+    districtsServed: ['Shayxontohur', 'Olmazor'],
+    experience: 5,
+    rating: 4.7,
+    reviewsCount: 78,
+    completedOrders: 280,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    bio: "Televizor ilish, korniz montaji, qulf almashtirish va javonlar o‘rnatish.",
+    popularServices: [
+      { name: 'Televizor ilish', price: "70 000 so'm" },
+      { name: 'Korniz o‘rnatish', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Korniz montaji', time: '30 daqiqa', price: "80 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Mahliyo S', date: '5-noyabr, 2026', rating: 5, district: 'Shayxontohur', text: 'Parda kornizini mustahkam o‘rnatib berdi.' }
+    ]
+  },
+
+  // --- SERGELI TUMANI ---
+  {
+    id: 21,
+    name: 'Otabek Nazarov',
+    initials: 'ON',
+    profession: 'Universal bir soatlik usta',
+    categoryId: 'universal',
+    district: 'Sergeli',
+    districtsServed: ['Sergeli', 'Yangi Hayot', 'Yakkasaroy'],
+    experience: 5,
+    rating: 4.8,
+    reviewsCount: 134,
+    completedOrders: 490,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    bio: "Televizorni devorga kronshteynda o‘rnatish, parda kornizlari, polkalar, rasmlar, ko‘zgular osish, eshik qulfini almashtirish.",
+    popularServices: [
+      { name: 'Televizor kronshteyni', price: "70 000 so'm" },
+      { name: 'Eshik qulfini yangilash', price: "90 000 so'm" },
+      { name: 'Parda kornizi montaji', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Televizor ilish', time: '30 daqiqa', price: "70 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Kamola Karimova', date: '11-noyabr, 2026', rating: 5, district: 'Sergeli', text: 'Barcha korniz va televizorlarni tekis qilib bitirib berdi.' }
+    ]
+  },
+  {
+    id: 22,
+    name: 'Sanjarbek Ergashev',
+    initials: 'SE',
+    profession: 'Santexnik mutaxassis',
+    categoryId: 'santexnik',
+    district: 'Sergeli',
+    districtsServed: ['Sergeli', 'Yangi Hayot'],
+    experience: 7,
+    rating: 4.9,
+    reviewsCount: 98,
+    completedOrders: 360,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    bio: "Yangi uylarda santexnika montaji, kranlar, unitaz va vanna o‘rnatish.",
+    popularServices: [
+      { name: 'Kran o‘rnatish', price: "75 000 so'm" },
+      { name: 'Unitaz montaji', price: "150 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Unitaz montaji', time: '1 soat', price: "150 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Umar B', date: '6-noyabr, 2026', rating: 5, district: 'Sergeli', text: 'Yangi uyimizdagi hamma kranlarni ulab berdi.' }
+    ]
+  },
+  {
+    id: 23,
+    name: 'Bexruz Davronov',
+    initials: 'BD',
+    profession: 'Elektrik va avtomatika',
+    categoryId: 'elektrik',
+    district: 'Sergeli',
+    districtsServed: ['Sergeli', 'Yangi Hayot'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 86,
+    completedOrders: 330,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    bio: "Elektr tarmog‘ini noldan tortish, lyustra va avtomatlarni montaj qilish.",
+    popularServices: [
+      { name: 'Rozetka montaji', price: "35 000 so'm" },
+      { name: 'Lyustra ilish', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Rozetka o‘rnatish', time: '15 daqiqa', price: "35 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Ziyoda M', date: '2-noyabr, 2026', rating: 5, district: 'Sergeli', text: 'Chiroqlarni chiroyli qilib o‘rnatdi.' }
+    ]
+  },
+  {
+    id: 24,
+    name: 'Temur Meliyev',
+    initials: 'TM',
+    profession: 'Maishiy texnika ta’miri',
+    categoryId: 'maishiy',
+    district: 'Sergeli',
+    districtsServed: ['Sergeli', 'Yakkasaroy'],
+    experience: 9,
+    rating: 4.8,
+    reviewsCount: 110,
+    completedOrders: 420,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    bio: "Kir yuvish mashinalari, muzlatgich va mikroto‘lqinli pechlar ta'miri.",
+    popularServices: [
+      { name: 'Kir yuvish mashinasi ta’miri', price: "120 000 so'm" },
+      { name: 'Muzlatgich freon quyish', price: "160 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Nasos almashtirish', time: '40 daqiqa', price: "120 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Ilhom T', date: '27-oktyabr, 2026', rating: 5, district: 'Sergeli', text: 'Muzlatgichni freonini to‘ldirib berdi, yaxshi sovutyapti.' }
+    ]
+  },
+
+  // --- OLMAZOR TUMANI ---
+  {
+    id: 25,
+    name: 'Farrux Yusupov',
+    initials: 'FY',
+    profession: 'Kotyol va santexnika muhandisi',
+    categoryId: 'santexnik',
+    district: 'Olmazor',
+    districtsServed: ['Olmazor', 'Shayxontohur', 'Yunusobod'],
+    experience: 12,
+    rating: 4.9,
+    reviewsCount: 178,
+    completedOrders: 650,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=400&q=80',
+    bio: "Ikki konturli isitish qozonlari (Navien, Baxi, Immergas) va issiq pol tizimlari ta'miri va montaji.",
+    popularServices: [
+      { name: 'Kotyol sozlash', price: "200 000 so'm" },
+      { name: 'Suv filtri o‘rnatish', price: "120 000 so'm" },
+      { name: 'Smesitel almashtirish', price: "75 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Kotyol profilaktikasi', time: '1.5 soat', price: "200 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Bekzod Tursunov', date: '9-noyabr, 2026', rating: 5, district: 'Olmazor', text: 'Kotyolimizni nosozligini tezda to‘g‘riladi, uylarimiz issiq.' }
+    ]
+  },
+  {
+    id: 26,
+    name: 'Anvar To‘rayev',
+    initials: 'AT',
+    profession: 'Elektrik va montajchi',
+    categoryId: 'elektrik',
+    district: 'Olmazor',
+    districtsServed: ['Olmazor', 'Shayxontohur'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 104,
+    completedOrders: 390,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+    bio: "Avtomatlar, lyustralar, rozetka va elektr shitlarini montaj qilish.",
+    popularServices: [
+      { name: 'Elektr shiti montaji', price: "220 000 so'm" },
+      { name: 'Rozetka o‘rnatish', price: "35 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Rozetka montaji', time: '15 daqiqa', price: "35 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Sardor A', date: '4-noyabr, 2026', rating: 5, district: 'Olmazor', text: 'Juda tez va sifatli ishladi.' }
+    ]
+  },
+  {
+    id: 27,
+    name: 'Ulug‘bek Shokirov',
+    initials: 'US',
+    profession: 'Konditsioner mutaxassisi',
+    categoryId: 'konditsioner',
+    district: 'Olmazor',
+    districtsServed: ['Olmazor', 'Yunusobod'],
+    experience: 7,
+    rating: 4.8,
+    reviewsCount: 82,
+    completedOrders: 310,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80',
+    bio: "Konditsionerni dori bilan yuvish, freon to‘ldirish va yangi konditsioner montaji.",
+    popularServices: [
+      { name: 'Freon quyish', price: "170 000 so'm" },
+      { name: 'Konditsioner yuvish', price: "110 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Freon to‘ldirish', time: '30 daqiqa', price: "170 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Mirjalol H', date: '26-oktyabr, 2026', rating: 5, district: 'Olmazor', text: 'Konditsioner juda yaxshi ishlayapti.' }
+    ]
+  },
+  {
+    id: 28,
+    name: 'Bobir Haydarov',
+    initials: 'BH',
+    profession: 'Mebel yig‘uvchi usta',
+    categoryId: 'mebel',
+    district: 'Olmazor',
+    districtsServed: ['Olmazor', 'Shayxontohur'],
+    experience: 6,
+    rating: 4.7,
+    reviewsCount: 71,
+    completedOrders: 270,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    bio: "Shkaf, stol, kravat yig‘ish va eshik petlyalarini yangilash.",
+    popularServices: [
+      { name: 'Shkaf yig‘ish', price: "170 000 so'm" },
+      { name: 'Eshik ilmoqlarini sozlash', price: "50 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Shkaf yig‘ish', time: '2 soat', price: "170 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Botir Q', date: '21-oktyabr, 2026', rating: 5, district: 'Olmazor', text: 'Yangi mebelni ehtiyotkorlik bilan yig‘di.' }
+    ]
+  },
+
+  // --- UCHTEPA TUMANI ---
+  {
+    id: 29,
+    name: 'Davron Abdullayev',
+    initials: 'DA',
+    profession: 'Santexnik va quvur ustasi',
+    categoryId: 'santexnik',
+    district: 'Uchtepa',
+    districtsServed: ['Uchtepa', 'Chilonzor'],
+    experience: 9,
+    rating: 4.9,
+    reviewsCount: 125,
+    completedOrders: 470,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    bio: "Kran, smesitel, unitaz va quvur tiqilishlarini ochish bo‘yicha tajribali usta.",
+    popularServices: [
+      { name: 'Kran almashtirish', price: "75 000 so'm" },
+      { name: 'Unitaz ta’miri', price: "140 000 so'm" },
+      { name: 'Tiqilishni ochish', price: "90 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Kran almashtirish', time: '30 daqiqa', price: "75 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Shahnoza I', date: '8-noyabr, 2026', rating: 5, district: 'Uchtepa', text: 'Suv oqayotgan kranni tezda almashtirdi.' }
+    ]
+  },
+  {
+    id: 30,
+    name: 'Ilhom Zokirov',
+    initials: 'IZ',
+    profession: 'Elektrik va avtomat uzgichlar',
+    categoryId: 'elektrik',
+    district: 'Uchtepa',
+    districtsServed: ['Uchtepa', 'Chilonzor'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 92,
+    completedOrders: 350,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    bio: "Rozetkalar, avtomat uzgichlar, lyustralar va qisqa tutashuvlarni bartaraf etish.",
+    popularServices: [
+      { name: 'Avtomat almashtirish', price: "40 000 so'm" },
+      { name: 'Lyustra montaji', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Avtomat montaji', time: '20 daqiqa', price: "40 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Jahongir N', date: '3-noyabr, 2026', rating: 5, district: 'Uchtepa', text: 'Yaxshi usta, tezda keldi va tuzatdi.' }
+    ]
+  },
+  {
+    id: 31,
+    name: 'Shuhrat Qobilov',
+    initials: 'SQ',
+    profession: 'Bir soatlik usta (Mayda ta’mirlar)',
+    categoryId: 'universal',
+    district: 'Uchtepa',
+    districtsServed: ['Uchtepa', 'Chilonzor'],
+    experience: 6,
+    rating: 4.8,
+    reviewsCount: 80,
+    completedOrders: 310,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    bio: "Televizor ilish, korniz montaji, qulf almashtirish va oyna osish.",
+    popularServices: [
+      { name: 'Televizor ilish', price: "65 000 so'm" },
+      { name: 'Qulf almashtirish', price: "85 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Televizor montaji', time: '30 daqiqa', price: "65 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Munisa K', date: '28-oktyabr, 2026', rating: 5, district: 'Uchtepa', text: 'Eshik qulfini sifatli yangilab berdi.' }
+    ]
+  },
+  {
+    id: 32,
+    name: 'Hasan Karimov',
+    initials: 'HK',
+    profession: 'Maishiy texnika ta’miri',
+    categoryId: 'maishiy',
+    district: 'Uchtepa',
+    districtsServed: ['Uchtepa', 'Chilonzor'],
+    experience: 7,
+    rating: 4.7,
+    reviewsCount: 75,
+    completedOrders: 290,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    bio: "Kir yuvish mashinalari va muzlatgichlarni uyingizda ta'mirlash.",
+    popularServices: [
+      { name: 'Kir yuvish mashinasi ta’miri', price: "125 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Nasos montaji', time: '40 daqiqa', price: "125 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Qobil R', date: '22-oktyabr, 2026', rating: 5, district: 'Uchtepa', text: 'Kir yuvish mashinasi yaxshi ishlayapti.' }
+    ]
+  },
+
+  // --- MIROBOD TUMANI ---
+  {
+    id: 33,
+    name: 'Botir Normatov',
+    initials: 'BN',
+    profession: 'Santexnik va vanna xonalari montaji',
+    categoryId: 'santexnik',
+    district: 'Mirobod',
+    districtsServed: ['Mirobod', 'Yakkasaroy', 'Yashnobod'],
+    experience: 10,
+    rating: 5.0,
+    reviewsCount: 155,
+    completedOrders: 600,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80',
+    bio: "Dush kabinalari, vanna, unitaz montaji va suv sizishlarini yo‘qotish.",
+    popularServices: [
+      { name: 'Dush smesiteli montaji', price: "80 000 so'm" },
+      { name: 'Unitaz montaji', price: "150 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Smesitel montaji', time: '30 daqiqa', price: "80 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Alisher O', date: '10-noyabr, 2026', rating: 5, district: 'Mirobod', text: 'Vanna xonasidagi hamma jihozlarni sifatli o‘rnatdi.' }
+    ]
+  },
+  {
+    id: 34,
+    name: 'Xurshid Aliyev',
+    initials: 'XA',
+    profession: 'Elektrik va yoritish tizimlari',
+    categoryId: 'elektrik',
+    district: 'Mirobod',
+    districtsServed: ['Mirobod', 'Yakkasaroy'],
+    experience: 9,
+    rating: 4.9,
+    reviewsCount: 130,
+    completedOrders: 510,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=400&q=80',
+    bio: "Elektr shitlari, LED tizimlar, stabilizator va kuchlanish relesi montaji.",
+    popularServices: [
+      { name: 'Kuchlanish relesi', price: "90 000 so'm" },
+      { name: 'Lyustra montaji', price: "90 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Rele montaji', time: '30 daqiqa', price: "90 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Elena Kim', date: '2-noyabr, 2026', rating: 5, district: 'Mirobod', text: 'Lyustralarni juda chiroyli va toza qilib o‘rnatib berdilar.' }
+    ]
+  },
+  {
+    id: 35,
+    name: 'Rustambek Usmonov',
+    initials: 'RU',
+    profession: 'Konditsioner montaji va freon',
+    categoryId: 'konditsioner',
+    district: 'Mirobod',
+    districtsServed: ['Mirobod', 'Yakkasaroy'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 90,
+    completedOrders: 340,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80',
+    bio: "Konditsioner yuvish, freon quyish va ta'mirlash.",
+    popularServices: [
+      { name: 'Freon to‘ldirish', price: "180 000 so'm" },
+      { name: 'Konditsioner yuvish', price: "120 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Konditsioner yuvish', time: '40 daqiqa', price: "120 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Timur S', date: '29-oktyabr, 2026', rating: 5, district: 'Mirobod', text: 'Konditsionerni zo‘r qilib yuvib berdi.' }
+    ]
+  },
+  {
+    id: 36,
+    name: 'Sardorbek Ikromov',
+    initials: 'SI',
+    profession: 'Mebel yig‘ish mutaxassisi',
+    categoryId: 'mebel',
+    district: 'Mirobod',
+    districtsServed: ['Mirobod', 'Yashnobod'],
+    experience: 7,
+    rating: 4.8,
+    reviewsCount: 84,
+    completedOrders: 320,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    bio: "Oshxona garnituri va shkaf-kupe yig‘ish va sozlash.",
+    popularServices: [
+      { name: 'Shkaf-kupe montaji', price: "200 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Shkaf montaji', time: '2.5 soat', price: "200 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Madina X', date: '24-oktyabr, 2026', rating: 5, district: 'Mirobod', text: 'Shkafni chiroyli qilib yig‘di.' }
+    ]
+  },
+
+  // --- YASHNOBOD TUMANI ---
+  {
+    id: 37,
+    name: 'Kamoliddin Po‘latov',
+    initials: 'KP',
+    profession: 'Santexnik mutaxassis',
+    categoryId: 'santexnik',
+    district: 'Yashnobod',
+    districtsServed: ['Yashnobod', 'Mirzo Ulug‘bek', 'Mirobod'],
+    experience: 8,
+    rating: 4.9,
+    reviewsCount: 112,
+    completedOrders: 440,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    bio: "Kran, smesitel, unitaz va isitish batareyalari ta'miri va montaji.",
+    popularServices: [
+      { name: 'Kran almashtirish', price: "75 000 so'm" },
+      { name: 'Unitaz montaji', price: "150 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Kran montaji', time: '30 daqiqa', price: "75 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Bobur K', date: '9-noyabr, 2026', rating: 5, district: 'Yashnobod', text: 'Suv sizayotgan joyni tezda tuzatdi.' }
+    ]
+  },
+  {
+    id: 38,
+    name: 'Jahongir Mirzayev',
+    initials: 'JM',
+    profession: 'Elektrik va avtomat uzgichlar',
+    categoryId: 'elektrik',
+    district: 'Yashnobod',
+    districtsServed: ['Yashnobod', 'Mirzo Ulug‘bek'],
+    experience: 9,
+    rating: 4.8,
+    reviewsCount: 120,
+    completedOrders: 460,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    bio: "Elektr shitlari, avtomatlar, rozetka va qisqa tutashuvlarni tuzatish.",
+    popularServices: [
+      { name: 'Rozetka montaji', price: "35 000 so'm" },
+      { name: 'Lyustra montaji', price: "85 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Rozetka montaji', time: '15 daqiqa', price: "35 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Nodira F', date: '5-noyabr, 2026', rating: 5, district: 'Yashnobod', text: 'Katta lyustrani tekis va mustahkam ilib berdi.' }
+    ]
+  },
+  {
+    id: 39,
+    name: 'Muzaffar Tojiyev',
+    initials: 'MT',
+    profession: 'Maishiy texnika ta’miri',
+    categoryId: 'maishiy',
+    district: 'Yashnobod',
+    districtsServed: ['Yashnobod', 'Mirobod'],
+    experience: 8,
+    rating: 4.8,
+    reviewsCount: 88,
+    completedOrders: 330,
+    urgent: false,
+    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    bio: "Kir yuvish mashinalari, muzlatgich va boshqa maishiy texnika ta'miri.",
+    popularServices: [
+      { name: 'Kir yuvish mashinasi ta’miri', price: "130 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Diagnostika', time: '20 daqiqa', price: "Bepul" }
+    ],
+    reviews: [
+      { author: 'Sanjar T', date: '31-oktyabr, 2026', rating: 5, district: 'Yashnobod', text: 'Kir yuvish mashinasini tezda sozlab berdi.' }
+    ]
+  },
+  {
+    id: 40,
+    name: 'Zafar Ahmedov',
+    initials: 'ZA',
+    profession: 'Universal bir soatlik usta',
+    categoryId: 'universal',
+    district: 'Yashnobod',
+    districtsServed: ['Yashnobod', 'Mirobod'],
+    experience: 6,
+    rating: 4.7,
+    reviewsCount: 79,
+    completedOrders: 290,
+    urgent: true,
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    bio: "Televizor ilish, korniz montaji, qulf almashtirish, oyna va rasmlar osish.",
+    popularServices: [
+      { name: 'Televizor kronshteyni', price: "70 000 so'm" },
+      { name: 'Parda kornizi ilish', price: "80 000 so'm" }
+    ],
+    fullPriceList: [
+      { service: 'Televizor ilish', time: '30 daqiqa', price: "70 000 so'm" }
+    ],
+    reviews: [
+      { author: 'Gulnoza M', date: '27-oktyabr, 2026', rating: 5, district: 'Yashnobod', text: 'Parda kornizini chiroyli o‘rnatib berdilar.' }
     ]
   }
 ];
@@ -401,6 +1168,7 @@ const PRICING_BENCHMARK = [
   {
     category: 'Santexnika ishlari',
     icon: 'wrench',
+    description: 'Barcha turdagi quvur, jo‘mrak va kanalizatsiya xizmatlari',
     items: [
       { name: 'Kran va smesitel almashtirish', range: '60 000 - 100 000 so‘m' },
       { name: 'Unitaz montaji va ulash', range: '130 000 - 200 000 so‘m' },
@@ -412,6 +1180,7 @@ const PRICING_BENCHMARK = [
   {
     category: 'Elektr montaj ishlari',
     icon: 'zap',
+    description: 'Xavfsiz elektr tarmog‘i, shitlar va yoritish tizimlari',
     items: [
       { name: 'Rozetka va vikluchatel montaji', range: '35 000 - 55 000 so‘m' },
       { name: 'Lyustra va shift chiroqlari montaji', range: '70 000 - 150 000 so‘m' },
@@ -423,28 +1192,29 @@ const PRICING_BENCHMARK = [
   {
     category: 'Iqlim va konditsioner',
     icon: 'wind',
+    description: 'Yozgi va qishki mavsumga tayyorlash hamda montaj',
     items: [
       { name: 'Konditsionerni kimyoviy tozalash', range: '100 000 - 150 000 so‘m' },
       { name: 'Freon gaz quyish (R410/R22)', range: '150 000 - 250 000 so‘m' },
       { name: 'Standart konditsioner montaji', range: '300 000 - 450 000 so‘m' },
-      { name: 'Konditsionerni xavfsiz demontaj qilish', range: '120 000 - 180 000 so‘m' },
-      { name: 'Konditsioner dori bilan dezinfeksiya', range: '80 000 - 120 000 so‘m' }
+      { name: 'Konditsionerni xavfsiz demontaj qilish', range: '120 000 - 180 000 so‘m' }
     ]
   },
   {
     category: 'Maishiy texnika ta’miri',
     icon: 'cpu',
+    description: 'Kir yuvish, muzlatgich va gaz plitalarini uyingizda ta’mirlash',
     items: [
       { name: 'Kir yuvish mashinasi diagnostikasi', range: 'Bepul / 50 000 so‘m' },
       { name: 'Suv nasosi (pompa) almashtirish', range: '120 000 - 180 000 so‘m' },
       { name: 'Kir yuvish mashinasi TEN almashtirish', range: '130 000 - 190 000 so‘m' },
-      { name: 'Muzlatgich freon quyish', range: '150 000 - 250 000 so‘m' },
-      { name: 'Muzlatgich termostati / starteri', range: '120 000 - 180 000 so‘m' }
+      { name: 'Muzlatgich freon quyish', range: '150 000 - 250 000 so‘m' }
     ]
   },
   {
     category: 'Mebel yig‘ish va sozlash',
     icon: 'hammer',
+    description: 'Yangi mebellarni chizma bo‘yicha toza yig‘ish va o‘rnatish',
     items: [
       { name: 'Shkaf-kupe yig‘ish', range: '150 000 - 250 000 so‘m' },
       { name: 'Oshxona garnituri montaji (metriga)', range: '200 000 - 300 000 so‘m' },
@@ -455,6 +1225,7 @@ const PRICING_BENCHMARK = [
   {
     category: 'Bir soatlik usta xizmatlari',
     icon: 'tool',
+    description: 'Devorga televizor, korniz, polkalar ilish va mayda ta’mir',
     items: [
       { name: 'Televizor kronshteyni montaji', range: '60 000 - 90 000 so‘m' },
       { name: 'Parda kornizi o‘rnatish', range: '70 000 - 100 000 so‘m' },
@@ -464,25 +1235,50 @@ const PRICING_BENCHMARK = [
   }
 ];
 
-const FAQS = [
+const TESTIMONIALS = [
   {
-    question: "Ustalarni chaqirish qancha turadi?",
-    answer: "Usta-Top platformasida chaqiruv ko'p hollarda bepul (agar ta'mirlash ishlari bajarilsa). Agar faqat diagnostika qilinib, ish keyinga qoldirilsa, Toshkent bo‘ylab o‘rtacha yo‘l haqi va ko‘rik uchun 40 000 - 50 000 so‘m to‘lanadi."
+    name: 'Nodirbek Sobirov',
+    role: 'Xonadon egasi, Chilonzor',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+    rating: 5,
+    text: 'Oshxonada quvur yorilib ketganda juda vahima bo‘ldi. Usta-Top orqali Akmal ustani topdik, sayt orqali bog‘landik, 25 daqiqada yetib kelib muammoni 100% bartaraf qildi. Xizmat juda zo‘r!'
   },
   {
-    question: "Usta narxni oshirib yubormasligiga qanday ishonch bor?",
-    answer: "Har bir usta profilida aniq xizmatlar narxi (preyskurant) ko'rsatilgan. Usta ishni boshlashdan oldin muammoni ko‘rib, aniq narxni siz bilan kelishib oladi. Ish tugagach, faqat kelishilgan narx to‘lanadi."
+    name: 'Elena Kim',
+    role: 'Toshkent sh., Mirobod',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+    rating: 5,
+    text: 'Elektr shitidagi avtomatlar kuya boshlagandi. Sardor usta kelib zamonaviy kuchlanish relesi va avtomatlarni tartibli qilib yig‘ib berdi. Narxi ham saytda ko‘rsatilganidek bo‘ldi, ortiqcha so‘ramadi.'
   },
   {
-    question: "Ustalar qanchalik tez yetib kelishadi?",
-    answer: "Saytimizda o‘z tumaningizdagi ustalarni tanlash imkoniyati bor. Shuning uchun yaqin hududdagi usta 25-45 daqiqa ichida yetib boradi. Shoshilinch avariya holatlarida esa 'Shoshilinch buyurtma oladi' belgisi bor ustalarga bog‘lanishingiz mumkin."
-  },
-  {
-    question: "Usta-Top orqali usta topish uchun vositachilik haqi bormi?",
-    answer: "Yo‘q! Mijozlar uchun xizmat mutlaqo 100% bepul. Siz to‘g‘ridan-to‘g‘ri usta bilan telefon yoki Telegram orqali bog‘lanasiz va vositachilarsiz gaplashasiz."
-  },
-  {
-    question: "Men ham usta sifatida ro‘yxatdan o‘tsam bo‘ladimi?",
-    answer: "Albatta! Saytdagi 'Usta sifatida qo‘shilish' tugmasi orqali arizangizni yuboring. Moderatorimiz ma’lumotlaringiz va tajribangizni tekshirib, 24 soat ichida profilingizni faollashtiradi."
+    name: 'Dilnoza Alimova',
+    role: 'Yunusobod tumani',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80',
+    rating: 5,
+    text: 'Konditsioner yuvish va freon to‘ldirish uchun usta qidirdim. Sayt juda qulay ekan: narxlar aniq yozilgan, ustaning sharhlari bor. Bobur usta aytilgan vaqtda keldi va toza qilib berdi.'
   }
 ];
+
+// LocalStorage dan qo'shilgan sharhlarni yuklab, bazaga qo'shish
+function syncReviewsFromStorage() {
+  try {
+    const storedReviews = JSON.parse(localStorage.getItem('user_reviews') || '{}');
+    Object.keys(storedReviews).forEach(masterId => {
+      const master = MASTERS_DATA.find(m => m.id === parseInt(masterId));
+      if (master && storedReviews[masterId]) {
+        storedReviews[masterId].forEach(rev => {
+          if (!master.reviews.some(r => r.text === rev.text && r.author === rev.author)) {
+            master.reviews.unshift(rev);
+          }
+        });
+        // Reytingni qayta hisoblash
+        const totalRating = master.reviews.reduce((sum, r) => sum + r.rating, 0);
+        master.rating = (totalRating / master.reviews.length).toFixed(1);
+        master.reviewsCount = master.reviews.length;
+      }
+    });
+  } catch (e) {
+    console.error('Sharhlarni sinxronlashda xatolik:', e);
+  }
+}
+syncReviewsFromStorage();
