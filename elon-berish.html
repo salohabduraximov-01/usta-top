@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E’lon berish (Buyurtmalar birjasi) | Usta-Top.uz</title>
+  <meta name="description" content="Toshkentda usta kerakmi? E’lon bering — santexnik, elektrik va boshqa ustalar o‘z narx va vaqtlarini taklif qilishadi. Eng qulayini tanlang!">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1E3A8A',
+              hover: '#172554',
+              light: '#EFF6FF',
+              dark: '#0F172A'
+            },
+            accent: {
+              DEFAULT: '#F97316',
+              hover: '#EA580C',
+              light: '#FFF7ED'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-300">
+
+  <!-- ==========================================
+       1. HEADER / NAVBAR (5 TA ASOSIY BO'LIM)
+       ========================================== -->
+  <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-md shadow-blue-900/20 group-hover:bg-[#172554] transition">
+          <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400 flex items-center">
+            Usta-Top<span class="text-[#F97316]">.uz</span>
+          </span>
+          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-1">
+            Toshkent ustalari
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigatsiya (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
+        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Bosh sahifa
+        </a>
+        <a href="elon-berish.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold border-b-2 border-[#1E3A8A] dark:border-blue-400 pb-1 flex items-center space-x-1">
+          <span>📢</span>
+          <span>E’lon berish</span>
+        </a>
+        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Ustalar
+        </a>
+        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🧮</span>
+          <span>Kalkulyator</span>
+        </a>
+        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🗺️</span>
+          <span>Xarita</span>
+        </a>
+      </nav>
+
+      <!-- O'ng tomon: auth.js dinamik boshqaradi -->
+      <div class="hidden md:flex items-center space-x-3.5">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm cursor-pointer"
+          title="Tungi / Kunduzgi rejim"
+        >
+          <span class="theme-toggle-icon flex items-center justify-center"></span>
+        </button>
+      </div>
+
+      <!-- Mobil burger -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm"
+        >
+          <span class="theme-toggle-icon"></span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="toggleMobileMenu()" 
+          class="text-slate-700 dark:text-slate-200 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobil menyu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
+      <a href="index.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🏠 Bosh sahifa
+      </a>
+      <a href="elon-berish.html" class="block py-2 text-base font-bold text-[#1E3A8A] dark:text-blue-400">
+        📢 E’lon berish (Buyurtma)
+      </a>
+      <a href="ustalar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🔧 Ustalar katalogi
+      </a>
+      <a href="kalkulyator.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🧮 Narx kalkulyatori
+      </a>
+      <a href="xarita.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🗺️ Toshkent xaritasi
+      </a>
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800"></div>
+    </div>
+  </header>
+
+
+  <!-- ==========================================
+       2. HERO BANNER
+       ========================================== -->
+  <section class="bg-gradient-to-b from-blue-50/80 via-slate-50 to-white dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-950 py-10 sm:py-14 border-b border-slate-200/60 dark:border-slate-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center space-x-2 bg-orange-100/90 dark:bg-orange-950/60 text-[#F97316] dark:text-orange-400 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold mb-4 border border-orange-200/70 dark:border-orange-900/60">
+        <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+        <span>⚡ Usta qidirishning eng oson yo‘li</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        E’lon bering — ustalar o‘zlari <br class="hidden sm:inline">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#1E3A8A] via-blue-600 to-[#F97316] dark:from-blue-400 dark:to-orange-400">
+          narx va vaqt taklif qilishadi
+        </span>
+      </h1>
+
+      <p class="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Masalan: <em>"Chilonzorda kran almashtirish kerak, bugun soat 18:00 ga, rasm ilova qilindi."</em> Ustalar takliflarini ko‘ring va reytingi hamda narxi eng ma’qulini tanlang!
+      </p>
+
+      <!-- Tezkor afzalliklar qatori -->
+      <div class="mt-6 flex flex-wrap justify-center items-center gap-4 sm:gap-8 text-xs font-bold text-slate-600 dark:text-slate-300">
+        <div class="flex items-center space-x-2">
+          <span class="text-emerald-500 text-base">✓</span>
+          <span>100% Bepul e’lon berish</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-emerald-500 text-base">✓</span>
+          <span>5-15 daqiqada takliflar</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-emerald-500 text-base">✓</span>
+          <span>Faqat tekshirilgan ustalar</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       3. ASOSIY QISM: FORMA VA E'LONLAR BIRJASI
+       ========================================== -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- CHAP USTUN: E'LON BERISH FORMASI (5 cols) -->
+      <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-7 border border-slate-200/80 dark:border-slate-800 shadow-xl">
+        
+        <div class="flex items-center space-x-3 pb-5 border-b border-slate-100 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-2xl bg-orange-50 dark:bg-orange-950/60 text-[#F97316] flex items-center justify-center font-bold text-lg">
+            ✏️
+          </div>
+          <div>
+            <h2 class="text-lg font-extrabold text-slate-900 dark:text-white">Yangi buyurtma qoldirish</h2>
+            <p class="text-xs text-slate-400">1 daqiqada to‘ldiring, ustalarga yetkazamiz</p>
+          </div>
+        </div>
+
+        <form id="newOrderForm" onsubmit="handleCreateOrder(event)" class="mt-5 space-y-4">
+          
+          <!-- Xizmat sohasi (Custom Select Dropdown) -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Xizmat turi <span class="text-rose-500">*</span>
+            </label>
+            <div class="custom-select-wrapper relative" data-name="orderCategory">
+              <input type="hidden" name="orderCategory" id="orderCategoryInput" value="santexnik" required>
+              <button 
+                type="button" 
+                class="custom-select-trigger w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+              >
+                <div class="flex items-center space-x-2.5 truncate">
+                  <span class="custom-select-icon text-lg">🚰</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Santexnik</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-64 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="santexnik" data-label="Santexnik" data-icon="🚰">
+                  <span>🚰</span><span>Santexnik</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="elektrik" data-label="Elektrik" data-icon="⚡">
+                  <span>⚡</span><span>Elektrik</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="konditsioner" data-label="Konditsioner ustasi" data-icon="❄️">
+                  <span>❄️</span><span>Konditsioner ustasi</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="maishiy" data-label="Maishiy texnika" data-icon="🧺">
+                  <span>🧺</span><span>Maishiy texnika</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="mebel" data-label="Mebel yig‘uvchi" data-icon="🪑">
+                  <span>🪑</span><span>Mebel yig‘uvchi</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2.5 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="universal" data-label="Bir soatlik usta" data-icon="🔨">
+                  <span>🔨</span><span>Bir soatlik usta</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Toshkent tumani (Custom Select Dropdown) -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Toshkent tumani <span class="text-rose-500">*</span>
+            </label>
+            <div class="custom-select-wrapper relative" data-name="orderDistrict">
+              <input type="hidden" name="orderDistrict" id="orderDistrictInput" value="Chilonzor" required>
+              <button 
+                type="button" 
+                class="custom-select-trigger w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+              >
+                <div class="flex items-center space-x-2.5 truncate">
+                  <span class="custom-select-icon text-lg">📍</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Chilonzor</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-64 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
+                  <span>📍</span><span>Chilonzor</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
+                  <span>📍</span><span>Yunusobod</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
+                  <span>📍</span><span>Mirzo Ulug‘bek</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
+                  <span>📍</span><span>Yakkasaroy</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
+                  <span>📍</span><span>Shayxontohur</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
+                  <span>📍</span><span>Sergeli</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
+                  <span>📍</span><span>Olmazor</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
+                  <span>📍</span><span>Uchtepa</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
+                  <span>📍</span><span>Mirobod</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
+                  <span>📍</span><span>Yashnobod</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aniq manzil / Mo'ljal -->
+          <div>
+            <label for="orderAddress" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Aniq manzil yoki mo‘ljal <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="orderAddress" 
+              required 
+              placeholder="Masalan: 7-mavze, 14-uy yoki Korzinka yonida"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] transition"
+            >
+          </div>
+
+          <!-- Qachon kerak? (Tezkor tanlovlar) -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Qachon bajarilishi kerak? <span class="text-rose-500">*</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <button 
+                type="button" 
+                onclick="setTimePreset('Bugun zudlik bilan (1-2 soatda)')"
+                class="time-preset-btn px-3 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-orange-500 text-slate-700 dark:text-slate-300 transition text-center cursor-pointer"
+              >
+                ⚡ Zudlik bilan
+              </button>
+              <button 
+                type="button" 
+                onclick="setTimePreset('Bugun soat 18:00 ga')"
+                class="time-preset-btn px-3 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-orange-500 text-slate-700 dark:text-slate-300 transition text-center cursor-pointer"
+              >
+                🕒 Bugun 18:00 ga
+              </button>
+              <button 
+                type="button" 
+                onclick="setTimePreset('Ertaga kun davomida')"
+                class="time-preset-btn px-3 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-orange-500 text-slate-700 dark:text-slate-300 transition text-center cursor-pointer"
+              >
+                📅 Ertaga
+              </button>
+              <button 
+                type="button" 
+                onclick="setTimePreset('Dam olish kuni (Shanba/Yakshanba)')"
+                class="time-preset-btn px-3 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-orange-500 text-slate-700 dark:text-slate-300 transition text-center cursor-pointer"
+              >
+                ☕ Dam olish kuni
+              </button>
+            </div>
+            <input 
+              type="text" 
+              id="orderTimeNeeded" 
+              required 
+              value="Bugun soat 18:00 ga"
+              placeholder="Masalan: Bugun soat 18:00 ga"
+              class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] transition"
+            >
+          </div>
+
+          <!-- Sarlavha -->
+          <div>
+            <label for="orderTitle" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Qisqa sarlavha <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="orderTitle" 
+              required 
+              placeholder="Masalan: Oshxona kranini almashtirish va filtr ulash"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] transition"
+            >
+          </div>
+
+          <!-- Batafsil tavsif -->
+          <div>
+            <label for="orderDescription" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Muammoni batafsil tasvirlang <span class="text-rose-500">*</span>
+            </label>
+            <textarea 
+              id="orderDescription" 
+              rows="3" 
+              required 
+              placeholder="Nosozlik nimada, nimalar sotib olingan yoki usta nima olib kelishi kerak..."
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] transition resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Taxminiy byudjet -->
+          <div>
+            <label for="orderBudget" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Mo‘ljallangan byudjet (ixtiyoriy)
+            </label>
+            <input 
+              type="text" 
+              id="orderBudget" 
+              placeholder="Masalan: 100 000 – 150 000 so‘m yoki Kelishamiz"
+              class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] transition"
+            >
+          </div>
+
+          <!-- Rasm yuklash (FileReader base64) -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+              Nosozlik rasmi (ixtiyoriy)
+            </label>
+            <div class="flex items-center space-x-3">
+              <label class="cursor-pointer flex-1 flex items-center justify-center space-x-2 px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 hover:border-orange-500 text-xs font-bold transition">
+                <span>📷 Rasm tanlash</span>
+                <input type="file" id="orderImageInput" accept="image/*" class="hidden" onchange="handleOrderImageSelect(event)">
+              </label>
+              <div id="orderImagePreviewContainer" class="hidden relative">
+                <img id="orderImagePreview" src="" class="w-12 h-12 rounded-xl object-cover border border-slate-200 dark:border-slate-700">
+                <button type="button" onclick="removeOrderImage()" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 text-white rounded-full text-xs font-bold flex items-center justify-center shadow">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aloqa uchun Ism va Telefon -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label for="orderCustomerName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Ismingiz <span class="text-rose-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="orderCustomerName" 
+                required 
+                placeholder="Ismingiz"
+                class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A]"
+              >
+            </div>
+
+            <div>
+              <label for="orderCustomerPhone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                Telefon <span class="text-rose-500">*</span>
+              </label>
+              <input 
+                type="tel" 
+                id="orderCustomerPhone" 
+                required 
+                placeholder="+998 90 123 45 67"
+                class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-medium text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A]"
+              >
+            </div>
+          </div>
+
+          <!-- Yuborish tugmasi -->
+          <div class="pt-3">
+            <button 
+              type="submit" 
+              class="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-orange-500/20 active:scale-95 transition flex items-center justify-center space-x-2 text-sm cursor-pointer"
+            >
+              <span>📢 E’lonni bepul joylashtirish</span>
+            </button>
+            <p class="text-[11px] text-center text-slate-400 mt-2">
+              E’loningiz darhol Toshkent ustalari lentasida ko‘rinadi
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- O'NG USTUN: FAOL E'LONLAR BIRJASI (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- Yuqori qidiruv va filtrlar -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+                <span>📋 Toshkentdagi faol e’lonlar</span>
+                <span id="activeOrdersCountBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-blue-100 text-[#1E3A8A] dark:bg-blue-950 dark:text-blue-300 font-bold">...</span>
+              </h2>
+              <p class="text-xs text-slate-400">Ustalar narx taklif qilishi va mijozlar tanlashi mumkin</p>
+            </div>
+
+            <!-- Tuman tezkor filtri (Custom ustun shaklida) -->
+            <div class="w-full sm:w-56">
+              <div class="custom-select-wrapper relative" data-name="boardDistrict">
+                <input type="hidden" id="boardDistrictFilter" value="all" onchange="renderOrdersBoard()">
+                <button 
+                  type="button" 
+                  class="custom-select-trigger w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-xs rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+                >
+                  <div class="flex items-center space-x-2 truncate">
+                    <span class="custom-select-icon text-sm">📍</span>
+                    <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha tumanlar</span>
+                  </div>
+                  <svg class="custom-select-arrow w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="all" data-label="Barcha tumanlar" data-icon="📍">
+                    <span>📍</span><span>Barcha tumanlar</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
+                    <span>📍</span><span>Chilonzor</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
+                    <span>📍</span><span>Yunusobod</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
+                    <span>📍</span><span>Mirzo Ulug‘bek</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
+                    <span>📍</span><span>Yakkasaroy</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
+                    <span>📍</span><span>Shayxontohur</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
+                    <span>📍</span><span>Sergeli</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
+                    <span>📍</span><span>Olmazor</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
+                    <span>📍</span><span>Uchtepa</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
+                    <span>📍</span><span>Mirobod</span>
+                  </div>
+                  <div class="custom-select-option px-3 py-2 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-xs" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
+                    <span>📍</span><span>Yashnobod</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kategoriya chiplari -->
+          <div class="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-slate-100 dark:border-slate-800">
+            <button type="button" onclick="filterBoardCategory('all', this)" class="board-cat-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-[#1E3A8A] text-white transition">Hammasi</button>
+            <button type="button" onclick="filterBoardCategory('santexnik', this)" class="board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">🚰 Santexnik</button>
+            <button type="button" onclick="filterBoardCategory('elektrik', this)" class="board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">⚡ Elektrik</button>
+            <button type="button" onclick="filterBoardCategory('konditsioner', this)" class="board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">❄️ Konditsioner</button>
+            <button type="button" onclick="filterBoardCategory('mebel', this)" class="board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">🪑 Mebel</button>
+            <button type="button" onclick="filterBoardCategory('maishiy', this)" class="board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">🧺 Maishiy</button>
+          </div>
+        </div>
+
+        <!-- E'lonlar ro'yxati konteyneri -->
+        <div id="ordersContainer" class="space-y-4">
+          <!-- JS dinamik joylaydi -->
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ==========================================
+       4. TAKLIF BERISH MODALI (Ustalar uchun)
+       ========================================== -->
+  <div id="bidModalContainer"></div>
+
+  <!-- TAKLIFLARNI KO'RISH MODALI (Mijozlar uchun) -->
+  <div id="viewBidsModalContainer"></div>
+
+  <!-- RASMNI KATTALASHTIRIB KO'RISH MODALI -->
+  <div id="imagePreviewModalContainer"></div>
+
+
+  <!-- ==========================================
+       5. FOOTER
+       ========================================== -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-16 pt-12 pb-8 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>© 2026 Usta-Top.uz — Toshkent shahri uchun maishiy xizmatlar portali.</p>
+        <div class="flex items-center space-x-6">
+          <a href="index.html" class="hover:text-[#1E3A8A]">Bosh sahifa</a>
+          <a href="elon-berish.html" class="hover:text-[#1E3A8A]">E’lon berish</a>
+          <a href="ustalar.html" class="hover:text-[#1E3A8A]">Ustalar</a>
+          <a href="kalkulyator.html" class="hover:text-[#1E3A8A]">Kalkulyator</a>
+          <a href="xarita.html" class="hover:text-[#1E3A8A]">Xarita</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobil pastki qotirilgan menyu -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+    <a href="index.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🏠</span>
+      <span>Bosh sahifa</span>
+    </a>
+    <a href="elon-berish.html" class="flex flex-col items-center text-[#1E3A8A] dark:text-blue-400 font-bold">
+      <span class="text-base mb-0.5">📢</span>
+      <span>E’lon</span>
+    </a>
+    <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🔧</span>
+      <span>Ustalar</span>
+    </a>
+    <a href="kalkulyator.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🧮</span>
+      <span>Kalkulyator</span>
+    </a>
+    <a href="xarita.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🗺️</span>
+      <span>Xarita</span>
+    </a>
+  </div>
+
+  <div id="chatModalContainer"></div>
+  <div id="detailModalContainer"></div>
+  <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
+
+  <!-- Skriptlar -->
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="animations.js"></script>
+  <script src="auth.js"></script>
+
+  <script>
+    let activeBoardCategory = 'all';
+    let currentUploadedImageBase64 = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Agar foydalanuvchi tizimga kirgan bo'lsa, ism va telefonini avtomatik to'ldirish
+      const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      if (user) {
+        const nameInput = document.getElementById('orderCustomerName');
+        const phoneInput = document.getElementById('orderCustomerPhone');
+        if (nameInput && !nameInput.value) nameInput.value = user.name;
+        if (phoneInput && !phoneInput.value) phoneInput.value = user.phone;
+      }
+
+      // Telefon maydoniga avto-format
+      const phoneInput = document.getElementById('orderCustomerPhone');
+      if (phoneInput && typeof attachPhoneFormatter === 'function') {
+        attachPhoneFormatter(phoneInput);
+      }
+
+      renderOrdersBoard();
+    });
+
+    function setTimePreset(val) {
+      const input = document.getElementById('orderTimeNeeded');
+      if (input) input.value = val;
+    }
+
+    function handleOrderImageSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.size > 1024 * 1024) {
+        showToast("Rasm hajmi 1 MB dan oshmasligi kerak", "error");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        currentUploadedImageBase64 = evt.target.result;
+        const preview = document.getElementById('orderImagePreview');
+        const container = document.getElementById('orderImagePreviewContainer');
+        if (preview && container) {
+          preview.src = currentUploadedImageBase64;
+          container.classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeOrderImage() {
+      currentUploadedImageBase64 = null;
+      const fileInput = document.getElementById('orderImageInput');
+      if (fileInput) fileInput.value = '';
+      const container = document.getElementById('orderImagePreviewContainer');
+      if (container) container.classList.add('hidden');
+    }
+
+    function handleCreateOrder(e) {
+      e.preventDefault();
+
+      const catInput = document.getElementById('orderCategoryInput');
+      const distInput = document.getElementById('orderDistrictInput');
+      const address = document.getElementById('orderAddress').value.trim();
+      const timeNeeded = document.getElementById('orderTimeNeeded').value.trim();
+      const title = document.getElementById('orderTitle').value.trim();
+      const description = document.getElementById('orderDescription').value.trim();
+      const budget = document.getElementById('orderBudget').value.trim();
+      const customerName = document.getElementById('orderCustomerName').value.trim();
+      const customerPhone = document.getElementById('orderCustomerPhone').value.trim();
+
+      if (!title || !description || !address || !customerName || !customerPhone) {
+        showToast("Iltimos, barcha majburiy maydonlarni to‘ldiring", "warning");
+        return;
+      }
+
+      const catLabels = {
+        santexnik: 'Santexnik',
+        elektrik: 'Elektrik',
+        konditsioner: 'Konditsioner ustasi',
+        maishiy: 'Maishiy texnika',
+        mebel: 'Mebel yig‘uvchi',
+        universal: 'Bir soatlik usta'
+      };
+
+      const orderData = {
+        category: catInput ? catInput.value : 'santexnik',
+        categoryName: catLabels[catInput?.value] || 'Usta xizmati',
+        district: distInput ? distInput.value : 'Chilonzor',
+        address,
+        timeNeeded,
+        title,
+        description,
+        budget: budget || 'Kelishuv asosida',
+        customerName,
+        customerPhone,
+        image: currentUploadedImageBase64
+      };
+
+      const created = saveOrder(orderData);
+      showToast("🎉 E’loningiz muvaffaqiyatli joylashtirildi!", "success");
+
+      // Formani tozalash
+      document.getElementById('orderTitle').value = '';
+      document.getElementById('orderDescription').value = '';
+      document.getElementById('orderBudget').value = '';
+      removeOrderImage();
+
+      renderOrdersBoard();
+    }
+
+    function filterBoardCategory(catId, btn) {
+      activeBoardCategory = catId;
+      document.querySelectorAll('.board-cat-btn').forEach(b => {
+        b.className = "board-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition";
+      });
+      btn.className = "board-cat-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-[#1E3A8A] text-white transition";
+      renderOrdersBoard();
+    }
+
+    function renderOrdersBoard() {
+      const container = document.getElementById('ordersContainer');
+      const badge = document.getElementById('activeOrdersCountBadge');
+      const districtFilter = document.getElementById('boardDistrictFilter')?.value || 'all';
+
+      if (!container) return;
+
+      const orders = typeof getOrders === 'function' ? getOrders() : [];
+      
+      const filtered = orders.filter(order => {
+        const matchDistrict = (districtFilter === 'all' || order.district === districtFilter);
+        const matchCat = (activeBoardCategory === 'all' || order.category === activeBoardCategory);
+        return matchDistrict && matchCat;
+      });
+
+      if (badge) badge.textContent = `${filtered.length} ta`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-10 border border-slate-200/80 dark:border-slate-800 text-center">
+            <span class="text-4xl block mb-3">📭</span>
+            <h3 class="font-bold text-base text-slate-800 dark:text-slate-200">Bu filtr bo‘yicha hozircha e’lon yo‘q</h3>
+            <p class="text-xs text-slate-400 mt-1">Chapdagi forma orqali birinchi bo‘lib o‘zingiz e’lon bering!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(order => {
+        const bidsCount = order.bids ? order.bids.length : 0;
+        const catIcons = {
+          santexnik: '🚰',
+          elektrik: '⚡',
+          konditsioner: '❄️',
+          maishiy: '🧺',
+          mebel: '🪑',
+          universal: '🔨'
+        };
+        const icon = catIcons[order.category] || '🔧';
+
+        return `
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition card-hover-effect">
+            
+            <!-- Yuqori qator: Kategoriyalar, vaqt va tuman -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 font-bold text-xs flex items-center space-x-1">
+                  <span>${icon}</span>
+                  <span>${escapeHtml(order.categoryName || 'Xizmat')}</span>
+                </span>
+                <span class="px-2.5 py-1 rounded-xl bg-orange-50 dark:bg-orange-950/60 text-[#F97316] font-bold text-xs">
+                  📍 ${escapeHtml(order.district)}
+                </span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-semibold">${escapeHtml(order.createdAt || 'Hozir')}</span>
+            </div>
+
+            <!-- Sarlavha -->
+            <h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-snug">
+              ${escapeHtml(order.title)}
+            </h3>
+
+            <!-- Tavsif -->
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 line-clamp-3 leading-relaxed">
+              ${escapeHtml(order.description)}
+            </p>
+
+            <!-- Agar rasm ilova qilingan bo'lsa -->
+            ${order.image ? `
+              <div class="mt-3">
+                <button type="button" onclick="previewImage('${order.image}')" class="inline-flex items-center space-x-2 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
+                  <span>📷 Ilova qilingan rasmni ko‘rish</span>
+                </button>
+              </div>
+            ` : ''}
+
+            <!-- Manzil, vaqt va byudjet paneli -->
+            <div class="mt-4 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+              <div>
+                <span class="block text-[10px] text-slate-400 font-bold uppercase">Kerakli vaqt:</span>
+                <span class="font-extrabold text-slate-800 dark:text-slate-200">🕒 ${escapeHtml(order.timeNeeded)}</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-slate-400 font-bold uppercase">Mo‘ljallangan byudjet:</span>
+                <span class="font-extrabold text-emerald-600 dark:text-emerald-400">💰 ${escapeHtml(order.budget)}</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-slate-400 font-bold uppercase">Manzil:</span>
+                <span class="font-semibold text-slate-700 dark:text-slate-300 truncate block">🏠 ${escapeHtml(order.address)}</span>
+              </div>
+            </div>
+
+            <!-- Pastki takliflar va harakatlar qatori -->
+            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full ${bidsCount > 0 ? 'bg-emerald-500 animate-ping' : 'bg-slate-300'}"></span>
+                <span class="text-xs font-bold ${bidsCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}">
+                  ${bidsCount > 0 ? `${bidsCount} ta usta narx taklif qildi` : 'Hozircha taklif yo‘q'}
+                </span>
+              </div>
+
+              <div class="flex items-center space-x-2">
+                ${bidsCount > 0 ? `
+                  <button 
+                    type="button" 
+                    onclick="openViewBidsModal('${order.id}')"
+                    class="px-4 py-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 hover:bg-blue-100 text-xs font-bold transition cursor-pointer"
+                  >
+                    Takliflarni ko‘rish (${bidsCount})
+                  </button>
+                ` : ''}
+
+                <button 
+                  type="button" 
+                  onclick="openBidModal('${order.id}')"
+                  class="px-4 py-2.5 rounded-xl bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 dark:hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-900/10 active:scale-95 transition cursor-pointer flex items-center space-x-1.5"
+                >
+                  <span>💬 Taklif berish</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Rasmni kattalashtirish
+    function previewImage(src) {
+      const container = document.getElementById('imagePreviewModalContainer');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in" onclick="this.innerHTML=''">
+          <div class="relative max-w-2xl w-full bg-white dark:bg-slate-900 rounded-3xl p-3 shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+            <img src="${src}" class="w-full h-auto max-h-[80vh] rounded-2xl object-contain">
+            <button onclick="document.getElementById('imagePreviewModalContainer').innerHTML=''" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/70 text-white flex items-center justify-center font-bold">✕</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Usta sifatida taklif berish modali
+    function openBidModal(orderId) {
+      const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      const container = document.getElementById('bidModalContainer');
+      if (!container) return;
+
+      const orders = typeof getOrders === 'function' ? getOrders() : [];
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      // Agar foydalanuvchi usta bo'lmasa, eslatma bilan birga forma beriladi
+      const isMaster = user && user.role === 'master';
+      const defaultMasterName = isMaster ? user.name : '';
+
+      container.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target===this) this.innerHTML=''">
+          <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up">
+            
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex items-center space-x-2.5">
+                <span class="text-xl">💬</span>
+                <div>
+                  <h3 class="font-bold text-base text-slate-900 dark:text-white">Buyurtmaga taklif berish</h3>
+                  <p class="text-xs text-slate-400 truncate max-w-xs">${escapeHtml(order.title)}</p>
+                </div>
+              </div>
+              <button onclick="document.getElementById('bidModalContainer').innerHTML=''" class="text-slate-400 hover:text-slate-600 font-bold p-1">✕</button>
+            </div>
+
+            <form onsubmit="handleSendBid(event, '${order.id}')" class="mt-4 space-y-3.5">
+              
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Usta / Sizning ismingiz <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="bidMasterName" 
+                  required 
+                  value="${escapeHtml(defaultMasterName)}"
+                  placeholder="Ismingiz yoki usta nomi"
+                  class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A]"
+                >
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Taklif narxi <span class="text-rose-500">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="bidPrice" 
+                    required 
+                    placeholder="Masalan: 90 000 so‘m"
+                    class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A]"
+                  >
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Qachon bora olasiz? <span class="text-rose-500">*</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="bidReadyTime" 
+                    required 
+                    placeholder="Masalan: 17:30 da tayyorman"
+                    class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A]"
+                  >
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Mijozga qisqa izoh
+                </label>
+                <textarea 
+                  id="bidComment" 
+                  rows="3" 
+                  placeholder="Kerakli instrumentlarim bor, kafolat beraman..."
+                  class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-medium rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] resize-none"
+                ></textarea>
+              </div>
+
+              <div class="pt-2 flex gap-2">
+                <button 
+                  type="button" 
+                  onclick="document.getElementById('bidModalContainer').innerHTML=''"
+                  class="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300"
+                >
+                  Bekor qilish
+                </button>
+                <button 
+                  type="submit" 
+                  class="flex-1 py-2.5 rounded-xl bg-[#1E3A8A] hover:bg-[#172554] text-white text-xs font-bold shadow-md active:scale-95 transition"
+                >
+                  Taklifni yuborish
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      `;
+    }
+
+    function handleSendBid(e, orderId) {
+      e.preventDefault();
+      const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      const masterName = document.getElementById('bidMasterName').value.trim();
+      const price = document.getElementById('bidPrice').value.trim();
+      const readyTime = document.getElementById('bidReadyTime').value.trim();
+      const comment = document.getElementById('bidComment').value.trim();
+
+      const bidData = {
+        masterId: user ? user.id : 'm_' + Date.now(),
+        masterName: masterName || 'Professional Usta',
+        masterAvatar: user?.avatar || '',
+        masterRating: user?.rating || 4.9,
+        masterDistrict: user?.district || 'Toshkent',
+        price,
+        readyTime,
+        comment
+      };
+
+      addOrderBid(orderId, bidData);
+      showToast("✅ Taklifingiz buyurtmachiga yuborildi!", "success");
+      document.getElementById('bidModalContainer').innerHTML = '';
+      renderOrdersBoard();
+    }
+
+    // Buyurtmaga kelgan barcha ustalarning takliflarini ko'rish modali
+    function openViewBidsModal(orderId) {
+      const orders = typeof getOrders === 'function' ? getOrders() : [];
+      const order = orders.find(o => o.id === orderId);
+      if (!order || !order.bids || order.bids.length === 0) return;
+
+      const container = document.getElementById('viewBidsModalContainer');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target===this) this.innerHTML=''">
+          <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up max-h-[85vh] flex flex-col">
+            
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Ustalarning narx takliflari</h3>
+                <p class="text-xs text-slate-400">${escapeHtml(order.title)}</p>
+              </div>
+              <button onclick="document.getElementById('viewBidsModalContainer').innerHTML=''" class="text-slate-400 hover:text-slate-600 font-bold p-1">✕</button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 my-4 pr-1">
+              ${order.bids.map(bid => `
+                <div class="py-4 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
+                        ${getInitials(bid.masterName)}
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-sm text-slate-900 dark:text-white">${escapeHtml(bid.masterName)}</h4>
+                        <div class="flex items-center text-xs text-amber-500 font-bold">
+                          <span>★ ${bid.masterRating || '4.9'}</span>
+                          <span class="text-slate-400 ml-2 font-normal">${bid.createdAt}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="text-right">
+                      <span class="block text-sm font-extrabold text-emerald-600 dark:text-emerald-400">${escapeHtml(bid.price)}</span>
+                      <span class="block text-[11px] text-slate-400 font-semibold">${escapeHtml(bid.readyTime)}</span>
+                    </div>
+                  </div>
+
+                  ${bid.comment ? `
+                    <p class="text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl">
+                      💬 "${escapeHtml(bid.comment)}"
+                    </p>
+                  ` : ''}
+
+                  <div class="flex justify-end pt-1">
+                    <button 
+                      type="button" 
+                      onclick="document.getElementById('viewBidsModalContainer').innerHTML=''; openChatModal(${bid.masterId || 1});"
+                      class="px-3.5 py-1.5 rounded-xl bg-[#1E3A8A] text-white text-xs font-bold hover:bg-[#172554] transition cursor-pointer"
+                    >
+                      Usta bilan chat boshlash
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-right">
+              <button 
+                type="button" 
+                onclick="document.getElementById('viewBidsModalContainer').innerHTML=''"
+                class="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold"
+              >
+                Yopish
+              </button>
+            </div>
+
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

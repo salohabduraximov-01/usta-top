@@ -63,19 +63,25 @@
         </div>
       </a>
 
-      <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+      <!-- Desktop Navigatsiya (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
         <a href="index.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold border-b-2 border-[#1E3A8A] dark:border-blue-400 pb-1">
           Bosh sahifa
         </a>
+        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>📢</span>
+          <span>E’lon berish</span>
+        </a>
         <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
-          Ustalar katalogi
+          Ustalar
         </a>
-        <a href="narxlar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
-          Xizmatlar narxi
+        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🧮</span>
+          <span>Kalkulyator</span>
         </a>
-        <a href="qanday-ishlaydi.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
-          Qanday ishlaydi?
+        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🗺️</span>
+          <span>Xarita</span>
         </a>
       </nav>
 
@@ -90,14 +96,20 @@
           <span class="theme-toggle-icon flex items-center justify-center"></span>
         </button>
 
-        <button 
-          type="button" 
-          onclick="openRegisterModal()"
+        <a 
+          href="kirish.html" 
+          class="text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#1E3A8A] dark:hover:text-blue-400 px-3 py-2 transition"
+        >
+          Kirish
+        </a>
+
+        <a 
+          href="royxat-usta.html"
           class="bg-[#F97316] hover:bg-[#EA580C] text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-orange-500/20 active:scale-95 transition flex items-center space-x-2 cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
           <span>Usta bo‘lish</span>
-        </button>
+        </a>
       </div>
 
       <!-- Mobil burger -->
@@ -123,28 +135,30 @@
 
     </div>
 
-    <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
+    <!-- Mobil menyu (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2 shadow-xl">
       <a href="index.html" class="block py-2 text-base font-bold text-[#1E3A8A] dark:text-blue-400">
         🏠 Bosh sahifa
+      </a>
+      <a href="elon-berish.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        📢 E’lon berish (Buyurtmalar)
       </a>
       <a href="ustalar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         🔧 Ustalar katalogi
       </a>
-      <a href="narxlar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        💰 Xizmatlar narxi
+      <a href="kalkulyator.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🧮 Narx kalkulyatori
       </a>
-      <a href="qanday-ishlaydi.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        ⚡ Qanday ishlaydi?
+      <a href="xarita.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🗺️ Toshkent xaritasi
       </a>
       <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-        <button 
-          type="button"
-          onclick="toggleMobileMenu(); openRegisterModal();"
-          class="w-full bg-[#F97316] text-white py-3 rounded-xl font-bold text-center shadow-md cursor-pointer"
+        <a 
+          href="royxat-usta.html"
+          class="block w-full bg-[#F97316] text-white py-3 rounded-xl font-bold text-center shadow-md cursor-pointer"
         >
           + Usta sifatida ro‘yxatdan o‘tish
-        </button>
+        </a>
       </div>
     </div>
   </header>
@@ -178,34 +192,137 @@
       <div class="mt-8 sm:mt-10 max-w-4xl mx-auto bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200/80 dark:border-slate-800">
         <form action="ustalar.html" method="GET" class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center">
           
+          <!-- Custom Select 1: Xizmat turi -->
           <div class="sm:col-span-4 text-left">
             <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1 px-3">Xizmat turi</label>
-            <select name="cat" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] cursor-pointer">
-              <option value="barchasi">Barcha xizmatlar</option>
-              <option value="santexnik">Santexnik</option>
-              <option value="elektrik">Elektrik</option>
-              <option value="konditsioner">Konditsioner ustasi</option>
-              <option value="maishiy">Maishiy texnika</option>
-              <option value="mebel">Mebel yig‘uvchi</option>
-              <option value="universal">Bir soatlik usta</option>
-            </select>
+            <div class="custom-select-wrapper relative" data-name="cat">
+              <input type="hidden" name="cat" value="barchasi">
+              <button 
+                type="button" 
+                class="custom-select-trigger w-full flex items-center justify-between px-4 py-3.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+              >
+                <div class="flex items-center space-x-2.5 truncate">
+                  <span class="custom-select-icon text-lg">🛠️</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha xizmatlar</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="barchasi" data-label="Barcha xizmatlar" data-icon="🛠️">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">🛠️</span>
+                    <span>Barcha xizmatlar</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">40+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="santexnik" data-label="Santexnik" data-icon="🚰">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">🚰</span>
+                    <span>Santexnik</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">10+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="elektrik" data-label="Elektrik" data-icon="⚡">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">⚡</span>
+                    <span>Elektrik</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">8+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="konditsioner" data-label="Konditsioner ustasi" data-icon="❄️">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">❄️</span>
+                    <span>Konditsioner ustasi</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">6+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="maishiy" data-label="Maishiy texnika" data-icon="🧺">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">🧺</span>
+                    <span>Maishiy texnika</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">6+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="mebel" data-label="Mebel yig‘uvchi" data-icon="🪑">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">🪑</span>
+                    <span>Mebel yig‘uvchi</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">5+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="universal" data-label="Bir soatlik usta" data-icon="🔨">
+                  <div class="flex items-center space-x-2.5">
+                    <span class="text-base">🔨</span>
+                    <span>Bir soatlik usta</span>
+                  </div>
+                  <span class="text-xs text-slate-400 font-normal">6+ usta</span>
+                </div>
+              </div>
+            </div>
           </div>
 
+          <!-- Custom Select 2: Toshkent tumani -->
           <div class="sm:col-span-4 text-left">
             <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1 px-3">Toshkent tumani (3+ usta)</label>
-            <select name="district" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-[#1E3A8A] cursor-pointer">
-              <option value="Barcha tumanlar">Barcha tumanlar</option>
-              <option value="Chilonzor">Chilonzor (4+ usta)</option>
-              <option value="Yunusobod">Yunusobod (4+ usta)</option>
-              <option value="Mirzo Ulug‘bek">Mirzo Ulug‘bek (4+ usta)</option>
-              <option value="Yakkasaroy">Yakkasaroy (4+ usta)</option>
-              <option value="Shayxontohur">Shayxontohur (4+ usta)</option>
-              <option value="Sergeli">Sergeli (4+ usta)</option>
-              <option value="Olmazor">Olmazor (4+ usta)</option>
-              <option value="Uchtepa">Uchtepa (4+ usta)</option>
-              <option value="Mirobod">Mirobod (4+ usta)</option>
-              <option value="Yashnobod">Yashnobod (4+ usta)</option>
-            </select>
+            <div class="custom-select-wrapper relative" data-name="district">
+              <input type="hidden" name="district" value="Barcha tumanlar">
+              <button 
+                type="button" 
+                class="custom-select-trigger w-full flex items-center justify-between px-4 py-3.5 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+              >
+                <div class="flex items-center space-x-2.5 truncate">
+                  <span class="custom-select-icon text-lg">📍</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha tumanlar</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="Barcha tumanlar" data-label="Barcha tumanlar" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Barcha tumanlar</span></div>
+                  <span class="text-xs text-slate-400 font-normal">10 ta tuman</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Chilonzor</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Yunusobod</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Mirzo Ulug‘bek</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Yakkasaroy</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Shayxontohur</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Sergeli</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Olmazor</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Uchtepa</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Mirobod</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
+                  <div class="flex items-center space-x-2"><span>📍</span><span>Yashnobod</span></div>
+                  <span class="text-xs text-slate-400 font-normal">4+ usta</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="sm:col-span-4 pt-1 sm:pt-4">
@@ -233,6 +350,55 @@
         <a href="ustalar.html" class="px-3 py-1.5 rounded-xl bg-orange-50 text-orange-600 dark:bg-orange-950/40 dark:text-orange-300 font-bold text-xs hover:underline">Barcha 10 ta tuman →</a>
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       2.5. STATISTIKA SANAGICHLARI (MIKRO-ANIMATSIYALAR)
+       ========================================== -->
+  <section class="py-10 bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/80 dark:border-slate-800 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center">
+        
+        <!-- 40+ Usta -->
+        <div class="reveal p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shadow-sm">
+          <div class="text-3xl sm:text-4xl font-extrabold text-[#1E3A8A] dark:text-blue-400">
+            <span data-counter data-target="40" data-suffix="+">0</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-1">Tekshirilgan usta</p>
+          <span class="text-[11px] text-slate-400">Toshkent bo‘ylab</span>
+        </div>
+
+        <!-- 1200+ Ish -->
+        <div class="reveal p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shadow-sm">
+          <div class="text-3xl sm:text-4xl font-extrabold text-[#F97316]">
+            <span data-counter data-target="1200" data-suffix="+">0</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-1">Bajarilgan ish</p>
+          <span class="text-[11px] text-slate-400">Muvaffaqiyatli buyurtma</span>
+        </div>
+
+        <!-- 4.8 Reyting -->
+        <div class="reveal p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shadow-sm">
+          <div class="text-3xl sm:text-4xl font-extrabold text-amber-500 flex items-center justify-center space-x-1">
+            <span data-counter data-target="4.8" data-decimals="1">0.0</span>
+            <span class="text-2xl sm:text-3xl">★</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-1">O‘rtacha reyting</p>
+          <span class="text-[11px] text-slate-400">5 yulduzli baholar</span>
+        </div>
+
+        <!-- 10 ta tuman -->
+        <div class="reveal p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 shadow-sm">
+          <div class="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400">
+            <span data-counter data-target="10" data-suffix=" ta">0</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-1">Toshkent tumani</p>
+          <span class="text-[11px] text-slate-400">Har birida 4+ usta</span>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -566,23 +732,27 @@
   </footer>
 
 
-  <!-- Mobil pastki qotirilgan menyu -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2.5 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+  <!-- Mobil pastki qotirilgan menyu (5 ta bo'lim) -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
     <a href="index.html" class="flex flex-col items-center text-[#1E3A8A] dark:text-blue-400 font-bold">
-      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span class="text-base mb-0.5">🏠</span>
       <span>Bosh sahifa</span>
     </a>
+    <a href="elon-berish.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">📢</span>
+      <span>E’lon</span>
+    </a>
     <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      <span class="text-base mb-0.5">🔧</span>
       <span>Ustalar</span>
     </a>
-    <a href="narxlar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      <span>Narxlar</span>
+    <a href="kalkulyator.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🧮</span>
+      <span>Kalkulyator</span>
     </a>
-    <a href="qanday-ishlaydi.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-      <span>Qoidalar</span>
+    <a href="xarita.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🗺️</span>
+      <span>Xarita</span>
     </a>
   </div>
 
@@ -594,5 +764,7 @@
 
   <script src="data.js"></script>
   <script src="common.js"></script>
+  <script src="animations.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

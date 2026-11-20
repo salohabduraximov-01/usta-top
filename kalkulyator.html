@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ta’mirlash narxi kalkulyatori | Usta-Top.uz</title>
+  <meta name="description" content="Toshkentda maishiy va ta'mirlash xizmatlari narxini onlayn hisoblang. Santexnika, elektr, konditsioner va mebel xizmatlari bo'yicha byudjetni aniqlang.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1E3A8A',
+              hover: '#172554',
+              light: '#EFF6FF',
+              dark: '#0F172A'
+            },
+            accent: {
+              DEFAULT: '#F97316',
+              hover: '#EA580C',
+              light: '#FFF7ED'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-300">
+
+  <!-- ==========================================
+       1. HEADER / NAVBAR (YANGI TARTIB BO'YICHA)
+       ========================================== -->
+  <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-md shadow-blue-900/20 group-hover:bg-[#172554] transition">
+          <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400 flex items-center">
+            Usta-Top<span class="text-[#F97316]">.uz</span>
+          </span>
+          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-1">
+            Toshkent ustalari
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigatsiya (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
+        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Bosh sahifa
+        </a>
+        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>📢</span>
+          <span>E’lon berish</span>
+        </a>
+        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Ustalar
+        </a>
+        <a href="kalkulyator.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold border-b-2 border-[#1E3A8A] dark:border-blue-400 pb-1 flex items-center space-x-1">
+          <span>🧮</span>
+          <span>Kalkulyator</span>
+        </a>
+        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🗺️</span>
+          <span>Xarita</span>
+        </a>
+      </nav>
+
+      <!-- O'ng tomon: auth.js dinamik boshqaradi -->
+      <div class="hidden md:flex items-center space-x-3.5">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm cursor-pointer"
+          title="Tungi / Kunduzgi rejim"
+        >
+          <span class="theme-toggle-icon flex items-center justify-center"></span>
+        </button>
+      </div>
+
+      <!-- Mobil burger -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm"
+        >
+          <span class="theme-toggle-icon"></span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="toggleMobileMenu()" 
+          class="text-slate-700 dark:text-slate-200 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobil menyu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
+      <a href="index.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🏠 Bosh sahifa
+      </a>
+      <a href="elon-berish.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        📢 E’lon berish (Buyurtma)
+      </a>
+      <a href="ustalar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🔧 Ustalar katalogi
+      </a>
+      <a href="kalkulyator.html" class="block py-2 text-base font-bold text-[#1E3A8A] dark:text-blue-400">
+        🧮 Narx kalkulyatori
+      </a>
+      <a href="xarita.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🗺️ Toshkent xaritasi
+      </a>
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800"></div>
+    </div>
+  </header>
+
+
+  <!-- ==========================================
+       2. ASOSIY KALKULYATOR KONTENTI
+       ========================================== -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Sarlavha -->
+    <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+      <span class="inline-flex items-center space-x-1.5 bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 text-xs font-bold px-3 py-1 rounded-full mb-3">
+        <span>🧮</span>
+        <span>Haqiqiy Toshkent narxlari asosida</span>
+      </span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Ta’mirlash xarajatlarini onlayn hisoblang
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2">
+        Kerakli xizmatlarni tanlang va miqdorini belgilang. Kalkulyator darhol byudjetingizni hisoblab, sizga mos ustalarni taklif qiladi!
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- CHAP TOMON: XIZMATLAR RO'YXATI (8 USTUN) -->
+      <div class="lg:col-span-8 space-y-6">
+        
+        <!-- Kategoriya tablari (filtrlash) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="calcCategoryFilter">
+          <button type="button" onclick="filterCalcCategory('all')" class="calc-tab-btn active px-4 py-2 rounded-2xl text-xs font-bold bg-[#1E3A8A] text-white shadow-sm transition whitespace-nowrap cursor-pointer">
+            Barchasi
+          </button>
+          <button type="button" onclick="filterCalcCategory('santexnik')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            💧 Santexnika
+          </button>
+          <button type="button" onclick="filterCalcCategory('elektrik')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            ⚡ Elektr
+          </button>
+          <button type="button" onclick="filterCalcCategory('konditsioner')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            ❄️ Konditsioner
+          </button>
+          <button type="button" onclick="filterCalcCategory('maishiy')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            🧺 Maishiy texnika
+          </button>
+          <button type="button" onclick="filterCalcCategory('mebel')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            🛋️ Mebel
+          </button>
+          <button type="button" onclick="filterCalcCategory('universal')" class="calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer">
+            🔨 1 soatlik usta
+          </button>
+        </div>
+
+        <!-- Xizmatlar guruhlari konteyneri -->
+        <div id="calculatorServicesContainer" class="space-y-6">
+          <!-- JS dinamik yaratadi -->
+        </div>
+
+      </div>
+
+
+      <!-- O'NG TOMON: NATIJA VA USTALARNI TOPISH BLOKI (4 USTUN - STICKY) -->
+      <div class="lg:col-span-4 sticky top-24">
+        
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-7 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-5">
+          
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 dark:text-white">Taxminiy byudjet</h2>
+              <span class="text-xs text-slate-400">Tanlangan xizmatlar bo‘yicha</span>
+            </div>
+            <button 
+              type="button" 
+              onclick="resetCalculator()" 
+              class="text-xs text-rose-500 hover:underline font-bold cursor-pointer"
+            >
+              Tozalash
+            </button>
+          </div>
+
+          <!-- Tuman tanlash (Custom ustunli menyu) -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+              📍 Toshkent tumaningiz:
+            </label>
+            <div class="custom-select-wrapper relative" data-name="calcDistrict">
+              <input type="hidden" id="calcDistrictSelect" value="Chilonzor" onchange="recalculateTotal()">
+              <button 
+                type="button" 
+                class="custom-select-trigger w-full flex items-center justify-between px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:outline-none focus:border-[#1E3A8A] transition cursor-pointer"
+              >
+                <div class="flex items-center space-x-2.5 truncate">
+                  <span class="custom-select-icon text-lg">📍</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Chilonzor</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-64 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-bold" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
+                  <span>📍</span><span>Chilonzor</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
+                  <span>📍</span><span>Yunusobod</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
+                  <span>📍</span><span>Mirzo Ulug‘bek</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
+                  <span>📍</span><span>Yakkasaroy</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
+                  <span>📍</span><span>Shayxontohur</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
+                  <span>📍</span><span>Sergeli</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
+                  <span>📍</span><span>Olmazor</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
+                  <span>📍</span><span>Uchtepa</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
+                  <span>📍</span><span>Mirobod</span>
+                </div>
+                <div class="custom-select-option px-3 py-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/40 transition text-sm" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
+                  <span>📍</span><span>Yashnobod</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tanlangan xizmatlar ro'yxati -->
+          <div id="selectedServicesList" class="max-h-48 overflow-y-auto space-y-2 pr-1 divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+            <div class="py-4 text-center text-slate-400">
+              Hali xizmat tanlanmadi. Ro‘yxatdan kerakli ishlarni qo‘shing.
+            </div>
+          </div>
+
+          <!-- Hisoblangan summa bloki -->
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Taxminiy oraliq narx:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-[#1E3A8A] dark:text-blue-400 mt-1" id="totalPriceRangeDisplay">
+              0 so‘m
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">
+              * Narx ish murakkabligi va ehtiyot qismlarga qarab usta bilan kelishiladi.
+            </p>
+          </div>
+
+          <!-- DARHOL USTALARNI KO'RISH TUGMASI -->
+          <button 
+            type="button" 
+            id="findMatchingMastersBtn"
+            onclick="goToMastersWithCalculatedParams()"
+            class="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold py-3.5 px-4 rounded-2xl shadow-lg shadow-orange-500/25 transition active:scale-95 text-xs sm:text-sm flex items-center justify-center space-x-2 cursor-pointer"
+          >
+            <span>Shu byudjetga to‘g‘ri keladigan ustalarni ko‘rish</span>
+            <span>→</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ==========================================
+       3. FOOTER
+       ========================================== -->
+  <footer class="mt-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-8 pb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+      © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
+    </div>
+  </footer>
+
+  <!-- Mobil pastki qotirilgan menyu -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2.5 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+    <a href="index.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Bosh sahifa</span>
+    </a>
+    <a href="elon-berish.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-lg">📢</span>
+      <span>E’lon</span>
+    </a>
+    <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      <span>Ustalar</span>
+    </a>
+    <a href="kalkulyator.html" class="flex flex-col items-center text-[#1E3A8A] dark:text-blue-400 font-bold">
+      <span class="text-lg">🧮</span>
+      <span>Kalkulyator</span>
+    </a>
+    <a href="xarita.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-lg">🗺️</span>
+      <span>Xarita</span>
+    </a>
+  </div>
+
+  <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
+
+  <!-- Skriptlar -->
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="animations.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Tanlangan xizmatlar holati { itemId: count }
+    const selectedCounts = {};
+    let activeCategoryFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCalculatorServices();
+      recalculateTotal();
+
+      const distInput = document.getElementById('calcDistrictSelect');
+      if (distInput) {
+        distInput.addEventListener('change', recalculateTotal);
+      }
+    });
+
+    function filterCalcCategory(catId) {
+      activeCategoryFilter = catId;
+      document.querySelectorAll('#calcCategoryFilter .calc-tab-btn').forEach(btn => {
+        btn.className = "calc-tab-btn px-4 py-2 rounded-2xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition whitespace-nowrap cursor-pointer";
+      });
+      event.target.className = "calc-tab-btn active px-4 py-2 rounded-2xl text-xs font-bold bg-[#1E3A8A] text-white shadow-sm transition whitespace-nowrap cursor-pointer";
+      renderCalculatorServices();
+    }
+
+    function renderCalculatorServices() {
+      const container = document.getElementById('calculatorServicesContainer');
+      if (!container) return;
+
+      const services = typeof CALCULATOR_SERVICES !== 'undefined' ? CALCULATOR_SERVICES : [];
+      const filtered = activeCategoryFilter === 'all' 
+        ? services 
+        : services.filter(s => s.categoryId === activeCategoryFilter);
+
+      container.innerHTML = filtered.map(group => `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center font-bold">
+              ${getSvgIcon(group.icon, 'w-5 h-5')}
+            </div>
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900 dark:text-white">${group.categoryName}</h3>
+              <span class="text-xs text-slate-400">Kerakli ishlarni belgilang</span>
+            </div>
+          </div>
+
+          <div class="divide-y divide-slate-100 dark:divide-slate-800">
+            ${group.items.map(item => {
+              const count = selectedCounts[item.id] || 0;
+              return `
+                <div class="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+                  <div class="flex-1 pr-2">
+                    <span class="font-bold text-slate-800 dark:text-slate-200 block">${item.name}</span>
+                    <span class="text-[11px] text-slate-400 font-medium">
+                      O‘rtacha: ${item.minPrice.toLocaleString()} - ${item.maxPrice.toLocaleString()} so‘m / ${item.unit}
+                    </span>
+                  </div>
+
+                  <div class="flex items-center space-x-2 self-end sm:self-auto">
+                    <button 
+                      type="button" 
+                      onclick="updateItemCount('${item.id}', -1)" 
+                      class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-extrabold flex items-center justify-center transition cursor-pointer select-none active:scale-95"
+                    >
+                      -
+                    </button>
+                    
+                    <span class="w-8 text-center font-extrabold text-sm ${count > 0 ? 'text-[#1E3A8A] dark:text-blue-400' : 'text-slate-400'}">
+                      ${count}
+                    </span>
+
+                    <button 
+                      type="button" 
+                      onclick="updateItemCount('${item.id}', 1)" 
+                      class="w-8 h-8 rounded-xl bg-blue-50 hover:bg-blue-100 dark:bg-blue-950 dark:hover:bg-blue-900 text-[#1E3A8A] dark:text-blue-300 font-extrabold flex items-center justify-center transition cursor-pointer select-none active:scale-95"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateItemCount(itemId, delta) {
+      const current = selectedCounts[itemId] || 0;
+      const next = Math.max(0, current + delta);
+      if (next === 0) {
+        delete selectedCounts[itemId];
+      } else {
+        selectedCounts[itemId] = next;
+      }
+      renderCalculatorServices();
+      recalculateTotal();
+    }
+
+    function recalculateTotal() {
+      let totalMin = 0;
+      let totalMax = 0;
+      let totalCount = 0;
+      const selectedListEl = document.getElementById('selectedServicesList');
+      const selectedItemsData = [];
+
+      const services = typeof CALCULATOR_SERVICES !== 'undefined' ? CALCULATOR_SERVICES : [];
+      
+      services.forEach(group => {
+        group.items.forEach(item => {
+          const count = selectedCounts[item.id] || 0;
+          if (count > 0) {
+            totalMin += item.minPrice * count;
+            totalMax += item.maxPrice * count;
+            totalCount += count;
+            selectedItemsData.push({ ...item, count, categoryId: group.categoryId });
+          }
+        });
+      });
+
+      // Narxni chiqarish
+      const display = document.getElementById('totalPriceRangeDisplay');
+      if (totalCount === 0) {
+        display.textContent = "0 so‘m";
+        if (selectedListEl) {
+          selectedListEl.innerHTML = `
+            <div class="py-4 text-center text-slate-400">
+              Hali xizmat tanlanmadi. Ro‘yxatdan kerakli ishlarni qo‘shing.
+            </div>
+          `;
+        }
+      } else {
+        display.textContent = `${totalMin.toLocaleString()} – ${totalMax.toLocaleString()} so‘m`;
+        if (selectedListEl) {
+          selectedListEl.innerHTML = selectedItemsData.map(item => `
+            <div class="py-2 flex items-center justify-between text-xs">
+              <div class="truncate pr-2">
+                <span class="font-bold text-slate-800 dark:text-slate-200">${item.name}</span>
+                <span class="text-slate-400 block">${item.count} ${item.unit}</span>
+              </div>
+              <span class="font-extrabold text-[#1E3A8A] dark:text-blue-400 whitespace-nowrap">
+                ${(item.minPrice * item.count).toLocaleString()} so‘m
+              </span>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Tugma matnini yangilash
+      const district = document.getElementById('calcDistrictSelect').value || 'Chilonzor';
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : [];
+      
+      let primaryCat = 'barchasi';
+      if (selectedItemsData.length > 0) {
+        primaryCat = selectedItemsData[0].categoryId;
+      }
+
+      const matchCount = allMasters.filter(m => 
+        (m.district === district || (m.districtsServed && m.districtsServed.includes(district))) &&
+        (primaryCat === 'barchasi' || m.categoryId === primaryCat)
+      ).length || 4;
+
+      const btn = document.getElementById('findMatchingMastersBtn');
+      if (btn) {
+        btn.innerHTML = `
+          <span>${district}dagi mos ${matchCount}+ ustalarni ko‘rish</span>
+          <span>→</span>
+        `;
+      }
+    }
+
+    function resetCalculator() {
+      for (const k in selectedCounts) delete selectedCounts[k];
+      renderCalculatorServices();
+      recalculateTotal();
+      showToast("Kalkulyator tozalandi", "info");
+    }
+
+    function goToMastersWithCalculatedParams() {
+      const district = document.getElementById('calcDistrictSelect').value || 'Chilonzor';
+      const services = typeof CALCULATOR_SERVICES !== 'undefined' ? CALCULATOR_SERVICES : [];
+      let primaryCat = 'barchasi';
+
+      for (const group of services) {
+        for (const item of group.items) {
+          if (selectedCounts[item.id] > 0) {
+            primaryCat = group.categoryId;
+            break;
+          }
+        }
+        if (primaryCat !== 'barchasi') break;
+      }
+
+      window.location.href = `ustalar.html?district=${encodeURIComponent(district)}${primaryCat !== 'barchasi' ? `&cat=${primaryCat}` : ''}`;
+    }
+  </script>
+</body>
+</html>

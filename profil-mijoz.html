@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mijoz profili | Usta-Top.uz</title>
+  <meta name="description" content="Usta-Top.uz mijoz kabineti. Sevimli ustalar, sharhlar tarixi va shaxsiy ma'lumotlar.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1E3A8A',
+              hover: '#172554',
+              light: '#EFF6FF',
+              dark: '#0F172A'
+            },
+            accent: {
+              DEFAULT: '#F97316',
+              hover: '#EA580C',
+              light: '#FFF7ED'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-300">
+
+  <!-- ==========================================
+       1. HEADER / NAVBAR
+       ========================================== -->
+  <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-md shadow-blue-900/20 group-hover:bg-[#172554] transition">
+          <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400 flex items-center">
+            Usta-Top<span class="text-[#F97316]">.uz</span>
+          </span>
+          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-1">
+            Toshkent ustalari
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigatsiya (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
+        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Bosh sahifa
+        </a>
+        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>📢</span>
+          <span>E’lon berish</span>
+        </a>
+        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+          Ustalar
+        </a>
+        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🧮</span>
+          <span>Kalkulyator</span>
+        </a>
+        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+          <span>🗺️</span>
+          <span>Xarita</span>
+        </a>
+      </nav>
+
+      <!-- O'ng tomon: auth.js avtomatik boshqaradi -->
+      <div class="hidden md:flex items-center space-x-3.5">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm cursor-pointer"
+          title="Tungi / Kunduzgi rejim"
+        >
+          <span class="theme-toggle-icon flex items-center justify-center"></span>
+        </button>
+      </div>
+
+      <!-- Mobil burger -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <button 
+          type="button" 
+          onclick="toggleTheme()" 
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm"
+        >
+          <span class="theme-toggle-icon"></span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="toggleMobileMenu()" 
+          class="text-slate-700 dark:text-slate-200 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobil menyu (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2 shadow-xl">
+      <a href="index.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🏠 Bosh sahifa
+      </a>
+      <a href="elon-berish.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        📢 E’lon berish (Buyurtmalar)
+      </a>
+      <a href="ustalar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🔧 Ustalar katalogi
+      </a>
+      <a href="kalkulyator.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🧮 Narx kalkulyatori
+      </a>
+      <a href="xarita.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+        🗺️ Toshkent xaritasi
+      </a>
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800"></div>
+    </div>
+  </header>
+
+
+  <!-- ==========================================
+       2. ASOSIY PROFIL SAHIFASI
+       ========================================== -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Yuqori Profil Header Kartochkasi -->
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm mb-8 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+      
+      <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-5 text-center sm:text-left">
+        <!-- Avatar bosh harflar -->
+        <div id="profileAvatarContainer" class="flex-shrink-0">
+          <!-- JS dinamik to'ldiradi -->
+        </div>
+
+        <div>
+          <div class="flex items-center justify-center sm:justify-start space-x-2">
+            <h1 id="profileNameDisplay" class="text-2xl font-extrabold text-slate-900 dark:text-white">Yuklanmoqda...</h1>
+            <span class="bg-blue-100 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 text-xs font-bold px-2.5 py-0.5 rounded-full">
+              Mijoz
+            </span>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2 text-xs text-slate-500 dark:text-slate-400">
+            <span class="flex items-center space-x-1">
+              <span>📞</span>
+              <strong id="profilePhoneDisplay" class="text-slate-700 dark:text-slate-300">+998 ...</strong>
+            </span>
+            <span>•</span>
+            <span class="flex items-center space-x-1">
+              <span>📍</span>
+              <span id="profileDistrictDisplay">Toshkent</span>
+            </span>
+            <span>•</span>
+            <span class="flex items-center space-x-1">
+              <span>📅</span>
+              <span id="profileDateDisplay">Ro‘yxatdan o‘tgan sana</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button 
+          onclick="logoutUser()" 
+          class="bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/50 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-300 border border-rose-200 dark:border-rose-800/80 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 transition cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span>Chiqish</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- TAB TUGMALARI -->
+    <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-2 mb-6 overflow-x-auto scrollbar-none">
+      <button 
+        type="button" 
+        onclick="switchProfileTab('info')" 
+        id="tabBtn-info"
+        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow"
+      >
+        👤 Ma’lumotlarim
+      </button>
+
+      <button 
+        type="button" 
+        onclick="switchProfileTab('favorites')" 
+        id="tabBtn-favorites"
+        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+      >
+        ❤️ Sevimli ustalar (<span id="favoritesCountBadge">0</span>)
+      </button>
+
+      <button 
+        type="button" 
+        onclick="switchProfileTab('reviews')" 
+        id="tabBtn-reviews"
+        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+      >
+        ⭐ Mening sharhlarim (<span id="reviewsCountBadge">0</span>)
+      </button>
+
+      <button 
+        type="button" 
+        onclick="switchProfileTab('messages')" 
+        id="tabBtn-messages"
+        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+      >
+        💬 Xabarlarim (<span id="chatsCountBadge">0</span>)
+      </button>
+
+      <button 
+        type="button" 
+        onclick="switchProfileTab('orders')" 
+        id="tabBtn-orders"
+        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+      >
+        📢 Mening e’lonlarim (<span id="myOrdersCountBadge">0</span>)
+      </button>
+    </div>
+
+
+    <!-- ==================== TAB 1: MA'LUMOTLARIM (TAHRIRLASH) ==================== -->
+    <div id="tabContent-info" class="space-y-6">
+      
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Shaxsiy ma’lumotlarni tahrirlash</h3>
+        
+        <form onsubmit="handleUpdateProfile(event)" class="space-y-4 max-w-lg">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Ism va familiya
+            </label>
+            <input 
+              type="text" 
+              id="editNameInput" 
+              required 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Toshkentdagi tumaningiz
+            </label>
+            <div class="custom-select-wrapper relative" data-name="editDistrict">
+              <input type="hidden" id="editDistrictSelect" value="Chilonzor">
+              <button type="button" class="custom-select-trigger w-full flex items-center justify-between px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-semibold shadow-sm hover:border-slate-300 dark:hover:border-slate-600 transition cursor-pointer">
+                <div class="flex items-center space-x-2 truncate">
+                  <span class="custom-select-icon text-sm">📍</span>
+                  <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Chilonzor</span>
+                </div>
+                <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Chilonzor</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Yunusobod</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Mirzo Ulug‘bek</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Yakkasaroy</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Shayxontohur</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Sergeli</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Olmazor</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Uchtepa</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Mirobod</span></span>
+                </div>
+                <div class="custom-select-option px-3 py-2 rounded-xl text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
+                  <span class="flex items-center gap-2"><span>📍</span><span>Yashnobod</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Telefon raqam (O‘zgartirib bo‘lmaydi)
+            </label>
+            <input 
+              type="text" 
+              id="editPhoneInput" 
+              disabled 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 text-slate-500 text-sm cursor-not-allowed"
+            >
+          </div>
+
+          <button 
+            type="submit" 
+            class="bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-md transition cursor-pointer"
+          >
+            Saqlash
+          </button>
+        </form>
+      </div>
+
+      <!-- Parolni o'zgartirish bloki -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Xavfsizlik: Parolni yangilash</h3>
+        
+        <form onsubmit="handleUpdatePassword(event)" class="space-y-4 max-w-lg">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Eski parol
+            </label>
+            <input 
+              type="password" 
+              id="oldPasswordInput" 
+              required 
+              placeholder="Hozirgi parolingiz" 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+              Yangi parol (kamida 8 belgi, harf va raqam)
+            </label>
+            <input 
+              type="password" 
+              id="newPasswordInput" 
+              required 
+              placeholder="Yangi parol" 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
+          </div>
+
+          <button 
+            type="submit" 
+            class="bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition cursor-pointer"
+          >
+            Parolni yangilash
+          </button>
+        </form>
+      </div>
+
+      <!-- Akkauntni o'chirish -->
+      <div class="bg-rose-50/50 dark:bg-rose-950/20 rounded-3xl p-6 border border-rose-200 dark:border-rose-900/60 flex items-center justify-between">
+        <div>
+          <h4 class="font-bold text-rose-700 dark:text-rose-400 text-sm">Akkauntni o‘chirish</h4>
+          <p class="text-xs text-rose-600/80 dark:text-rose-400/70 mt-0.5">Barcha shaxsiy ma’lumotlaringiz butunlay o‘chiriladi.</p>
+        </div>
+        <button 
+          type="button" 
+          onclick="confirmDeleteAccount()" 
+          class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-xl text-xs transition cursor-pointer"
+        >
+          Akkauntni o‘chirish
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- ==================== TAB 2: SEVIMLI USTALAR ==================== -->
+    <div id="tabContent-favorites" class="hidden">
+      <div id="favoritesListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS to'ldiradi -->
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB 3: MENING SHARHLARIM ==================== -->
+    <div id="tabContent-reviews" class="hidden">
+      <div id="myReviewsList" class="space-y-4">
+        <!-- JS to'ldiradi -->
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB 4: XABARLARIM (CHATLAR TARIXI) ==================== -->
+    <div id="tabContent-messages" class="hidden">
+      <div id="myChatsList" class="space-y-4">
+        <!-- JS to'ldiradi -->
+      </div>
+    </div>
+
+
+    <!-- ==================== TAB 5: MENING E'LONLARIM ==================== -->
+    <div id="tabContent-orders" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Joylashtirgan e’lonlarim</h3>
+          <p class="text-xs text-slate-400">Ustalar takliflarini tekshiring va tanlang</p>
+        </div>
+        <a href="elon-berish.html" class="px-4 py-2.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-bold shadow transition cursor-pointer">
+          + Yangi e’lon berish
+        </a>
+      </div>
+
+      <div id="myOrdersList" class="space-y-4">
+        <!-- JS to'ldiradi -->
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ==========================================
+       3. FOOTER
+       ========================================== -->
+  <footer class="mt-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-8 pb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+      © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
+    </div>
+  </footer>
+
+  <div id="chatModalContainer"></div>
+  <div id="detailModalContainer"></div>
+  <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
+
+  <!-- Skriptlar -->
+  <script src="data.js"></script>
+  <script src="common.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    let activeClientUser = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeClientUser = requireAuth('customer');
+      if (!activeClientUser) return;
+
+      renderProfileHeader();
+      renderCustomerFavoritesTab();
+      renderCustomerReviewsTab();
+      renderCustomerMessagesTab();
+      renderCustomerOrdersTab();
+    });
+
+    function renderProfileHeader() {
+      const u = activeClientUser;
+      document.getElementById('profileNameDisplay').textContent = u.name;
+      document.getElementById('profilePhoneDisplay').textContent = u.phone;
+      document.getElementById('profileDistrictDisplay').textContent = u.district || 'Toshkent';
+      document.getElementById('profileDateDisplay').textContent = u.createdAt || '2026-yil';
+
+      document.getElementById('profileAvatarContainer').innerHTML = renderAvatar(u, 'w-20 h-20 text-2xl');
+
+      // Edit form
+      document.getElementById('editNameInput').value = u.name;
+      document.getElementById('editPhoneInput').value = u.phone;
+      if (typeof setCustomSelectValue === 'function') {
+        setCustomSelectValue('editDistrictSelect', u.district || 'Chilonzor');
+      } else {
+        document.getElementById('editDistrictSelect').value = u.district || 'Chilonzor';
+      }
+    }
+
+    function switchProfileTab(tabName) {
+      const tabs = ['info', 'favorites', 'reviews', 'messages', 'orders'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn-${t}`);
+        const content = document.getElementById(`tabContent-${t}`);
+        if (!btn || !content) return;
+
+        if (t === tabName) {
+          btn.className = "tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow";
+          content.classList.remove('hidden');
+        } else {
+          btn.className = "tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer";
+          content.classList.add('hidden');
+        }
+      });
+    }
+
+    // TAB 5: Mijozning o'z e'lonlarini render qilish
+    function renderCustomerOrdersTab() {
+      const container = document.getElementById('myOrdersList');
+      const badge = document.getElementById('myOrdersCountBadge');
+      if (!container) return;
+
+      const allOrders = typeof getOrders === 'function' ? getOrders() : [];
+      // Foydalanuvchining telefon yoki ismiga mos keladigan yoki namuna e'lonlar
+      const myOrders = allOrders.filter(o => 
+        (activeClientUser.phone && o.customerPhone === activeClientUser.phone) ||
+        (activeClientUser.name && o.customerName === activeClientUser.name)
+      );
+
+      if (badge) badge.textContent = myOrders.length;
+
+      if (myOrders.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
+            <span class="text-4xl block mb-2">📢</span>
+            <h4 class="font-bold text-slate-800 dark:text-white">Sizda hali faol e’lon yo‘q</h4>
+            <p class="text-xs text-slate-400 mt-1 mb-4">Usta kerak bo‘lsa, buyurtma qoldiring — ustalar narx taklif qilishadi!</p>
+            <a href="elon-berish.html" class="inline-block bg-[#F97316] text-white font-bold py-2.5 px-5 rounded-xl text-xs shadow">
+              E’lon joylashtirish →
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = myOrders.map(o => {
+        const bidsCount = o.bids ? o.bids.length : 0;
+        return `
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-3 py-1 rounded-xl">
+                ${escapeHtml(o.categoryName || 'Xizmat')}
+              </span>
+              <span class="text-xs text-slate-400">${escapeHtml(o.createdAt)}</span>
+            </div>
+
+            <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${escapeHtml(o.title)}</h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(o.description)}</p>
+
+            <div class="flex flex-wrap items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">💰 ${escapeHtml(o.budget)}</span>
+              <span class="text-slate-500">📍 ${escapeHtml(o.district)}</span>
+              <span class="font-bold ${bidsCount > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'}">
+                💬 ${bidsCount} ta usta taklif berdi
+              </span>
+            </div>
+
+            <div class="flex justify-end pt-1">
+              <a href="elon-berish.html" class="px-4 py-2 bg-blue-50 dark:bg-blue-950 text-[#1E3A8A] dark:text-blue-300 font-bold text-xs rounded-xl hover:bg-blue-100 transition">
+                E’lonlar birjasida ko‘rish →
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // TAB 1: Ma'lumotlarni saqlash
+    function handleUpdateProfile(e) {
+      e.preventDefault();
+      const newName = document.getElementById('editNameInput').value.trim();
+      const newDistrict = document.getElementById('editDistrictSelect').value;
+
+      if (newName.length < 3) {
+        showToast("Ism kamida 3 ta harf bo‘lishi kerak", "warning");
+        return;
+      }
+
+      activeClientUser.name = newName;
+      activeClientUser.district = newDistrict;
+      saveUser(activeClientUser);
+      setCurrentSession(activeClientUser);
+      renderProfileHeader();
+      showToast("✓ Shaxsiy ma’lumotlaringiz saqlandi", "success");
+    }
+
+    // TAB 1: Parolni yangilash
+    async function handleUpdatePassword(e) {
+      e.preventDefault();
+      const oldPass = document.getElementById('oldPasswordInput').value;
+      const newPass = document.getElementById('newPasswordInput').value;
+
+      const isValid = await verifyPassword(oldPass, activeClientUser.passwordHash, activeClientUser.passwordSalt);
+      if (!isValid) {
+        showToast("Hozirgi parolingiz noto‘g‘ri kiritildi!", "error");
+        return;
+      }
+
+      const val = validatePassword(newPass);
+      if (!val.valid) {
+        showToast(val.message, "warning");
+        return;
+      }
+
+      const { hash, salt } = await hashPasswordWithSalt(newPass);
+      activeClientUser.passwordHash = hash;
+      activeClientUser.passwordSalt = salt;
+      saveUser(activeClientUser);
+
+      document.getElementById('oldPasswordInput').value = '';
+      document.getElementById('newPasswordInput').value = '';
+      showToast("✓ Parolingiz muvaffaqiyatli yangilandi!", "success");
+    }
+
+    // TAB 1: Akkauntni o'chirish
+    function confirmDeleteAccount() {
+      if (confirm("Haqiqatan ham akkauntingizni o‘chirmoqchimisiz? Ushbu amalni qaytarib bo‘lmaydi!")) {
+        const users = getAllUsers().filter(u => u.id !== activeClientUser.id);
+        safeStorage.setItem('app_users', users);
+        safeStorage.removeItem('current_session');
+        showToast("Akkaunt o‘chirildi", "info");
+        setTimeout(() => window.location.href = 'index.html', 500);
+      }
+    }
+
+    // TAB 2: Sevimli ustalar
+    function renderCustomerFavoritesTab() {
+      const container = document.getElementById('favoritesListGrid');
+      const badge = document.getElementById('favoritesCountBadge');
+      if (!container) return;
+
+      const favIds = getFavoritesList();
+      if (badge) badge.textContent = favIds.length;
+
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : MASTERS_DATA;
+      const favMasters = allMasters.filter(m => favIds.includes(m.id));
+
+      if (favMasters.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
+            <span class="text-4xl block mb-2">🤍</span>
+            <h4 class="font-bold text-slate-800 dark:text-white">Sevimli ustalar ro‘yxati bo‘sh</h4>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Usta kartochkalaridagi yurakcha tugmasini bosib shu yerga saqlashingiz mumkin.</p>
+            <a href="ustalar.html" class="inline-block bg-[#1E3A8A] text-white font-bold py-2 px-5 rounded-xl text-xs">
+              Ustalarni ko‘rish
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = favMasters.map(m => `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-3">
+              ${renderAvatar(m, 'w-14 h-14 text-base')}
+              <div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(m.name)}</h4>
+                <p class="text-xs text-slate-500 font-medium">${escapeHtml(m.profession)}</p>
+                <span class="text-[11px] text-slate-400">📍 ${escapeHtml(m.district)}</span>
+              </div>
+            </div>
+            <button 
+              onclick="toggleFavoriteMaster(${m.id}, event)" 
+              class="text-rose-500 hover:scale-110 transition p-1.5 cursor-pointer" 
+              title="Sevimlilardan o‘chirish"
+            >
+              ${getSvgIcon('heart', 'w-5 h-5 text-rose-500 fill-current')}
+            </button>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+            <button 
+              onclick="openChatModal(${m.id})" 
+              class="flex-1 bg-[#1E3A8A] text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center space-x-1 cursor-pointer"
+            >
+              ${getSvgIcon('chat', 'w-3.5 h-3.5')}
+              <span>Chat</span>
+            </button>
+            <button 
+              onclick="openDetailModal(${m.id})" 
+              class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold py-2 rounded-xl text-xs cursor-pointer"
+            >
+              Batafsil
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // TAB 3: Mening sharhlarim
+    function renderCustomerReviewsTab() {
+      const container = document.getElementById('myReviewsList');
+      const badge = document.getElementById('reviewsCountBadge');
+      if (!container) return;
+
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : MASTERS_DATA;
+      const myReviews = [];
+
+      allMasters.forEach(master => {
+        if (master.reviews && master.reviews.length > 0) {
+          master.reviews.forEach(r => {
+            if (r.author && r.author.trim().toLowerCase() === activeClientUser.name.trim().toLowerCase()) {
+              myReviews.push({ ...r, masterName: master.name, masterProf: master.profession, masterId: master.id });
+            }
+          });
+        }
+      });
+
+      if (badge) badge.textContent = myReviews.length;
+
+      if (myReviews.length === 0) {
+        container.innerHTML = `
+          <div class="py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
+            <span class="text-4xl block mb-2">⭐</span>
+            <h4 class="font-bold text-slate-800 dark:text-white">Siz hali sharh qoldirmagansiz</h4>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Usta bilan ishlaganingizdan so‘ng o‘z fikringiz va 5 yulduzli bahoingizni yozib qoldiring.</p>
+            <a href="ustalar.html" class="inline-block bg-[#1E3A8A] text-white font-bold py-2 px-5 rounded-xl text-xs">
+              Ustalarga baho berish
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = myReviews.map(r => `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="font-bold text-sm text-[#1E3A8A] dark:text-blue-400">${escapeHtml(r.masterName)}</span>
+              <span class="text-xs text-slate-400">(${escapeHtml(r.masterProf)})</span>
+            </div>
+            <div class="flex items-center text-amber-500 text-xs font-bold">
+              ${getSvgIcon('star', 'w-4 h-4 text-amber-400 mr-1')}
+              <span>${r.rating} yulduz</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic">"${escapeHtml(r.text)}"</p>
+          <span class="text-[10px] text-slate-400 block mt-2">${escapeHtml(r.date || '')}</span>
+        </div>
+      `).join('');
+    }
+
+    // TAB 4: Xabarlarim
+    function renderCustomerMessagesTab() {
+      const container = document.getElementById('myChatsList');
+      const badge = document.getElementById('chatsCountBadge');
+      if (!container) return;
+
+      const allChats = safeStorage.getJSON('user_chats', {});
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : MASTERS_DATA;
+      
+      const chatEntries = [];
+      Object.keys(allChats).forEach(mId => {
+        const msgs = allChats[mId];
+        if (msgs && msgs.length > 0) {
+          const master = allMasters.find(m => m.id === Number(mId));
+          if (master) {
+            const lastMsg = msgs[msgs.length - 1];
+            chatEntries.push({ master, lastMsg, count: msgs.length });
+          }
+        }
+      });
+
+      if (badge) badge.textContent = chatEntries.length;
+
+      if (chatEntries.length === 0) {
+        container.innerHTML = `
+          <div class="py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
+            <span class="text-4xl block mb-2">💬</span>
+            <h4 class="font-bold text-slate-800 dark:text-white">Suhbatlar tarixi mavjud emas</h4>
+            <p class="text-xs text-slate-500 mt-1 mb-4">Usta kartochkalaridagi "Chat" tugmasi orqali bevosita yozishingiz mumkin.</p>
+            <a href="ustalar.html" class="inline-block bg-[#1E3A8A] text-white font-bold py-2 px-5 rounded-xl text-xs">
+              Usta bilan bog‘lanish
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = chatEntries.map(entry => `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center justify-between gap-4">
+          <div class="flex items-center space-x-3.5">
+            ${renderAvatar(entry.master, 'w-12 h-12 text-sm')}
+            <div>
+              <h4 class="font-bold text-sm text-slate-900 dark:text-white">${escapeHtml(entry.master.name)}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${escapeHtml(entry.master.profession)}</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-1 mt-1">
+                <strong class="text-[#1E3A8A] dark:text-blue-400">${entry.lastMsg.sender === 'user' ? 'Siz: ' : 'Usta: '}</strong>${escapeHtml(entry.lastMsg.text)}
+              </p>
+            </div>
+          </div>
+
+          <button 
+            onclick="openChatModal(${entry.master.id})" 
+            class="bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl text-xs shadow transition cursor-pointer flex-shrink-0"
+          >
+            Chatni ochish
+          </button>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,159 @@
-// Usta-Top.uz - Umumiy yordamchi, Dark Mode, Sayt ichidagi Chat va 5 Yulduzli Sharh tizimi
+// Usta-Top.uz - Umumiy yordamchi, Xavfsiz Storage, Avatar generator, Chat va 5 Yulduzli Sharh tizimi
+
+// 0. XAVFSIZ STORAGE (Private rejim va xatoliklar uchun try/catch himoyasi)
+const safeStorage = {
+  getItem(key, defaultVal = null) {
+    try {
+      const item = localStorage.getItem(key);
+      return item !== null ? item : defaultVal;
+    } catch (e) {
+      console.warn('LocalStorage o‘qishda xatolik (Private rejim bo‘lishi mumkin):', e);
+      return defaultVal;
+    }
+  },
+  getJSON(key, defaultVal = null) {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultVal;
+    } catch (e) {
+      console.warn('LocalStorage JSON o‘qishda xatolik:', e);
+      return defaultVal;
+    }
+  },
+  setItem(key, value) {
+    try {
+      localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+      return true;
+    } catch (e) {
+      console.error('LocalStorage ga saqlashda xatolik:', e);
+      if (typeof showToast === 'function') {
+        showToast("⚠️ Brauzer xotirasiga saqlab bo‘lmadi (Private rejim yoki xotira to‘lgan)", "warning");
+      }
+      return false;
+    }
+  },
+  removeItem(key) {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch (e) {
+      console.warn('LocalStorage elementini o‘chirishda xatolik:', e);
+      return false;
+    }
+  }
+};
+
+// XSS himoyasi uchun matnlarni xavfsiz escape qilish
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Ismning bosh harflarini olish
+function getInitials(name) {
+  if (!name) return 'U';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+}
+
+// Usta/Foydalanuvchi ismiga qarab deterministik chiroyli rang tanlash
+function getAvatarColor(name) {
+  const colors = [
+    'bg-blue-600 text-white',
+    'bg-emerald-600 text-white',
+    'bg-indigo-600 text-white',
+    'bg-amber-600 text-white',
+    'bg-rose-600 text-white',
+    'bg-teal-600 text-white',
+    'bg-violet-600 text-white',
+    'bg-sky-600 text-white',
+    'bg-orange-600 text-white'
+  ];
+  if (!name) return colors[0];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % colors.length;
+  return colors[index];
+}
+
+// Katta dumaloq avatar render qilish (Rasm bo'lmasa ism harflari, onerror bo'lsa fallback)
+function renderAvatar(person, sizeClass = "w-16 h-16 text-lg", extraClasses = "") {
+  const initials = getInitials(person.name || person.fullName || 'Usta');
+  const colorClass = getAvatarColor(person.name || person.fullName || '');
+  const escapedName = escapeHtml(person.name || person.fullName || 'Foydalanuvchi');
+
+  if (person.avatar && person.avatar.trim() !== '') {
+    const escapedAvatar = escapeHtml(person.avatar);
+    return `
+      <div class="relative ${sizeClass} rounded-full overflow-hidden flex-shrink-0 shadow-sm border-2 border-white dark:border-slate-800 ${extraClasses}">
+        <img 
+          src="${escapedAvatar}" 
+          alt="${escapedName}" 
+          class="w-full h-full object-cover"
+          onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'w-full h-full rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none\\'>${initials}</div>';"
+        >
+      </div>
+    `;
+  }
+
+  return `
+    <div class="${sizeClass} rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none flex-shrink-0 shadow-sm border-2 border-white dark:border-slate-800 ${extraClasses}">
+      <span>${initials}</span>
+    </div>
+  `;
+}
+
+// Telefon raqamini avtomatik +998 XX XXX XX XX formatiga keltirish
+function formatPhoneNumber(value) {
+  let numbers = value.replace(/\D/g, '');
+  if (!numbers.startsWith('998')) {
+    if (numbers.startsWith('8')) numbers = '998' + numbers.slice(1);
+    else numbers = '998' + numbers;
+  }
+  numbers = numbers.slice(0, 12); // 998 + 9 raqam
+
+  let res = '+998';
+  if (numbers.length > 3) res += ' ' + numbers.slice(3, 5);
+  if (numbers.length > 5) res += ' ' + numbers.slice(5, 8);
+  if (numbers.length > 8) res += ' ' + numbers.slice(8, 10);
+  if (numbers.length > 10) res += ' ' + numbers.slice(10, 12);
+  return res;
+}
+
+function attachPhoneFormatter(inputEl) {
+  if (!inputEl) return;
+  inputEl.addEventListener('input', (e) => {
+    const start = inputEl.selectionStart;
+    const oldLen = inputEl.value.length;
+    inputEl.value = formatPhoneNumber(inputEl.value);
+    const newLen = inputEl.value.length;
+    const newPos = start + (newLen - oldLen);
+    try {
+      inputEl.setSelectionRange(newPos, newPos);
+    } catch (_) {}
+  });
+
+  inputEl.addEventListener('focus', () => {
+    if (!inputEl.value.trim()) {
+      inputEl.value = '+998 ';
+    }
+  });
+}
+
 
 // 1. Dark Mode boshqaruvi
 function initTheme() {
-  const savedTheme = localStorage.getItem('theme');
+  const savedTheme = safeStorage.getItem('theme');
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
@@ -15,7 +166,7 @@ function initTheme() {
 
 function toggleTheme() {
   const isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  safeStorage.setItem('theme', isDark ? 'dark' : 'light');
   updateThemeIcons();
   showToast(isDark ? "🌙 Tungi rejim (Dark mode) yoqildi" : "☀️ Kunduzgi rejim (Light mode) yoqildi", "info");
 }
@@ -48,7 +199,11 @@ function getSvgIcon(name, classes = "w-5 h-5") {
     briefcase: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke-width="2"/></svg>`,
     info: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="16" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="8" x2="12.01" y2="8" stroke-width="2"/></svg>`,
     close: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`,
-    check: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-width="2"/></svg>`
+    check: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-width="2"/></svg>`,
+    heart: `<svg class="${classes}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+    heartOutline: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>`,
+    user: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
+    logout: `<svg class="${classes}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>`
   };
   return icons[name] || '';
 }
@@ -74,8 +229,15 @@ function showToast(message, type = 'success') {
     error: 'bg-rose-600 text-white'
   };
 
+  const icons = {
+    success: '✓',
+    info: 'ℹ',
+    warning: '⚠',
+    error: '✕'
+  };
+
   toast.className = `animate-toast flex items-center space-x-2.5 px-4 py-3 rounded-2xl shadow-xl font-medium text-sm mb-3 pointer-events-auto ${bgColors[type] || bgColors.success}`;
-  toast.innerHTML = `<span>${message}</span>`;
+  toast.innerHTML = `<span class="font-bold text-base">${icons[type] || '•'}</span><span>${escapeHtml(message)}</span>`;
   container.appendChild(toast);
 
   setTimeout(() => {
@@ -86,34 +248,82 @@ function showToast(message, type = 'success') {
   }, 3500);
 }
 
-// 5. SAYT ICHIDAGI CHAT / BOG'LANISH TIZIMI
-let activeChatMasterId = null;
 
-function getChatHistory(masterId) {
-  try {
-    const allChats = JSON.parse(localStorage.getItem('user_chats') || '{}');
-    return allChats[masterId] || [
-      { sender: 'master', text: `Assalomu alaykum! Men bilan bog‘langaningizdan xursandman. Qanday nosozlik bo‘ldi va Toshkentning qaysi manziliga borish kerak?`, time: 'Hozir' }
-    ];
-  } catch (e) {
-    return [];
+// 5. SEVIMLI USTALAR (Favorites) BOSHQARUVI
+function getFavoritesList() {
+  return safeStorage.getJSON('favorite_masters', []);
+}
+
+function isMasterFavorite(masterId) {
+  const favs = getFavoritesList();
+  return favs.includes(Number(masterId));
+}
+
+function toggleFavoriteMaster(masterId, e) {
+  if (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  const id = Number(masterId);
+  let favs = getFavoritesList();
+  let added = false;
+
+  if (favs.includes(id)) {
+    favs = favs.filter(favId => favId !== id);
+    added = false;
+  } else {
+    favs.push(id);
+    added = true;
+  }
+
+  safeStorage.setItem('favorite_masters', favs);
+
+  // Yurakcha ikonlarini yangilash
+  document.querySelectorAll(`[data-fav-master-id="${id}"]`).forEach(btn => {
+    btn.innerHTML = added 
+      ? getSvgIcon('heart', 'w-5 h-5 text-rose-500 fill-current')
+      : getSvgIcon('heartOutline', 'w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-rose-500');
+    btn.setAttribute('title', added ? "Sevimlilardan o‘chirish" : "Sevimlilarga saqlash");
+  });
+
+  showToast(
+    added ? "❤️ Usta sevimlilar ro‘yxatiga qo‘shildi" : "🤍 Usta sevimlilardan olib tashlandi", 
+    added ? "success" : "info"
+  );
+
+  // Agar mijoz profilida bo'lsa
+  if (typeof renderCustomerFavoritesTab === 'function') {
+    renderCustomerFavoritesTab();
   }
 }
 
+
+// 6. SAYT ICHIDAGI CHAT / BOG'LANISH TIZIMI
+let activeChatMasterId = null;
+
+function getChatHistory(masterId) {
+  const allChats = safeStorage.getJSON('user_chats', {});
+  return allChats[masterId] || [
+    { sender: 'master', text: `Assalomu alaykum! Men bilan bog‘langaningizdan xursandman. Qanday nosozlik bo‘ldi va Toshkentning qaysi manziliga borish kerak?`, time: 'Hozir' }
+  ];
+}
+
 function saveChatMessage(masterId, sender, text) {
-  try {
-    const allChats = JSON.parse(localStorage.getItem('user_chats') || '{}');
-    if (!allChats[masterId]) allChats[masterId] = [];
-    allChats[masterId].push({ sender, text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-    localStorage.setItem('user_chats', JSON.stringify(allChats));
-  } catch (e) {
-    console.error(e);
-  }
+  const allChats = safeStorage.getJSON('user_chats', {});
+  if (!allChats[masterId]) allChats[masterId] = [];
+  allChats[masterId].push({ 
+    sender, 
+    text: text.trim(), 
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    timestamp: Date.now()
+  });
+  safeStorage.setItem('user_chats', allChats);
 }
 
 function openChatModal(masterId) {
   activeChatMasterId = masterId;
-  const master = MASTERS_DATA.find(m => m.id === masterId);
+  const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+  const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
   const container = document.getElementById('chatModalContainer') || document.getElementById('callModalContainer');
@@ -129,36 +339,41 @@ function openChatModal(masterId) {
         <div class="p-4 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
           <div class="flex items-center space-x-3">
             <div class="relative">
-              <img src="${master.avatar}" alt="${master.name}" class="w-12 h-12 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
+              ${renderAvatar(master, 'w-12 h-12 text-sm', '')}
               <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900" title="Onlayn"></span>
             </div>
             <div>
               <div class="flex items-center space-x-1">
-                <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">${master.name}</h3>
-                <span class="text-blue-500">${getSvgIcon('checkBadge', 'w-4 h-4')}</span>
+                <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">${escapeHtml(master.name)}</h3>
+                <span class="text-blue-500" title="Tekshirilgan usta">${getSvgIcon('checkBadge', 'w-4 h-4')}</span>
               </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${master.profession}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${escapeHtml(master.profession)}</p>
               <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">● Hozir saytda onlayn</span>
             </div>
           </div>
 
-          <button onclick="closeChatModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+          <button onclick="closeChatModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer" aria-label="Yopish">
             ${getSvgIcon('close', 'w-5 h-5')}
           </button>
         </div>
 
         <!-- Chat Xabarlari maydoni -->
         <div id="chatMessagesBox" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-950/40">
-          ${history.map(msg => `
+          ${history.length === 0 ? `
+            <div class="text-center py-12 text-slate-400 text-xs">
+              ${getSvgIcon('chat', 'w-8 h-8 mx-auto mb-2 opacity-50')}
+              <span>Suhbat tarixi bo‘sh. Xabar yozib usta bilan bog‘laning.</span>
+            </div>
+          ` : history.map(msg => `
             <div class="flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}">
               <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm ${
                 msg.sender === 'user' 
                   ? 'bg-[#1E3A8A] text-white rounded-br-sm' 
                   : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700/80 rounded-bl-sm shadow-sm'
               }">
-                <p class="leading-relaxed whitespace-pre-wrap">${msg.text}</p>
+                <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
               </div>
-              <span class="text-[10px] text-slate-400 mt-1 px-1">${msg.time || ''}</span>
+              <span class="text-[10px] text-slate-400 mt-1 px-1">${escapeHtml(msg.time || '')}</span>
             </div>
           `).join('')}
         </div>
@@ -221,7 +436,7 @@ function handleChatSubmit(e) {
   appendChatMessageToUI('user', text);
   scrollChatToBottom();
 
-  // Usta tomonidan avtomatik real-vaqtda javob simulyatsiyasi (2 soniya ichida)
+  // Usta tomonidan avtomatik real-vaqtda javob simulyatsiyasi (1.6 soniya ichida)
   setTimeout(() => {
     const replies = [
       "Assalomu alaykum! Xabaringizni oldim. Hozir asboblarni olib 25-30 daqiqada aytilgan manzilga yetib boraman.",
@@ -234,7 +449,7 @@ function handleChatSubmit(e) {
     appendChatMessageToUI('master', randomReply);
     scrollChatToBottom();
     showToast("💬 Usta sizga javob qaytardi!", "info");
-  }, 1800);
+  }, 1600);
 }
 
 function appendChatMessageToUI(sender, text) {
@@ -250,7 +465,7 @@ function appendChatMessageToUI(sender, text) {
         ? 'bg-[#1E3A8A] text-white rounded-br-sm' 
         : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700/80 rounded-bl-sm shadow-sm'
     }">
-      <p class="leading-relaxed whitespace-pre-wrap">${text}</p>
+      <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(text)}</p>
     </div>
     <span class="text-[10px] text-slate-400 mt-1 px-1">${time}</span>
   `;
@@ -271,11 +486,12 @@ function closeChatModal() {
 }
 
 
-// 6. 5 YULDUZLI BAHOLASH VA SHARH (KOMMENT) YOZISH TIZIMI
+// 7. 5 YULDUZLI BAHOLASH VA SHARH (KOMMENT) YOZISH TIZIMI
 let currentSelectedRating = 5;
 
 function openReviewModal(masterId) {
-  const master = MASTERS_DATA.find(m => m.id === masterId);
+  const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+  const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
   const container = document.getElementById('detailModalContainer');
@@ -283,18 +499,27 @@ function openReviewModal(masterId) {
 
   currentSelectedRating = 5;
 
+  // Agar mijoz tizimga kirgan bo'lsa, ismini avtomatik to'ldirish
+  let defaultAuthor = '';
+  if (typeof getCurrentUser === 'function') {
+    const user = getCurrentUser();
+    if (user && user.name) defaultAuthor = user.name;
+  }
+
   container.innerHTML = `
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target === this) closeDetailModal()">
       <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up relative">
         
-        <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer" aria-label="Yopish">
           ${getSvgIcon('close', 'w-5 h-5')}
         </button>
 
         <div class="text-center mb-6">
-          <img src="${master.avatar}" alt="${master.name}" class="w-16 h-16 rounded-2xl object-cover mx-auto mb-3 border-2 border-primary/20 dark:border-blue-400/20">
-          <h3 class="text-xl font-bold text-slate-900 dark:text-white">${master.name}</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">${master.profession} (${master.district})</p>
+          <div class="flex justify-center mb-3">
+            ${renderAvatar(master, 'w-16 h-16 text-xl')}
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">${escapeHtml(master.name)}</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">${escapeHtml(master.profession)} (${escapeHtml(master.district)})</p>
           <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-2 block">Ustaga baho bering va fikringizni yozing</span>
         </div>
 
@@ -308,6 +533,7 @@ function openReviewModal(masterId) {
               onmouseleave="resetHoverRating()"
               class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform cursor-pointer"
               data-star="${star}"
+              aria-label="${star} yulduz"
             >
               ${getSvgIcon('star', 'w-8 h-8')}
             </button>
@@ -318,12 +544,25 @@ function openReviewModal(masterId) {
         <form onsubmit="handleReviewSubmit(event, ${master.id})" class="space-y-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Ismingiz</label>
-            <input type="text" id="reviewAuthorInput" required placeholder="Masalan: Sardorbek" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]">
+            <input 
+              type="text" 
+              id="reviewAuthorInput" 
+              required 
+              value="${escapeHtml(defaultAuthor)}"
+              placeholder="Masalan: Sardorbek" 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
           </div>
 
           <div>
             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Fikringiz (Sharh)</label>
-            <textarea id="reviewTextInput" required rows="3" placeholder="Usta qanday ishladi? Vaqtida keldimi? Narxi ma’qul bo‘ldimi?" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"></textarea>
+            <textarea 
+              id="reviewTextInput" 
+              required 
+              rows="3" 
+              placeholder="Usta qanday ishladi? Vaqtida keldimi? Narxi ma’qul bo‘ldimi?" 
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+            ></textarea>
           </div>
 
           <button 
@@ -383,29 +622,27 @@ function handleReviewSubmit(e, masterId) {
 
   const author = authorInput.value.trim();
   const text = textInput.value.trim();
-  const master = MASTERS_DATA.find(m => m.id === masterId);
+  const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+  const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
   const newReview = {
     author: author,
     date: 'Hozir',
     rating: currentSelectedRating,
-    district: master.district,
+    district: master.district || 'Toshkent',
     text: text
   };
 
-  // 1. Bazaga qo'shish
+  // 1. Usta ob'ektiga qo'shish
+  if (!master.reviews) master.reviews = [];
   master.reviews.unshift(newReview);
 
   // 2. LocalStorage ga saqlash
-  try {
-    const stored = JSON.parse(localStorage.getItem('user_reviews') || '{}');
-    if (!stored[masterId]) stored[masterId] = [];
-    stored[masterId].unshift(newReview);
-    localStorage.setItem('user_reviews', JSON.stringify(stored));
-  } catch (err) {
-    console.error(err);
-  }
+  const stored = safeStorage.getJSON('user_reviews', {});
+  if (!stored[masterId]) stored[masterId] = [];
+  stored[masterId].unshift(newReview);
+  safeStorage.setItem('user_reviews', stored);
 
   // 3. Reytingni qayta hisoblash
   const total = master.reviews.reduce((acc, r) => acc + r.rating, 0);
@@ -413,7 +650,7 @@ function handleReviewSubmit(e, masterId) {
   master.reviewsCount = master.reviews.length;
 
   closeDetailModal();
-  showToast("🎉 Rahmat! Sharhingiz va 5 yulduzli bahoingiz muvaffaqiyatli saqlandi!", "success");
+  showToast("🎉 Rahmat! Sharhingiz va bahoingiz muvaffaqiyatli saqlandi!", "success");
 
   // Agar sahifada renderMastersGrid bo'lsa yangilash
   if (typeof renderMastersGrid === 'function') {
@@ -421,45 +658,70 @@ function handleReviewSubmit(e, masterId) {
   }
 }
 
-// 7. BATAFSIL USTA PROFILI MODALI (Narxlar va Barcha sharhlar)
+
+// 8. BATAFSIL USTA PROFILI MODALI (Narxlar va Barcha sharhlar)
 function openDetailModal(masterId) {
-  const master = MASTERS_DATA.find(m => m.id === masterId);
+  const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+  const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
   const container = document.getElementById('detailModalContainer');
   if (!container) return;
 
+  const isFree = master.status !== 'busy';
+  const isFav = isMasterFavorite(master.id);
+
   container.innerHTML = `
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target === this) closeDetailModal()">
       <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up relative p-6 sm:p-8">
         
-        <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition z-10">
-          ${getSvgIcon('close', 'w-5 h-5')}
-        </button>
+        <div class="absolute top-5 right-5 flex items-center space-x-2 z-10">
+          <button 
+            type="button" 
+            onclick="toggleFavoriteMaster(${master.id}, event)" 
+            data-fav-master-id="${master.id}"
+            class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+            title="${isFav ? 'Sevimlilardan o‘chirish' : 'Sevimlilarga saqlash'}"
+          >
+            ${isFav 
+              ? getSvgIcon('heart', 'w-5 h-5 text-rose-500 fill-current')
+              : getSvgIcon('heartOutline', 'w-5 h-5 text-slate-400 hover:text-rose-500')}
+          </button>
 
-        <!-- Bosh qism -->
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 border-b border-slate-100 dark:border-slate-800 pb-6">
-          <div class="relative w-24 h-24 flex-shrink-0">
-            <img src="${master.avatar}" alt="${master.name}" class="w-24 h-24 rounded-2xl object-cover shadow-md border-2 border-primary/20 dark:border-blue-400/20">
-            <span class="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-1 rounded-full border-2 border-white dark:border-slate-900" title="Tekshirilgan">
+          <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer" aria-label="Yopish">
+            ${getSvgIcon('close', 'w-5 h-5')}
+          </button>
+        </div>
+
+        <!-- Bosh qism: Katta dumaloq avatar -->
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 border-b border-slate-100 dark:border-slate-800 pb-6 pr-14">
+          <div class="relative flex-shrink-0">
+            ${renderAvatar(master, 'w-24 h-24 text-2xl', '')}
+            <span class="absolute -bottom-1 -right-1 bg-blue-600 text-white p-1 rounded-full border-2 border-white dark:border-slate-900" title="Tasdiqlangan usta">
               ${getSvgIcon('checkBadge', 'w-4 h-4')}
             </span>
           </div>
 
           <div class="text-center sm:text-left flex-1">
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-              <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">${master.name}</h3>
-              <span class="bg-blue-100 dark:bg-blue-900/40 text-[#1E3A8A] dark:text-blue-300 text-xs font-bold px-2.5 py-0.5 rounded-full flex items-center space-x-1">
-                ${getSvgIcon('checkBadge', 'w-3.5 h-3.5 text-blue-600')}
-                <span>Tekshirilgan usta</span>
+              <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">${escapeHtml(master.name)}</h3>
+              
+              <span class="inline-flex items-center space-x-1 bg-blue-100 dark:bg-blue-900/40 text-[#1E3A8A] dark:text-blue-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                ${getSvgIcon('checkBadge', 'w-3.5 h-3.5 text-blue-600 dark:text-blue-400')}
+                <span>Tasdiqlangan</span>
               </span>
+
+              ${isFree 
+                ? `<span class="status-badge-free"><span class="status-dot-pulse"></span> Bo‘sh</span>` 
+                : `<span class="status-badge-busy"><span class="w-2 h-2 rounded-full bg-slate-400"></span> Band</span>`}
             </div>
-            <p class="text-slate-600 dark:text-slate-400 font-medium text-sm mt-1">${master.profession}</p>
+
+            <p class="text-slate-600 dark:text-slate-400 font-medium text-sm mt-1">${escapeHtml(master.profession)}</p>
 
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-3 text-xs">
               <span class="flex items-center text-amber-500 font-bold bg-amber-50 dark:bg-amber-950/40 px-2 py-1 rounded-lg">
                 ${getSvgIcon('star', 'w-4 h-4 text-amber-400 mr-1')}
-                ${master.rating} (${master.reviewsCount} ta sharh)
+                ${master.rating} (${master.reviewsCount || (master.reviews ? master.reviews.length : 0)} ta sharh)
               </span>
               <span class="flex items-center font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-lg">
                 ${getSvgIcon('briefcase', 'w-4 h-4 mr-1 text-slate-500')}
@@ -467,7 +729,7 @@ function openDetailModal(masterId) {
               </span>
               <span class="flex items-center font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 px-2 py-1 rounded-lg">
                 ${getSvgIcon('check', 'w-4 h-4 mr-1')}
-                ${master.completedOrders}+ buyurtma
+                ${master.completedOrders || 50}+ buyurtma
               </span>
             </div>
           </div>
@@ -476,10 +738,10 @@ function openDetailModal(masterId) {
         <!-- Usta haqida -->
         <div class="py-5 border-b border-slate-100 dark:border-slate-800">
           <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2">Mutaxassis haqida:</h4>
-          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${master.bio}</p>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(master.bio || 'Professional usta xizmatlari.')}</p>
           <div class="mt-3 flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
             ${getSvgIcon('mapPin', 'w-4 h-4 text-rose-500')}
-            <span><strong>Xizmat ko‘rsatadigan hududlar:</strong> ${master.districtsServed.join(', ')}</span>
+            <span><strong>Xizmat ko‘rsatadigan hududlar:</strong> ${escapeHtml(Array.isArray(master.districtsServed) ? master.districtsServed.join(', ') : master.district)}</span>
           </div>
         </div>
 
@@ -496,11 +758,11 @@ function openDetailModal(masterId) {
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
-                ${master.fullPriceList.map(item => `
+                ${(master.fullPriceList || master.popularServices || []).map(item => `
                   <tr>
-                    <td class="py-2.5 px-4 font-medium">${item.service}</td>
-                    <td class="py-2.5 px-4 text-slate-400 text-xs">${item.time}</td>
-                    <td class="py-2.5 px-4 text-right font-bold text-[#1E3A8A] dark:text-blue-400">${item.price}</td>
+                    <td class="py-2.5 px-4 font-medium">${escapeHtml(item.service || item.name)}</td>
+                    <td class="py-2.5 px-4 text-slate-400 text-xs">${escapeHtml(item.time || 'Kelishiladi')}</td>
+                    <td class="py-2.5 px-4 text-right font-bold text-[#1E3A8A] dark:text-blue-400">${escapeHtml(item.price)}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -512,38 +774,42 @@ function openDetailModal(masterId) {
         <div class="py-5">
           <div class="flex items-center justify-between mb-4">
             <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-              Mijozlar fikrlari (${master.reviews.length}):
+              Mijozlar fikrlari (${master.reviews ? master.reviews.length : 0}):
             </h4>
             <button 
               type="button" 
               onclick="closeDetailModal(); openReviewModal(${master.id});" 
-              class="text-xs font-bold text-[#F97316] hover:underline flex items-center space-x-1"
+              class="text-xs font-bold text-[#F97316] hover:underline flex items-center space-x-1 cursor-pointer"
             >
               <span>+ Sharh va baho qoldirish</span>
             </button>
           </div>
 
           <div class="space-y-3">
-            ${master.reviews.map(r => `
+            ${(!master.reviews || master.reviews.length === 0) ? `
+              <div class="p-6 text-center text-slate-400 text-xs bg-slate-50 dark:bg-slate-800/40 rounded-2xl">
+                <span>Hozircha sharhlar yo‘q. Birinchi bo‘lib sharh qoldiring!</span>
+              </div>
+            ` : master.reviews.map(r => `
               <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/40">
                 <div class="flex items-center justify-between mb-1">
                   <div class="flex items-center space-x-2">
-                    <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">${r.author}</span>
-                    <span class="text-[11px] text-slate-400">(${r.district})</span>
+                    <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">${escapeHtml(r.author)}</span>
+                    <span class="text-[11px] text-slate-400">(${escapeHtml(r.district || '')})</span>
                   </div>
                   <div class="flex items-center text-amber-400 text-xs font-bold">
                     ${getSvgIcon('star', 'w-3.5 h-3.5 mr-0.5')}
                     <span>${r.rating}</span>
                   </div>
                 </div>
-                <p class="text-xs text-slate-600 dark:text-slate-300 leading-normal">${r.text}</p>
-                <span class="text-[10px] text-slate-400 block mt-1">${r.date}</span>
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-normal">${escapeHtml(r.text)}</p>
+                <span class="text-[10px] text-slate-400 block mt-1">${escapeHtml(r.date)}</span>
               </div>
             `).join('')}
           </div>
         </div>
 
-        <!-- Pastki harakat tugmalari: Sayt ichidagi Chat va Baholash -->
+        <!-- Pastki harakat tugmalari -->
         <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-3">
           <button 
             type="button" 
@@ -574,83 +840,306 @@ function closeDetailModal() {
   if (container) container.innerHTML = '';
 }
 
-// 8. Usta bo'lish anketasi
-function openRegisterModal() {
-  const container = document.getElementById('registerModalContainer');
-  if (!container) return;
 
-  container.innerHTML = `
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target === this) closeRegisterModal()">
-      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up relative">
-        <button onclick="closeRegisterModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          ${getSvgIcon('close', 'w-5 h-5')}
-        </button>
+// ==========================================
+// 8. E'LONLAR / TENDER TIZIMI (Jobs & Orders)
+// ==========================================
 
-        <div class="text-center mb-6">
-          <div class="w-12 h-12 rounded-2xl bg-orange-100 dark:bg-orange-950/60 text-[#F97316] flex items-center justify-center mx-auto mb-3">
-            ${getSvgIcon('wrench', 'w-6 h-6')}
-          </div>
-          <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Usta sifatida qo‘shiling</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kuniga 3-5 ta yangi buyurtmalarga ega bo‘ling. 0% komissiya!</p>
-        </div>
+const INITIAL_SAMPLE_ORDERS = [
+  {
+    id: 'ord_1',
+    customerName: 'Sardorbek Alimov',
+    customerPhone: '+998 90 345 67 89',
+    category: 'santexnik',
+    categoryName: 'Santexnik',
+    district: 'Chilonzor',
+    address: 'Chilonzor 9-mavze, 14-uy',
+    title: 'Kran almashtirish va oshxona filtrini ulash',
+    description: 'Oshxona smesiteli suv o‘tkazib yuboryapti, yangi kran va filtr olingan. Bugun soat 18:00 ga usta kerak.',
+    budget: '100 000 – 150 000 so‘m',
+    timeNeeded: 'Bugun soat 18:00 gacha',
+    status: 'active',
+    createdAt: 'Bugun, 14:15',
+    createdAtTimestamp: Date.now() - 1000 * 60 * 120,
+    bids: [
+      {
+        id: 'bid_1',
+        masterId: 1,
+        masterName: 'Akmal Karimov',
+        masterAvatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+        masterRating: 4.9,
+        masterDistrict: 'Chilonzor',
+        price: '90 000 so‘m',
+        readyTime: 'Bugun 17:30 da yetib boraman',
+        comment: 'Assalomu alaykum! Kerakli hamma kalit va ulamalarim bor. 30 daqiqada sifatli o‘rnatib beraman.',
+        createdAt: '1 soat oldin'
+      },
+      {
+        id: 'bid_2',
+        masterId: 2,
+        masterName: 'Jamshid Toirov',
+        masterAvatar: '',
+        masterRating: 4.8,
+        masterDistrict: 'Chilonzor',
+        price: '110 000 so‘m',
+        readyTime: 'Bugun 18:00 ga tayyorman',
+        comment: 'Filtr bosimini ham tekshirib, kafolat bilan o‘rnatib beraman.',
+        createdAt: '40 daqiqa oldin'
+      }
+    ]
+  },
+  {
+    id: 'ord_2',
+    customerName: 'Nilufar Rahimova',
+    customerPhone: '+998 97 712 34 56',
+    category: 'elektrik',
+    categoryName: 'Elektrik',
+    district: 'Yunusobod',
+    address: 'Yunusobod 12-mavze, 22-uy',
+    title: 'Zal lyustrasini o‘rnatish va 3 ta rozetka almashtirish',
+    description: 'Yangi og‘ir billur lyustra ilish kerak, shift beton. 3 ta rozetkadan uchqun chiqayotgan edi, yangisiga almashtirish lozim.',
+    budget: '120 000 – 180 000 so‘m',
+    timeNeeded: 'Ertaga 10:00 da',
+    status: 'active',
+    createdAt: 'Bugun, 12:30',
+    createdAtTimestamp: Date.now() - 1000 * 60 * 240,
+    bids: [
+      {
+        id: 'bid_3',
+        masterId: 5,
+        masterName: 'Bobur Usmonov',
+        masterAvatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80',
+        masterRating: 4.8,
+        masterDistrict: 'Yunusobod',
+        price: '140 000 so‘m',
+        readyTime: 'Ertaga soat 10:00 da boraman',
+        comment: 'Perfartor va dubellar bor, xavfsiz qilib montaj qilamiz.',
+        createdAt: '2 soat oldin'
+      }
+    ]
+  },
+  {
+    id: 'ord_3',
+    customerName: 'Farhod Qosimov',
+    customerPhone: '+998 93 501 22 33',
+    category: 'konditsioner',
+    categoryName: 'Konditsioner ustasi',
+    district: 'Mirzo Ulug‘bek',
+    address: 'Buyuk Ipak Yo‘li ko‘chasi, 85-uy',
+    title: 'Konditsionerni freon bilan to‘ldirish va dori bilan yuvish',
+    description: 'Artel 12 talik konditsioner sovuq bermayapti. Ichki va tashqi blokni tozalash va freon quyish kerak.',
+    budget: '200 000 – 260 000 so‘m',
+    timeNeeded: 'Bugun 16:00 – 19:00 oralig‘ida',
+    status: 'active',
+    createdAt: 'Bugun, 11:00',
+    createdAtTimestamp: Date.now() - 1000 * 60 * 300,
+    bids: []
+  },
+  {
+    id: 'ord_4',
+    customerName: 'Madina Umarova',
+    customerPhone: '+998 90 987 65 43',
+    category: 'mebel',
+    categoryName: 'Mebel yig‘uvchi',
+    district: 'Yakkasaroy',
+    address: 'Shota Rustaveli ko‘chasi, 45-uy',
+    title: 'Yangi 3 eshikli shkaf-kupeni yig‘ish',
+    description: 'Karobkada turibdi, barcha furnituralari bor. Tajribali usta kerak, eshik relslari to‘g‘ri sozlanishi lozim.',
+    budget: '180 000 – 250 000 so‘m',
+    timeNeeded: 'Ertaga kun davomida',
+    status: 'active',
+    createdAt: 'Bugun, 09:40',
+    createdAtTimestamp: Date.now() - 1000 * 60 * 420,
+    bids: []
+  }
+];
 
-        <form onsubmit="handleRegisterSubmit(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Ism va familiyangiz</label>
-            <input type="text" required placeholder="Masalan: Azizbek Aliyev" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]">
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Mutaxassislik</label>
-              <select class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm">
-                <option value="santexnik">Santexnik</option>
-                <option value="elektrik">Elektrik</option>
-                <option value="konditsioner">Konditsioner ustasi</option>
-                <option value="maishiy">Maishiy texnika</option>
-                <option value="mebel">Mebel yig‘uvchi</option>
-                <option value="universal">Bir soatlik usta</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Tumaningiz</label>
-              <select class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm">
-                <option>Chilonzor</option>
-                <option>Yunusobod</option>
-                <option>Mirzo Ulug‘bek</option>
-                <option>Yakkasaroy</option>
-                <option>Shayxontohur</option>
-                <option>Sergeli</option>
-                <option>Olmazor</option>
-                <option>Uchtepa</option>
-                <option>Mirobod</option>
-                <option>Yashnobod</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Ish tajribangiz (yil)</label>
-            <input type="number" min="1" max="50" required placeholder="Masalan: 6" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]">
-          </div>
-          <button type="submit" class="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition active:scale-95 text-sm cursor-pointer">
-            Arizani yuborish
-          </button>
-        </form>
-      </div>
-    </div>
-  `;
+function getOrders() {
+  const stored = safeStorage.getJSON('app_orders', null);
+  if (!stored || !Array.isArray(stored) || stored.length === 0) {
+    safeStorage.setItem('app_orders', INITIAL_SAMPLE_ORDERS);
+    return INITIAL_SAMPLE_ORDERS;
+  }
+  return stored;
 }
 
-function closeRegisterModal() {
-  const container = document.getElementById('registerModalContainer');
-  if (container) container.innerHTML = '';
+function saveOrder(orderData) {
+  const orders = getOrders();
+  const newOrder = {
+    id: 'ord_' + Date.now(),
+    customerName: orderData.customerName || 'Mijoz',
+    customerPhone: orderData.customerPhone || '',
+    category: orderData.category || 'universal',
+    categoryName: orderData.categoryName || 'Boshqa xizmat',
+    district: orderData.district || 'Chilonzor',
+    address: orderData.address || '',
+    title: orderData.title || 'Usta xizmati kerak',
+    description: orderData.description || '',
+    budget: orderData.budget || 'Kelishuv asosida',
+    timeNeeded: orderData.timeNeeded || 'Qisqa vaqtda',
+    image: orderData.image || null,
+    status: 'active',
+    createdAt: 'Hozir',
+    createdAtTimestamp: Date.now(),
+    bids: []
+  };
+
+  orders.unshift(newOrder);
+  safeStorage.setItem('app_orders', orders);
+  return newOrder;
 }
 
-function handleRegisterSubmit(e) {
-  e.preventDefault();
-  closeRegisterModal();
-  showToast("🎉 Arizangiz qabul qilindi! Tez orada profilingiz faollashtiriladi.", "success");
+function addOrderBid(orderId, bidData) {
+  const orders = getOrders();
+  const order = orders.find(o => o.id === orderId);
+  if (!order) return false;
+
+  if (!order.bids) order.bids = [];
+  
+  // Bir usta bitta buyurtmaga qayta taklif yuborsa, yangilaydi
+  const existingIndex = order.bids.findIndex(b => b.masterId === bidData.masterId);
+  const newBid = {
+    id: 'bid_' + Date.now(),
+    masterId: bidData.masterId,
+    masterName: bidData.masterName,
+    masterAvatar: bidData.masterAvatar || '',
+    masterRating: bidData.masterRating || 5.0,
+    masterDistrict: bidData.masterDistrict || '',
+    price: bidData.price || 'Kelishuv asosida',
+    readyTime: bidData.readyTime || 'Tez orada',
+    comment: bidData.comment || '',
+    createdAt: 'Hozir'
+  };
+
+  if (existingIndex >= 0) {
+    order.bids[existingIndex] = newBid;
+  } else {
+    order.bids.unshift(newBid);
+  }
+
+  safeStorage.setItem('app_orders', orders);
+  return true;
 }
 
+
+// ==========================================
+// 9. MAXSUS USTUN KO'RINISHIDAGI SELECT (Custom Dropdown)
+// Brauzerning standart noqulay <select> menyusi o'rniga
+// ==========================================
+
+function initCustomSelects() {
+  document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+    // Agar allaqachon initsializatsiya qilingan bo'lsa
+    if (wrapper.dataset.initialized === 'true') return;
+    wrapper.dataset.initialized = 'true';
+
+    const trigger = wrapper.querySelector('.custom-select-trigger');
+    const dropdown = wrapper.querySelector('.custom-select-dropdown');
+    const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+    const labelSpan = wrapper.querySelector('.custom-select-label');
+    const iconSpan = wrapper.querySelector('.custom-select-icon');
+    const arrow = wrapper.querySelector('.custom-select-arrow');
+
+    if (!trigger || !dropdown) return;
+
+    // Trigger bosilganda ochish/yopish
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Boshqa ochiq bo'lgan barcha dropdownlarni yopish
+      document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+        if (d !== dropdown) {
+          d.classList.add('hidden');
+          const otherArrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+          if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+        }
+      });
+
+      const isOpen = !dropdown.classList.contains('hidden');
+      if (isOpen) {
+        dropdown.classList.add('hidden');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      } else {
+        dropdown.classList.remove('hidden');
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
+      }
+    });
+
+    // Har bir variant tanlanganda
+    dropdown.querySelectorAll('.custom-select-option').forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const value = option.dataset.value;
+        const text = option.dataset.label || option.innerText.trim();
+        const icon = option.dataset.icon || '';
+
+        if (hiddenInput) {
+          hiddenInput.value = value;
+          hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        if (labelSpan) labelSpan.textContent = text;
+        if (iconSpan && icon) iconSpan.innerHTML = icon;
+
+        // Tanlangan klassni yangilash
+        dropdown.querySelectorAll('.custom-select-option').forEach(o => {
+          o.classList.remove('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+        });
+        option.classList.add('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+
+        dropdown.classList.add('hidden');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      });
+    });
+  });
+
+  // Tashqariga bosilganda ochiq bo'lgan barcha dropdownlarni yopish
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+      d.classList.add('hidden');
+      const arrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    });
+  });
+
+  // Esc bosilganda yopish
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+        d.classList.add('hidden');
+        const arrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      });
+    }
+  });
+}
+
+// Custom Select qiymatini dasturiy tarzda yangilash yordamchisi
+function setCustomSelectValue(inputId, value) {
+  const hiddenInput = document.getElementById(inputId);
+  if (!hiddenInput) return;
+  hiddenInput.value = value;
+  const wrapper = hiddenInput.closest('.custom-select-wrapper');
+  if (!wrapper) return;
+  const dropdown = wrapper.querySelector('.custom-select-dropdown');
+  if (!dropdown) return;
+  const matchingOption = dropdown.querySelector(`.custom-select-option[data-value="${value}"]`);
+  if (matchingOption) {
+    const text = matchingOption.dataset.label || matchingOption.innerText.trim();
+    const icon = matchingOption.dataset.icon || '';
+    const labelSpan = wrapper.querySelector('.custom-select-label');
+    const iconSpan = wrapper.querySelector('.custom-select-icon');
+    if (labelSpan) labelSpan.textContent = text;
+    if (iconSpan && icon) iconSpan.innerHTML = icon;
+    dropdown.querySelectorAll('.custom-select-option').forEach(o => {
+      o.classList.remove('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+    });
+    matchingOption.classList.add('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+  }
+}
+
+
+// Boshlang'ich tema sozlash
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initCustomSelects();
 });

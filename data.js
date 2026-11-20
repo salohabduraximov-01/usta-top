@@ -1262,9 +1262,13 @@ const TESTIMONIALS = [
 // LocalStorage dan qo'shilgan sharhlarni yuklab, bazaga qo'shish
 function syncReviewsFromStorage() {
   try {
-    const storedReviews = JSON.parse(localStorage.getItem('user_reviews') || '{}');
+    const raw = typeof safeStorage !== 'undefined' 
+      ? safeStorage.getItem('user_reviews') 
+      : localStorage.getItem('user_reviews');
+    const storedReviews = JSON.parse(raw || '{}');
     Object.keys(storedReviews).forEach(masterId => {
-      const master = MASTERS_DATA.find(m => m.id === parseInt(masterId));
+      const allM = typeof getAllMasters === 'function' ? getAllMasters(false) : MASTERS_DATA;
+      const master = allM.find(m => m.id === parseInt(masterId));
       if (master && storedReviews[masterId]) {
         storedReviews[masterId].forEach(rev => {
           if (!master.reviews.some(r => r.text === rev.text && r.author === rev.author)) {
@@ -1281,4 +1285,174 @@ function syncReviewsFromStorage() {
     console.error('Sharhlarni sinxronlashda xatolik:', e);
   }
 }
+
+// Barcha ustalarni (data.js + LocalStorage dagi yangi ro'yxatdan o'tgan ustalar) birlashtirib olish
+function getAllMasters(applyOverrides = true) {
+  let combined = [...MASTERS_DATA];
+
+  // LocalStorage dagi ro'yxatdan o'tgan ustalarni qo'shish
+  try {
+    const rawNewMasters = typeof safeStorage !== 'undefined'
+      ? safeStorage.getItem('registered_masters')
+      : localStorage.getItem('registered_masters');
+    if (rawNewMasters) {
+      const newMasters = JSON.parse(rawNewMasters);
+      if (Array.isArray(newMasters)) {
+        newMasters.forEach(newM => {
+          if (!combined.some(m => m.id === newM.id)) {
+            combined.unshift(newM);
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('Yangi ustalarni yuklashda xatolik:', err);
+  }
+
+  // Har bir ustaga default status, verified va minimal narx berish
+  if (applyOverrides) {
+    try {
+      const statusOverrides = JSON.parse(
+        (typeof safeStorage !== 'undefined' ? safeStorage.getItem('master_status_overrides') : localStorage.getItem('master_status_overrides')) || '{}'
+      );
+
+      combined.forEach(m => {
+        // Agar usta panelidan status o'zgartirilgan bo'lsa
+        if (statusOverrides[m.id]) {
+          m.status = statusOverrides[m.id];
+        } else if (!m.status) {
+          // Demo maqsadida bir nechta usta 'busy' (band), qolganlari 'free' (bo'sh)
+          m.status = (m.id === 4 || m.id === 11 || m.id === 24 || m.id === 35) ? 'busy' : 'free';
+        }
+
+        m.verified = true;
+      });
+    } catch (_) {}
+  }
+
+  return combined;
+}
+
+// Usta uchun "dan ... so'm" boshlang'ich narxini hisoblash
+function getMasterStartingPrice(master) {
+  if (master.startingPrice) {
+    return master.startingPrice.replace(/dan\s*/i, '').replace(/so['‘`]?m.*/i, "so'm").trim();
+  }
+  if (master.fullPriceList && master.fullPriceList.length > 0) {
+    const prices = master.fullPriceList
+      .map(p => parseInt(String(p.price).replace(/\D/g, ''), 10))
+      .filter(n => !isNaN(n) && n > 0);
+    if (prices.length > 0) {
+      const min = Math.min(...prices);
+      return min.toLocaleString('uz-UZ') + " so'm";
+    }
+  }
+  if (master.popularServices && master.popularServices.length > 0) {
+    const prices = master.popularServices
+      .map(p => parseInt(String(p.price).replace(/\D/g, ''), 10))
+      .filter(n => !isNaN(n) && n > 0);
+    if (prices.length > 0) {
+      const min = Math.min(...prices);
+      return min.toLocaleString('uz-UZ') + " so'm";
+    }
+  }
+  return "40 000 so'm";
+}
+
+// Toshkent tumanlarining markaziy koordinatalari (Xarita uchun)
+const DISTRICT_COORDINATES = {
+  'Chilonzor': [41.2721, 69.2045],
+  'Yunusobod': [41.3644, 69.2872],
+  'Mirzo Ulug‘bek': [41.3283, 69.3344],
+  'Yakkasaroy': [41.2825, 69.2508],
+  'Shayxontohur': [41.3175, 69.2311],
+  'Sergeli': [41.2231, 69.2225],
+  'Olmazor': [41.3506, 69.2208],
+  'Uchtepa': [41.2942, 69.1764],
+  'Mirobod': [41.2917, 69.2817],
+  'Yashnobod': [41.2933, 69.3375]
+};
+
+// Har bir usta uchun deterministik xarita koordinatasi
+function getMasterCoordinates(master) {
+  const base = DISTRICT_COORDINATES[master.district] || [41.2995, 69.2401];
+  // Ustaning id raqamiga qarab kichik siljish (jitter) beramiz, toki markerlar bir-birining ustiga tushib qolmasin
+  const offsetLat = Math.sin(master.id * 1.7) * 0.012;
+  const offsetLng = Math.cos(master.id * 2.3) * 0.014;
+  return [base[0] + offsetLat, base[1] + offsetLng];
+}
+
+// Kalkulyator uchun xizmatlar bazasi
+const CALCULATOR_SERVICES = [
+  {
+    categoryId: 'santexnik',
+    categoryName: 'Santexnika ishlari',
+    icon: 'wrench',
+    items: [
+      { id: 's1', name: 'Kran va smesitel almashtirish', unit: 'dona', minPrice: 60000, maxPrice: 90000 },
+      { id: 's2', name: 'Unitaz montaji yoki ta’mirlash', unit: 'dona', minPrice: 130000, maxPrice: 180000 },
+      { id: 's3', name: 'Tiqilib qolgan quvurni ochish (prochistka)', unit: 'nuqta', minPrice: 80000, maxPrice: 130000 },
+      { id: 's4', name: 'Suv filtri o‘rnatish', unit: 'dona', minPrice: 90000, maxPrice: 140000 },
+      { id: 's5', name: 'Dush kabinasi yoki vanna montaji', unit: 'dona', minPrice: 250000, maxPrice: 400000 },
+      { id: 's6', name: 'Isitish batareyasi (radiator) montaji', unit: 'dona', minPrice: 120000, maxPrice: 180000 }
+    ]
+  },
+  {
+    categoryId: 'elektrik',
+    categoryName: 'Elektr montaj ishlari',
+    icon: 'zap',
+    items: [
+      { id: 'e1', name: 'Rozetka yoki vikluchatel montaji', unit: 'dona', minPrice: 35000, maxPrice: 50000 },
+      { id: 'e2', name: 'Lyustra yoki shift chirog‘i ilish', unit: 'dona', minPrice: 70000, maxPrice: 120000 },
+      { id: 'e3', name: 'Avtomat uzgich almashtirish', unit: 'dona', minPrice: 40000, maxPrice: 60000 },
+      { id: 'e4', name: 'Kuchlanish relesi (Zubr / Tomzn) montaji', unit: 'dona', minPrice: 80000, maxPrice: 120000 },
+      { id: 'e5', name: 'Elektr shiti va avtomatika yig‘ish', unit: 'shit', minPrice: 200000, maxPrice: 350000 },
+      { id: 'e6', name: 'LED lenta va podsvetka montaji', unit: 'metr', minPrice: 35000, maxPrice: 55000 }
+    ]
+  },
+  {
+    categoryId: 'konditsioner',
+    categoryName: 'Iqlim va konditsioner',
+    icon: 'wind',
+    items: [
+      { id: 'k1', name: 'Konditsionerni dori bilan chuqur yuvish', unit: 'dona', minPrice: 100000, maxPrice: 140000 },
+      { id: 'k2', name: 'Freon gaz quyish (R410A / R22)', unit: 'dona', minPrice: 160000, maxPrice: 220000 },
+      { id: 'k3', name: 'Standart konditsioner montaji', unit: 'dona', minPrice: 300000, maxPrice: 420000 },
+      { id: 'k4', name: 'Konditsionerni xavfsiz demontaj qilish', unit: 'dona', minPrice: 120000, maxPrice: 180000 }
+    ]
+  },
+  {
+    categoryId: 'maishiy',
+    categoryName: 'Maishiy texnika ta’miri',
+    icon: 'cpu',
+    items: [
+      { id: 'm1', name: 'Kir yuvish mashinasi diagnostikasi / nasosi', unit: 'dona', minPrice: 100000, maxPrice: 160000 },
+      { id: 'm2', name: 'Kir yuvish mashinasi TEN (isitgich) yangilash', unit: 'dona', minPrice: 120000, maxPrice: 170000 },
+      { id: 'm3', name: 'Muzlatgich freon quyish va ta’mirlash', unit: 'dona', minPrice: 150000, maxPrice: 240000 }
+    ]
+  },
+  {
+    categoryId: 'mebel',
+    categoryName: 'Mebel yig‘ish va sozlash',
+    icon: 'hammer',
+    items: [
+      { id: 'b1', name: 'Shkaf-kupe yig‘ish va montaji', unit: 'dona', minPrice: 160000, maxPrice: 250000 },
+      { id: 'b2', name: 'Oshxona garnituri montaji', unit: 'metr', minPrice: 200000, maxPrice: 300000 },
+      { id: 'b3', name: 'Krovat yoki divan yig‘ish', unit: 'dona', minPrice: 100000, maxPrice: 150000 },
+      { id: 'b4', name: 'Eshik ilmoqlari (petlya) va tortmalarni sozlash', unit: 'dona', minPrice: 45000, maxPrice: 70000 }
+    ]
+  },
+  {
+    categoryId: 'universal',
+    categoryName: 'Bir soatlik usta xizmatlari',
+    icon: 'tool',
+    items: [
+      { id: 'u1', name: 'Televizor kronshteyni montaji', unit: 'dona', minPrice: 60000, maxPrice: 90000 },
+      { id: 'u2', name: 'Parda kornizi ilish', unit: 'dona', minPrice: 70000, maxPrice: 100000 },
+      { id: 'u3', name: 'Eshik qulfini almashtirish', unit: 'dona', minPrice: 80000, maxPrice: 120000 },
+      { id: 'u4', name: 'Ko‘zgu, javon yoki kartina osish', unit: 'dona', minPrice: 40000, maxPrice: 70000 }
+    ]
+  }
+];
+
 syncReviewsFromStorage();
