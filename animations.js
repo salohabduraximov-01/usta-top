@@ -20,8 +20,8 @@ function initScrollReveal() {
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.01,
+      rootMargin: '100px 0px 50px 0px'
     });
 
     observeReveals();
@@ -35,9 +35,9 @@ function observeReveals(root = document) {
   if (!revealObserver) return;
   const reveals = root.querySelectorAll('.reveal:not(.active)');
   reveals.forEach((el, index) => {
-    // Agar elementda data-delay bo'lmasa, ketma-ketlik (stagger) kechikishini berish
+    // Tezkor ketma-ketlik (stagger) kechikishi (15 ms)
     if (!el.style.transitionDelay) {
-      const delay = (index % 6) * 100; // 0, 100, 200, 300, 400, 500 ms
+      const delay = (index % 6) * 15; // 0, 15, 30, 45, 60, 75 ms
       el.style.transitionDelay = `${delay}ms`;
     }
     revealObserver.observe(el);

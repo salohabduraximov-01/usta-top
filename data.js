@@ -1,4 +1,4 @@
-// Usta-Top.uz - Haqiqiy ma'lumotlar bazasi (Toshkent ustalari va xizmat narxlari)
+﻿// Usta-Top.uz - Haqiqiy ma'lumotlar bazasi (Toshkent ustalari va xizmat narxlari)
 
 const CATEGORIES = [
   { 
@@ -85,6 +85,7 @@ const MASTERS_DATA = [
   // --- CHILONZOR TUMANI ---
   {
     id: 1,
+    status: 'free',
     name: 'Akmal Karimov',
     initials: 'AK',
     profession: 'Santexnik va isitish mutaxassisi',
@@ -116,6 +117,7 @@ const MASTERS_DATA = [
   },
   {
     id: 2,
+    status: 'busy',
     name: 'Jamshid Bekmirzayev',
     initials: 'JB',
     profession: 'Elektrik va LED tizimlari ustasi',
@@ -145,6 +147,7 @@ const MASTERS_DATA = [
   },
   {
     id: 3,
+    status: 'free',
     name: 'Baxtiyor Saidov',
     initials: 'BS',
     profession: 'Konditsioner montaji va xizmati',
@@ -173,6 +176,7 @@ const MASTERS_DATA = [
   },
   {
     id: 4,
+    status: 'free',
     name: 'Sherzod Rahimov',
     initials: 'SR',
     profession: 'Mebel ustasi va yig‘uvchi',
@@ -202,6 +206,7 @@ const MASTERS_DATA = [
   // --- YUNUSOBOD TUMANI ---
   {
     id: 5,
+    status: 'free',
     name: 'Bobur Alimov',
     initials: 'BA',
     profession: 'Konditsioner ustasi (Iqlim mutaxassisi)',
@@ -229,6 +234,7 @@ const MASTERS_DATA = [
   },
   {
     id: 6,
+    status: 'busy',
     name: 'Mansur Qosimov',
     initials: 'MQ',
     profession: 'Professional usta elektrik',
@@ -256,6 +262,7 @@ const MASTERS_DATA = [
   },
   {
     id: 7,
+    status: 'free',
     name: 'Alisher Nurmatov',
     initials: 'AN',
     profession: 'Santexnik va quvurlar ustasi',
@@ -283,6 +290,7 @@ const MASTERS_DATA = [
   },
   {
     id: 8,
+    status: 'free',
     name: 'Rustam Mirzayev',
     initials: 'RM',
     profession: 'Maishiy texnika (kir yuvish/muzlatgich)',
@@ -312,6 +320,7 @@ const MASTERS_DATA = [
   // --- MIRZO ULUG‘BEK TUMANI ---
   {
     id: 9,
+    status: 'free',
     name: 'Sardor Toshmatov',
     initials: 'ST',
     profession: 'Elektrik va avtomatika muhandisi',
@@ -339,6 +348,7 @@ const MASTERS_DATA = [
   },
   {
     id: 10,
+    status: 'free',
     name: 'Farhod Fayzullayev',
     initials: 'FF',
     profession: 'Santexnik va isitish batareyalari',
@@ -366,6 +376,7 @@ const MASTERS_DATA = [
   },
   {
     id: 11,
+    status: 'busy',
     name: 'Umidjon Vohidov',
     initials: 'UV',
     profession: 'Konditsioner montaji va ta’miri',
@@ -392,6 +403,7 @@ const MASTERS_DATA = [
   },
   {
     id: 12,
+    status: 'free',
     name: 'Nodir Karimov',
     initials: 'NK',
     profession: 'Universal bir soatlik usta',
@@ -421,6 +433,7 @@ const MASTERS_DATA = [
   // --- YAKKASAROY TUMANI ---
   {
     id: 13,
+    status: 'free',
     name: 'Jasur Qodirov',
     initials: 'JQ',
     profession: 'Maishiy texnika mutaxassisi',
@@ -432,7 +445,7 @@ const MASTERS_DATA = [
     reviewsCount: 167,
     completedOrders: 610,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80',
     bio: "Avtomat kir yuvish mashinalari, quritgichlar va muzlatgichlarni uyingizda tezkor ta'mirlash. Original ehtiyot qismlar.",
     popularServices: [
       { name: 'Kir yuvish nasosini yangilash', price: "130 000 so'm" },
@@ -448,6 +461,7 @@ const MASTERS_DATA = [
   },
   {
     id: 14,
+    status: 'free',
     name: 'Elyor Jo‘rayev',
     initials: 'EJ',
     profession: 'Santexnik va kanalizatsiya ustasi',
@@ -475,6 +489,7 @@ const MASTERS_DATA = [
   },
   {
     id: 15,
+    status: 'busy',
     name: 'Doniyor Sobirov',
     initials: 'DS',
     profession: 'Elektrik va yoritish montaji',
@@ -501,6 +516,7 @@ const MASTERS_DATA = [
   },
   {
     id: 16,
+    status: 'free',
     name: 'Azizbek Shukurov',
     initials: 'AS',
     profession: 'Mebel yig‘ish va o‘rnatish',
@@ -512,7 +528,7 @@ const MASTERS_DATA = [
     reviewsCount: 65,
     completedOrders: 250,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     bio: "Shkaf-kupe, oshxona, stol-stul yig‘ish. Furnituralarni sozlash.",
     popularServices: [
       { name: 'Shkaf yig‘ish', price: "180 000 so'm" },
@@ -529,6 +545,7 @@ const MASTERS_DATA = [
   // --- SHAYXONTOHUR TUMANI ---
   {
     id: 17,
+    status: 'free',
     name: 'Dilshodbek Rahimov',
     initials: 'DR',
     profession: 'Mebel yig‘uvchi professional usta',
@@ -540,7 +557,7 @@ const MASTERS_DATA = [
     reviewsCount: 89,
     completedOrders: 310,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
     bio: "Har qanday turdagi mebellarni chizmasi bo‘yicha sifatli yig‘ish: shkaf-kupe, oshxona mebellari, ikki qavatli kravatlar.",
     popularServices: [
       { name: 'Shkaf-kupe yig‘ish', price: "180 000 so'm" },
@@ -556,6 +573,7 @@ const MASTERS_DATA = [
   },
   {
     id: 18,
+    status: 'free',
     name: 'Shavkat Ismoilov',
     initials: 'SI',
     profession: 'Santexnik va isitish qozoni ustasi',
@@ -567,7 +585,7 @@ const MASTERS_DATA = [
     reviewsCount: 140,
     completedOrders: 540,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80',
     bio: "Isitish qozonlari (kotyol) va quvurlar bo‘yicha 11 yillik tajriba. Avariya chaqiruvlariga tezkor yetib borish.",
     popularServices: [
       { name: 'Kotyol ta’miri', price: "200 000 so'm" },
@@ -582,6 +600,7 @@ const MASTERS_DATA = [
   },
   {
     id: 19,
+    status: 'free',
     name: 'Olimjon Hotamov',
     initials: 'OH',
     profession: 'Elektrik va montaj mutaxassisi',
@@ -593,7 +612,7 @@ const MASTERS_DATA = [
     reviewsCount: 95,
     completedOrders: 370,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
     bio: "Shit yig‘ish, avtomatlarni yangilash va qisqa tutashuvlarni bartaraf etish.",
     popularServices: [
       { name: 'Avtomat yangilash', price: "45 000 so'm" },
@@ -608,6 +627,7 @@ const MASTERS_DATA = [
   },
   {
     id: 20,
+    status: 'busy',
     name: 'Javlon Yo‘ldoshev',
     initials: 'JY',
     profession: 'Bir soatlik usta va mayda ta’mir',
@@ -619,7 +639,7 @@ const MASTERS_DATA = [
     reviewsCount: 78,
     completedOrders: 280,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80',
     bio: "Televizor ilish, korniz montaji, qulf almashtirish va javonlar o‘rnatish.",
     popularServices: [
       { name: 'Televizor ilish', price: "70 000 so'm" },
@@ -636,6 +656,7 @@ const MASTERS_DATA = [
   // --- SERGELI TUMANI ---
   {
     id: 21,
+    status: 'free',
     name: 'Otabek Nazarov',
     initials: 'ON',
     profession: 'Universal bir soatlik usta',
@@ -647,7 +668,7 @@ const MASTERS_DATA = [
     reviewsCount: 134,
     completedOrders: 490,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80',
     bio: "Televizorni devorga kronshteynda o‘rnatish, parda kornizlari, polkalar, rasmlar, ko‘zgular osish, eshik qulfini almashtirish.",
     popularServices: [
       { name: 'Televizor kronshteyni', price: "70 000 so'm" },
@@ -663,6 +684,7 @@ const MASTERS_DATA = [
   },
   {
     id: 22,
+    status: 'free',
     name: 'Sanjarbek Ergashev',
     initials: 'SE',
     profession: 'Santexnik mutaxassis',
@@ -674,7 +696,7 @@ const MASTERS_DATA = [
     reviewsCount: 98,
     completedOrders: 360,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1519085186259-b131cd64d1f5?auto=format&fit=crop&w=400&q=80',
     bio: "Yangi uylarda santexnika montaji, kranlar, unitaz va vanna o‘rnatish.",
     popularServices: [
       { name: 'Kran o‘rnatish', price: "75 000 so'm" },
@@ -689,6 +711,7 @@ const MASTERS_DATA = [
   },
   {
     id: 23,
+    status: 'busy',
     name: 'Bexruz Davronov',
     initials: 'BD',
     profession: 'Elektrik va avtomatika',
@@ -700,7 +723,7 @@ const MASTERS_DATA = [
     reviewsCount: 86,
     completedOrders: 330,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
     bio: "Elektr tarmog‘ini noldan tortish, lyustra va avtomatlarni montaj qilish.",
     popularServices: [
       { name: 'Rozetka montaji', price: "35 000 so'm" },
@@ -715,6 +738,7 @@ const MASTERS_DATA = [
   },
   {
     id: 24,
+    status: 'free',
     name: 'Temur Meliyev',
     initials: 'TM',
     profession: 'Maishiy texnika ta’miri',
@@ -726,7 +750,7 @@ const MASTERS_DATA = [
     reviewsCount: 110,
     completedOrders: 420,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80',
     bio: "Kir yuvish mashinalari, muzlatgich va mikroto‘lqinli pechlar ta'miri.",
     popularServices: [
       { name: 'Kir yuvish mashinasi ta’miri', price: "120 000 so'm" },
@@ -743,6 +767,7 @@ const MASTERS_DATA = [
   // --- OLMAZOR TUMANI ---
   {
     id: 25,
+    status: 'free',
     name: 'Farrux Yusupov',
     initials: 'FY',
     profession: 'Kotyol va santexnika muhandisi',
@@ -754,7 +779,7 @@ const MASTERS_DATA = [
     reviewsCount: 178,
     completedOrders: 650,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80',
     bio: "Ikki konturli isitish qozonlari (Navien, Baxi, Immergas) va issiq pol tizimlari ta'miri va montaji.",
     popularServices: [
       { name: 'Kotyol sozlash', price: "200 000 so'm" },
@@ -770,6 +795,7 @@ const MASTERS_DATA = [
   },
   {
     id: 26,
+    status: 'free',
     name: 'Anvar To‘rayev',
     initials: 'AT',
     profession: 'Elektrik va montajchi',
@@ -781,7 +807,7 @@ const MASTERS_DATA = [
     reviewsCount: 104,
     completedOrders: 390,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=400&q=80',
     bio: "Avtomatlar, lyustralar, rozetka va elektr shitlarini montaj qilish.",
     popularServices: [
       { name: 'Elektr shiti montaji', price: "220 000 so'm" },
@@ -796,6 +822,7 @@ const MASTERS_DATA = [
   },
   {
     id: 27,
+    status: 'free',
     name: 'Ulug‘bek Shokirov',
     initials: 'US',
     profession: 'Konditsioner mutaxassisi',
@@ -807,7 +834,7 @@ const MASTERS_DATA = [
     reviewsCount: 82,
     completedOrders: 310,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1517256673644-36ad11246d21?auto=format&fit=crop&w=400&q=80',
     bio: "Konditsionerni dori bilan yuvish, freon to‘ldirish va yangi konditsioner montaji.",
     popularServices: [
       { name: 'Freon quyish', price: "170 000 so'm" },
@@ -822,6 +849,7 @@ const MASTERS_DATA = [
   },
   {
     id: 28,
+    status: 'busy',
     name: 'Bobir Haydarov',
     initials: 'BH',
     profession: 'Mebel yig‘uvchi usta',
@@ -833,7 +861,7 @@ const MASTERS_DATA = [
     reviewsCount: 71,
     completedOrders: 270,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=400&q=80',
     bio: "Shkaf, stol, kravat yig‘ish va eshik petlyalarini yangilash.",
     popularServices: [
       { name: 'Shkaf yig‘ish', price: "170 000 so'm" },
@@ -850,6 +878,7 @@ const MASTERS_DATA = [
   // --- UCHTEPA TUMANI ---
   {
     id: 29,
+    status: 'free',
     name: 'Davron Abdullayev',
     initials: 'DA',
     profession: 'Santexnik va quvur ustasi',
@@ -861,7 +890,7 @@ const MASTERS_DATA = [
     reviewsCount: 125,
     completedOrders: 470,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=400&q=80',
     bio: "Kran, smesitel, unitaz va quvur tiqilishlarini ochish bo‘yicha tajribali usta.",
     popularServices: [
       { name: 'Kran almashtirish', price: "75 000 so'm" },
@@ -877,6 +906,7 @@ const MASTERS_DATA = [
   },
   {
     id: 30,
+    status: 'free',
     name: 'Ilhom Zokirov',
     initials: 'IZ',
     profession: 'Elektrik va avtomat uzgichlar',
@@ -888,7 +918,7 @@ const MASTERS_DATA = [
     reviewsCount: 92,
     completedOrders: 350,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=400&q=80',
     bio: "Rozetkalar, avtomat uzgichlar, lyustralar va qisqa tutashuvlarni bartaraf etish.",
     popularServices: [
       { name: 'Avtomat almashtirish', price: "40 000 so'm" },
@@ -903,6 +933,7 @@ const MASTERS_DATA = [
   },
   {
     id: 31,
+    status: 'free',
     name: 'Shuhrat Qobilov',
     initials: 'SQ',
     profession: 'Bir soatlik usta (Mayda ta’mirlar)',
@@ -914,7 +945,7 @@ const MASTERS_DATA = [
     reviewsCount: 80,
     completedOrders: 310,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80',
     bio: "Televizor ilish, korniz montaji, qulf almashtirish va oyna osish.",
     popularServices: [
       { name: 'Televizor ilish', price: "65 000 so'm" },
@@ -929,6 +960,7 @@ const MASTERS_DATA = [
   },
   {
     id: 32,
+    status: 'busy',
     name: 'Hasan Karimov',
     initials: 'HK',
     profession: 'Maishiy texnika ta’miri',
@@ -940,7 +972,7 @@ const MASTERS_DATA = [
     reviewsCount: 75,
     completedOrders: 290,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1528892952291-009c663ce843?auto=format&fit=crop&w=400&q=80',
     bio: "Kir yuvish mashinalari va muzlatgichlarni uyingizda ta'mirlash.",
     popularServices: [
       { name: 'Kir yuvish mashinasi ta’miri', price: "125 000 so'm" }
@@ -956,6 +988,7 @@ const MASTERS_DATA = [
   // --- MIROBOD TUMANI ---
   {
     id: 33,
+    status: 'free',
     name: 'Botir Normatov',
     initials: 'BN',
     profession: 'Santexnik va vanna xonalari montaji',
@@ -967,7 +1000,7 @@ const MASTERS_DATA = [
     reviewsCount: 155,
     completedOrders: 600,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80',
     bio: "Dush kabinalari, vanna, unitaz montaji va suv sizishlarini yo‘qotish.",
     popularServices: [
       { name: 'Dush smesiteli montaji', price: "80 000 so'm" },
@@ -982,6 +1015,7 @@ const MASTERS_DATA = [
   },
   {
     id: 34,
+    status: 'free',
     name: 'Xurshid Aliyev',
     initials: 'XA',
     profession: 'Elektrik va yoritish tizimlari',
@@ -993,7 +1027,7 @@ const MASTERS_DATA = [
     reviewsCount: 130,
     completedOrders: 510,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&w=400&q=80',
     bio: "Elektr shitlari, LED tizimlar, stabilizator va kuchlanish relesi montaji.",
     popularServices: [
       { name: 'Kuchlanish relesi', price: "90 000 so'm" },
@@ -1008,6 +1042,7 @@ const MASTERS_DATA = [
   },
   {
     id: 35,
+    status: 'free',
     name: 'Rustambek Usmonov',
     initials: 'RU',
     profession: 'Konditsioner montaji va freon',
@@ -1019,7 +1054,7 @@ const MASTERS_DATA = [
     reviewsCount: 90,
     completedOrders: 340,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1519764622345-23439dd774f7?auto=format&fit=crop&w=400&q=80',
     bio: "Konditsioner yuvish, freon quyish va ta'mirlash.",
     popularServices: [
       { name: 'Freon to‘ldirish', price: "180 000 so'm" },
@@ -1034,6 +1069,7 @@ const MASTERS_DATA = [
   },
   {
     id: 36,
+    status: 'busy',
     name: 'Sardorbek Ikromov',
     initials: 'SI',
     profession: 'Mebel yig‘ish mutaxassisi',
@@ -1045,7 +1081,7 @@ const MASTERS_DATA = [
     reviewsCount: 84,
     completedOrders: 320,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
     bio: "Oshxona garnituri va shkaf-kupe yig‘ish va sozlash.",
     popularServices: [
       { name: 'Shkaf-kupe montaji', price: "200 000 so'm" }
@@ -1061,6 +1097,7 @@ const MASTERS_DATA = [
   // --- YASHNOBOD TUMANI ---
   {
     id: 37,
+    status: 'free',
     name: 'Kamoliddin Po‘latov',
     initials: 'KP',
     profession: 'Santexnik mutaxassis',
@@ -1072,7 +1109,7 @@ const MASTERS_DATA = [
     reviewsCount: 112,
     completedOrders: 440,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
     bio: "Kran, smesitel, unitaz va isitish batareyalari ta'miri va montaji.",
     popularServices: [
       { name: 'Kran almashtirish', price: "75 000 so'm" },
@@ -1087,6 +1124,7 @@ const MASTERS_DATA = [
   },
   {
     id: 38,
+    status: 'free',
     name: 'Jahongir Mirzayev',
     initials: 'JM',
     profession: 'Elektrik va avtomat uzgichlar',
@@ -1098,7 +1136,7 @@ const MASTERS_DATA = [
     reviewsCount: 120,
     completedOrders: 460,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1562788869-4ed32648eb72?auto=format&fit=crop&w=400&q=80',
     bio: "Elektr shitlari, avtomatlar, rozetka va qisqa tutashuvlarni tuzatish.",
     popularServices: [
       { name: 'Rozetka montaji', price: "35 000 so'm" },
@@ -1113,6 +1151,7 @@ const MASTERS_DATA = [
   },
   {
     id: 39,
+    status: 'free',
     name: 'Muzaffar Tojiyev',
     initials: 'MT',
     profession: 'Maishiy texnika ta’miri',
@@ -1124,7 +1163,7 @@ const MASTERS_DATA = [
     reviewsCount: 88,
     completedOrders: 330,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?auto=format&fit=crop&w=400&q=80',
     bio: "Kir yuvish mashinalari, muzlatgich va boshqa maishiy texnika ta'miri.",
     popularServices: [
       { name: 'Kir yuvish mashinasi ta’miri', price: "130 000 so'm" }
@@ -1138,6 +1177,7 @@ const MASTERS_DATA = [
   },
   {
     id: 40,
+    status: 'free',
     name: 'Zafar Ahmedov',
     initials: 'ZA',
     profession: 'Universal bir soatlik usta',
@@ -1149,7 +1189,7 @@ const MASTERS_DATA = [
     reviewsCount: 79,
     completedOrders: 290,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
+    avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&q=80',
     bio: "Televizor ilish, korniz montaji, qulf almashtirish, oyna va rasmlar osish.",
     popularServices: [
       { name: 'Televizor kronshteyni', price: "70 000 so'm" },

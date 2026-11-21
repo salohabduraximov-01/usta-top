@@ -8,6 +8,11 @@
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -16,20 +21,19 @@
       theme: {
         extend: {
           colors: {
-            primary: {
-              DEFAULT: '#1E3A8A',
-              hover: '#172554',
-              light: '#EFF6FF',
-              dark: '#0F172A'
-            },
-            accent: {
-              DEFAULT: '#F97316',
-              hover: '#EA580C',
-              light: '#FFF7ED'
+            brand: {
+              navy: '#1E3A8A',
+              navyDark: '#142C5C',
+              orange: '#F97316',
+              softOrange: '#FFF1E6',
+              bgLight: '#F8FAFC',
+              border: '#E2E8F0',
+              textPrimary: '#0F172A',
+              textSecondary: '#64748B'
             }
           },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif']
           }
         }
       }
@@ -38,63 +42,66 @@
 
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-300">
+<body class="bg-[#F8FAFC] dark:bg-[#0B1120] text-[#0F172A] dark:text-[#F8FAFC] antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-200">
 
   <!-- ==========================================
-       1. HEADER / NAVBAR (5 TA ASOSIY BO'LIM)
+       1. HEADER / NAVBAR (Standardized SaaS Layout)
        ========================================== -->
-  <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all">
+  <header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
-      <!-- Logo -->
+      <!-- Brand Logo -->
       <a href="index.html" class="flex items-center space-x-3 group">
-        <div class="w-11 h-11 rounded-2xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-md shadow-blue-900/20 group-hover:bg-[#172554] transition">
+        <div class="w-11 h-11 rounded-xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-sm shadow-blue-900/20 group-hover:bg-[#142C5C] transition">
           <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
         </div>
         <div class="flex flex-col">
-          <span class="text-2xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400 flex items-center">
+          <span class="text-xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400">
             Usta-Top<span class="text-[#F97316]">.uz</span>
           </span>
-          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-1">
+          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-0.5">
             Usta kabineti
           </span>
         </div>
       </a>
 
-      <!-- Desktop Navigatsiya (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
-      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
-        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+      <!-- Desktop Navigatsiya -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
           Bosh sahifa
         </a>
-        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
           <span>📢</span>
           <span>E’lon berish</span>
         </a>
-        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
+        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
           Ustalar
         </a>
-        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
           <span>🧮</span>
           <span>Kalkulyator</span>
         </a>
-        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
+        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
           <span>🗺️</span>
           <span>Xarita</span>
         </a>
       </nav>
 
-      <!-- O'ng tomon: auth.js avtomatik boshqaradi -->
+      <!-- Desktop O'ng qism -->
       <div class="hidden md:flex items-center space-x-3.5">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm cursor-pointer"
+          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer shadow-2xs"
           title="Tungi / Kunduzgi rejim"
+          aria-label="Mavzuni almashtirish"
         >
           <span class="theme-toggle-icon flex items-center justify-center"></span>
         </button>
+
+        <div id="desktopAuthNav" class="flex items-center space-x-3"></div>
       </div>
 
       <!-- Mobil burger -->
@@ -102,7 +109,8 @@
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm"
+          class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 shadow-2xs"
+          aria-label="Tungi rejim"
         >
           <span class="theme-toggle-icon"></span>
         </button>
@@ -110,7 +118,8 @@
         <button 
           type="button" 
           onclick="toggleMobileMenu()" 
-          class="text-slate-700 dark:text-slate-200 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm"
+          class="text-slate-700 dark:text-slate-200 p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs"
+          aria-label="Menyu"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -120,24 +129,24 @@
 
     </div>
 
-    <!-- Mobil menyu (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2 shadow-xl">
-      <a href="index.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+    <!-- Mobil menyu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
+      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         🏠 Bosh sahifa
       </a>
-      <a href="elon-berish.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         📢 E’lon berish (Buyurtmalar)
       </a>
-      <a href="ustalar.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         🔧 Ustalar katalogi
       </a>
-      <a href="kalkulyator.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         🧮 Narx kalkulyatori
       </a>
-      <a href="xarita.html" class="block py-2 text-base font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
+      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
         🗺️ Toshkent xaritasi
       </a>
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800"></div>
+      <div id="mobileAuthNav" class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2"></div>
     </div>
   </header>
 
@@ -148,29 +157,29 @@
   <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
     
     <!-- Yuqori Usta Header Kartochkasi & Holat (Tumbler) -->
-    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm mb-8 flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+    <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 shadow-2xs mb-6 flex flex-col md:flex-row items-center md:items-start justify-between gap-5">
       
-      <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-5 text-center sm:text-left">
-        <!-- Dumaloq Avatar -->
+      <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
+        <!-- Avatar -->
         <div id="masterProfileAvatarBox" class="flex-shrink-0">
           <!-- JS dinamik to'ldiradi -->
         </div>
 
         <div>
           <div class="flex items-center justify-center sm:justify-start space-x-2">
-            <h1 id="masterProfileName" class="text-2xl font-extrabold text-slate-900 dark:text-white">Usta Ismi</h1>
+            <h1 id="masterProfileName" class="text-xl font-bold text-slate-900 dark:text-white">Usta Ismi</h1>
             <span class="text-blue-500" title="Tasdiqlangan usta">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
             </span>
           </div>
 
-          <p id="masterProfileProf" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
+          <p id="masterProfileProf" class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
             Mutaxassislik
           </p>
 
-          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-3 text-xs">
-            <span class="flex items-center text-amber-500 font-bold bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-xl">
-              ★ <span id="masterProfileRating">5.0</span> (<span id="masterProfileReviewsCount">0</span> ta sharh)
+          <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 mt-2.5 text-xs">
+            <span class="flex items-center text-amber-500 font-bold bg-amber-50 dark:bg-amber-950/40 px-2.5 py-0.5 rounded-md">
+              ★ <span id="masterProfileRating">5.0</span> (<span id="masterProfileReviewsCount">0</span> sharh)
             </span>
             <span class="text-slate-400">•</span>
             <span class="text-slate-600 dark:text-slate-300 font-medium">
@@ -185,35 +194,35 @@
       </div>
 
       <!-- HOLATNI O'ZGARTIRISH TUMBLERI (BO'SH / BAND) -->
-      <div class="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700 flex flex-col items-center sm:items-end w-full md:w-auto">
-        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+      <div class="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center sm:items-end w-full md:w-auto">
+        <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">
           Hozirgi holatingiz:
         </span>
 
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2.5">
           <span id="statusToggleLabel" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-            🟢 Bo‘sh (Buyurtma olishga tayyor)
+            🟢 Bo‘sh (Buyurtmaga tayyor)
           </span>
 
           <!-- Tumbler switch -->
           <label class="relative inline-flex items-center cursor-pointer select-none">
             <input type="checkbox" id="masterStatusToggle" class="sr-only peer" onchange="handleMasterStatusChange(this.checked)">
-            <div class="w-12 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
           </label>
         </div>
 
-        <span class="text-[10px] text-slate-400 mt-1">Tumbler o‘zgarsa katalogdagi kartangiz ham yangilanadi</span>
+        <span class="text-[10px] text-slate-400 mt-1">Holat o‘zgarsa katalogdagi kartangiz ham yangilanadi</span>
       </div>
 
     </div>
 
     <!-- TAB TUGMALARI -->
-    <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-2 mb-6 overflow-x-auto scrollbar-none">
+    <div class="flex items-center space-x-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-6 overflow-x-auto scrollbar-none">
       <button 
         type="button" 
         onclick="switchMasterTab('info')" 
         id="mTabBtn-info"
-        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow"
+        class="tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow-xs"
       >
         ⚙️ Ma’lumotlarim
       </button>
@@ -222,7 +231,7 @@
         type="button" 
         onclick="switchMasterTab('messages')" 
         id="mTabBtn-messages"
-        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+        class="tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
       >
         💬 Xabarlar (<span id="mInboxCountBadge">0</span>)
       </button>
@@ -231,7 +240,7 @@
         type="button" 
         onclick="switchMasterTab('reviews')" 
         id="mTabBtn-reviews"
-        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+        class="tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
       >
         ⭐ Sharhlarim (<span id="mReviewsCountBadge">0</span>)
       </button>
@@ -240,7 +249,7 @@
         type="button" 
         onclick="switchMasterTab('orders')" 
         id="mTabBtn-orders"
-        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+        class="tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
       >
         📢 Buyurtmalar birjasi (<span id="mOrdersCountBadge">0</span>)
       </button>
@@ -249,7 +258,7 @@
         type="button" 
         onclick="switchMasterTab('stats')" 
         id="mTabBtn-stats"
-        class="tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
+        class="tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer"
       >
         📊 Statistika
       </button>
@@ -257,69 +266,67 @@
 
 
     <!-- ==================== TAB 1: MA'LUMOTLARIM (TAHRIRLASH) ==================== -->
-    <div id="mTabContent-info" class="space-y-6">
+    <div id="mTabContent-info" class="space-y-5">
       
-      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Profil ma’lumotlarini tahrirlash</h3>
+      <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4">Usta profili ma’lumotlarini tahrirlash</h3>
         
-        <form onsubmit="handleMasterUpdateProfile(event)" class="space-y-4 max-w-xl">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Minimal narx (so‘m)
-              </label>
-              <input 
-                type="text" 
-                id="editMasterPrice" 
-                required 
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-                Tajriba (yil)
-              </label>
-              <input 
-                type="number" 
-                id="editMasterExp" 
-                min="1" 
-                max="50" 
-                required 
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
-              >
-            </div>
+        <form onsubmit="handleUpdateMasterProfile(event)" class="space-y-4 max-w-lg">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+              Boshlang‘ich xizmat narxi (so‘m)
+            </label>
+            <input 
+              type="text" 
+              id="editMasterPrice" 
+              required 
+              placeholder="Masalan: 50 000"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
-              O‘zingiz haqingizda ma’lumot (Bio)
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+              Ish tajribasi (yil)
+            </label>
+            <input 
+              type="number" 
+              id="editMasterExp" 
+              required 
+              min="1" 
+              max="50"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A]"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+              O‘zingiz haqingizda (Bio)
             </label>
             <textarea 
               id="editMasterBio" 
               rows="3" 
-              maxlength="300" 
-              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A] resize-none"
             ></textarea>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
               Xizmat ko‘rsatadigan tumanlar (Vergul bilan ajrating)
             </label>
             <input 
               type="text" 
               id="editMasterDistricts" 
-              placeholder="Masalan: Chilonzor, Yunusobod, Sergeli" 
-              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+              placeholder="Chilonzor, Yunusobod, Mirobod"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A]"
             >
           </div>
 
           <button 
             type="submit" 
-            class="bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-md transition cursor-pointer"
+            class="btn-primary py-2.5 px-6 rounded-xl text-xs font-bold"
           >
-            Ma’lumotlarni yangilash
+            Saqlash
           </button>
         </form>
       </div>
@@ -327,17 +334,20 @@
     </div>
 
 
-    <!-- ==================== TAB 2: XABARLAR (MIJOZLARDAN KELGAN CHATLAR VA JAVOB YOZISH) ==================== -->
+    <!-- ==================== TAB 2: MIJOZLAR BILAN XABARLAR ==================== -->
     <div id="mTabContent-messages" class="hidden space-y-4">
-      <div id="masterInboxList" class="space-y-4">
-        <!-- JS to'ldiradi -->
+      <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">Mijozlar bilan yozishmalar</h3>
+        <div id="masterInboxList" class="space-y-3">
+          <!-- JS to'ldiradi -->
+        </div>
       </div>
     </div>
 
 
-    <!-- ==================== TAB 3: SHARHLARIM ==================== -->
+    <!-- ==================== TAB 3: SHARHLAR ==================== -->
     <div id="mTabContent-reviews" class="hidden space-y-4">
-      <div id="masterReviewsList" class="space-y-4">
+      <div id="masterReviewsList" class="space-y-3">
         <!-- JS to'ldiradi -->
       </div>
     </div>
@@ -345,114 +355,114 @@
 
     <!-- ==================== TAB 4: BUYURTMALAR BIRJASI ==================== -->
     <div id="mTabContent-orders" class="hidden space-y-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Mijozlardan kelgan faol buyurtmalar</h3>
-          <p class="text-xs text-slate-400">O‘z narx va vaqtingizni taklif qiling, mijoz bilan to‘g‘ridan-to‘g‘ri ishlang</p>
-        </div>
-        <a href="elon-berish.html" class="px-4 py-2 bg-[#1E3A8A] text-white text-xs font-bold rounded-xl hover:bg-[#172554] transition">
-          Barcha e’lonlar doskasi →
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-bold text-sm text-slate-900 dark:text-white">Toshkentdagi yangi mijoz e’lonlari</h3>
+        <a href="elon-berish.html" class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 hover:underline">
+          Birja sahifasiga o‘tish →
         </a>
       </div>
-
-      <div id="masterOrdersList" class="space-y-4">
+      <div id="masterOrdersList" class="space-y-3">
         <!-- JS to'ldiradi -->
       </div>
     </div>
 
 
     <!-- ==================== TAB 5: STATISTIKA ==================== -->
-    <div id="mTabContent-stats" class="hidden space-y-6">
-      
-      <!-- Ko'rsatkichlar kartochkalari -->
+    <div id="mTabContent-stats" class="hidden space-y-4">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Profil ko‘rilishlari</span>
-          <span class="text-3xl font-extrabold text-[#1E3A8A] dark:text-blue-400 mt-2 block" id="statViewsCount">342</span>
-          <span class="text-[11px] text-emerald-500 font-semibold">↑ Oxirgi 30 kunda</span>
+        <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Profil ko‘rishlar</span>
+          <div class="text-2xl font-extrabold text-[#1E3A8A] dark:text-blue-400 mt-1">428 ta</div>
+          <span class="text-[11px] text-emerald-500 font-semibold">↑ Oxirgi 30 kunda +18%</span>
         </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Mijozlar murojaati (Chat)</span>
-          <span class="text-3xl font-extrabold text-[#F97316] mt-2 block" id="statChatsCount">28</span>
-          <span class="text-[11px] text-slate-400">Sayt orqali yozilgan</span>
+        <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Mijoz murojaatlari</span>
+          <div class="text-2xl font-extrabold text-[#F97316] mt-1">34 ta</div>
+          <span class="text-[11px] text-slate-400">Chat va qo‘ng‘iroqlar</span>
         </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Bajarilgan buyurtmalar</span>
-          <span class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-2 block" id="statOrdersCount">24</span>
-          <span class="text-[11px] text-slate-400">Kafolat berilgan</span>
+        <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">O‘rtacha reyting</span>
+          <div class="text-2xl font-extrabold text-amber-500 mt-1">4.9 ★</div>
+          <span class="text-[11px] text-slate-400">Tekshirilgan sharhlar</span>
         </div>
       </div>
-
-      <!-- Oddiy Chiziqli Diagramma (SVG) -->
-      <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-        <div class="flex items-center justify-between mb-6">
-          <div>
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">Haftalik faollik dinamikasi</h3>
-            <p class="text-xs text-slate-400">Mijozlar tashrifi va chat xabarlari statistikasi</p>
-          </div>
-          <span class="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full">
-            ● O‘sish: +18%
-          </span>
-        </div>
-
-        <!-- Chiroyli SVG Chiziqli Diagramma -->
-        <div class="w-full overflow-x-auto">
-          <svg class="w-full h-48 text-primary" viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#1E3A8A" stop-opacity="0.25"/>
-                <stop offset="100%" stop-color="#1E3A8A" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-
-            <!-- Gorizontal orqa chiziqlar -->
-            <line x1="0" y1="30" x2="600" y2="30" stroke="currentColor" stroke-opacity="0.08" stroke-dasharray="4"/>
-            <line x1="0" y1="80" x2="600" y2="80" stroke="currentColor" stroke-opacity="0.08" stroke-dasharray="4"/>
-            <line x1="0" y1="130" x2="600" y2="130" stroke="currentColor" stroke-opacity="0.08" stroke-dasharray="4"/>
-
-            <!-- Gradient Area -->
-            <path d="M 30 140 Q 120 70 200 90 T 380 40 T 570 30 L 570 170 L 30 170 Z" fill="url(#chartGradient)"/>
-
-            <!-- Asosiy chiziq -->
-            <path d="M 30 140 Q 120 70 200 90 T 380 40 T 570 30" stroke="#1E3A8A" stroke-width="3.5" stroke-linecap="round"/>
-
-            <!-- Nuqtalar -->
-            <circle cx="30" cy="140" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="120" cy="80" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="210" cy="90" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="300" cy="60" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="390" cy="40" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="480" cy="55" r="5" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
-            <circle cx="570" cy="30" r="6" fill="#F97316" stroke="#FFFFFF" stroke-width="2"/>
-          </svg>
-          
-          <div class="flex justify-between text-[11px] font-semibold text-slate-400 px-4 mt-2">
-            <span>Dush</span>
-            <span>Sesh</span>
-            <span>Chor</span>
-            <span>Pay</span>
-            <span>Juma</span>
-            <span>Shan</span>
-            <span class="text-[#F97316] font-bold">Yak (Bugun)</span>
-          </div>
-        </div>
-      </div>
-
     </div>
 
   </main>
 
 
   <!-- ==========================================
-       3. FOOTER
+       3. FOOTER (Standardized 4-column)
        ========================================== -->
-  <footer class="mt-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-8 pb-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-      © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
+  <footer class="mt-auto bg-white dark:bg-[#0B1120] border-t border-slate-200 dark:border-slate-800 pt-12 pb-8 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
+        
+        <div class="md:col-span-5 space-y-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-[#1E3A8A] flex items-center justify-center text-white">
+              <svg class="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <span class="text-lg font-extrabold text-[#1E3A8A] dark:text-blue-400">Usta-Top<span class="text-[#F97316]">.uz</span></span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+            Toshkent shahrida professional va tekshirilgan ustalarni topish portali. Har bir tuman uchun bo‘sh va band ustalar, kafolatlangan xizmatlar va bepul e’lon berish imkoniyati.
+          </p>
+        </div>
+
+        <div class="md:col-span-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Asosiy sahifalar</h4>
+          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+            <li><a href="index.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Bosh sahifa</a></li>
+            <li><a href="elon-berish.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">E’lon berish (Buyurtmalar birjasi)</a></li>
+            <li><a href="ustalar.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Ustalar katalogi</a></li>
+            <li><a href="kalkulyator.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Narx kalkulyatori</a></li>
+            <li><a href="xarita.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Toshkent xaritasi</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Toshkent tumanlari</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Chilonzor, Yunusobod, Mirzo Ulug‘bek, Yakkasaroy, Shayxontohur, Sergeli, Olmazor, Uchtepa, Mirobod, Yashnobod. Har bir tumanda kamida 4 ta professional mutaxassis mavjud.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <span>© 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.</span>
+        <span>Toshkent, O‘zbekiston</span>
+      </div>
+
     </div>
   </footer>
+
+
+  <!-- Mobil pastki qotirilgan menyu -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
+    <a href="index.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🏠</span>
+      <span>Bosh sahifa</span>
+    </a>
+    <a href="elon-berish.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">📢</span>
+      <span>E’lon</span>
+    </a>
+    <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🔧</span>
+      <span>Ustalar</span>
+    </a>
+    <a href="kalkulyator.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🧮</span>
+      <span>Kalkulyator</span>
+    </a>
+    <a href="xarita.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
+      <span class="text-base mb-0.5">🗺️</span>
+      <span>Xarita</span>
+    </a>
+  </div>
 
   <div id="chatModalContainer"></div>
   <div id="detailModalContainer"></div>
@@ -461,13 +471,25 @@
   <!-- Skriptlar -->
   <script src="data.js"></script>
   <script src="common.js"></script>
+  <script src="animations.js"></script>
   <script src="auth.js"></script>
+
   <script>
     let activeMasterUser = null;
 
     document.addEventListener('DOMContentLoaded', () => {
-      activeMasterUser = requireAuth('master');
-      if (!activeMasterUser) return;
+      const user = getCurrentUser();
+      if (!user) {
+        window.location.href = 'kirish.html';
+        return;
+      }
+
+      if (user.role !== 'master') {
+        window.location.href = 'profil-mijoz.html';
+        return;
+      }
+
+      activeMasterUser = user;
 
       renderMasterHeader();
       renderMasterInboxTab();
@@ -479,21 +501,19 @@
       const u = activeMasterUser;
       document.getElementById('masterProfileName').textContent = u.name;
       document.getElementById('masterProfileProf').textContent = u.profession;
-      document.getElementById('masterProfileRating').textContent = u.rating || '5.0';
-      document.getElementById('masterProfileReviewsCount').textContent = u.reviews ? u.reviews.length : (u.reviewsCount || 0);
       document.getElementById('masterProfilePhone').textContent = u.phone;
       document.getElementById('masterProfileDistrict').textContent = u.district;
+      document.getElementById('masterProfileRating').textContent = u.rating || 5.0;
+      document.getElementById('masterProfileReviewsCount').textContent = u.reviewsCount || (u.reviews ? u.reviews.length : 0);
 
-      document.getElementById('masterProfileAvatarBox').innerHTML = renderAvatar(u, 'w-20 h-20 text-2xl');
+      document.getElementById('masterProfileAvatarBox').innerHTML = renderAvatar(u, 'w-16 h-16 text-xl font-bold');
 
-      // Tumbler status
-      const isFree = u.status !== 'busy';
+      // Holat tumbleri
       const toggle = document.getElementById('masterStatusToggle');
       const label = document.getElementById('statusToggleLabel');
-      if (toggle && label) {
-        toggle.checked = isFree;
-        updateTumblerLabel(isFree);
-      }
+      const isFree = (u.status !== 'busy');
+      toggle.checked = isFree;
+      updateStatusLabel(isFree);
 
       // Edit inputs
       document.getElementById('editMasterPrice').value = (u.startingPrice || '50 000').replace(/dan|so'mdan|so'm/gi, '').trim();
@@ -502,40 +522,24 @@
       document.getElementById('editMasterDistricts').value = Array.isArray(u.districtsServed) ? u.districtsServed.join(', ') : u.district;
     }
 
-    function updateTumblerLabel(isFree) {
+    function updateStatusLabel(isFree) {
       const label = document.getElementById('statusToggleLabel');
-      if (label) {
-        if (isFree) {
-          label.innerHTML = '🟢 Bo‘sh (Buyurtma olishga tayyor)';
-          label.className = 'text-xs font-bold text-emerald-600 dark:text-emerald-400';
-        } else {
-          label.innerHTML = '🔴 Band (Vaqtinchalik band)';
-          label.className = 'text-xs font-bold text-slate-500 dark:text-slate-400';
-        }
+      if (isFree) {
+        label.textContent = "🟢 Bo‘sh (Buyurtmaga tayyor)";
+        label.className = "text-xs font-bold text-emerald-600 dark:text-emerald-400";
+      } else {
+        label.textContent = "⚪ Band (Vaqtincha band)";
+        label.className = "text-xs font-bold text-slate-500 dark:text-slate-400";
       }
     }
 
-    // TUMBLER STATUSNI O'ZGARTIRISH (BO'SH / BAND)
     function handleMasterStatusChange(isChecked) {
-      const newStatus = isChecked ? 'free' : 'busy';
+      const newStatus = isChecked ? 'available' : 'busy';
       activeMasterUser.status = newStatus;
-      saveUser(activeMasterUser);
-      updateTumblerLabel(isChecked);
+      updateStatusLabel(isChecked);
 
-      // Overrides ga saqlash
-      const overrides = safeStorage.getJSON('master_status_overrides', {});
-      overrides[activeMasterUser.id] = newStatus;
-      safeStorage.setItem('master_status_overrides', overrides);
-
-      // Agar yangi ro'yxatdan o'tgan ustalar bo'lsa
-      const regMasters = safeStorage.getJSON('registered_masters', []);
-      const idx = regMasters.findIndex(m => m.id === activeMasterUser.id);
-      if (idx >= 0) {
-        regMasters[idx].status = newStatus;
-        safeStorage.setItem('registered_masters', regMasters);
-      }
-
-      showToast(isChecked ? "✓ Holatingiz «Bo‘sh»ga o‘zgartirildi" : "✓ Holatingiz «Band»ga o‘zgartirildi", "info");
+      updateMasterStatus(activeMasterUser.id, newStatus);
+      showToast(isChecked ? "✓ Holatingiz: 'Bo‘sh' deb belgilandi" : "✓ Holatingiz: 'Band' deb belgilandi", "info");
     }
 
     function switchMasterTab(tabName) {
@@ -546,107 +550,91 @@
         if (!btn || !content) return;
 
         if (t === tabName) {
-          btn.className = "tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow";
+          btn.className = "tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer bg-[#1E3A8A] text-white shadow-xs";
           content.classList.remove('hidden');
         } else {
-          btn.className = "tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer";
+          btn.className = "tab-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap cursor-pointer";
           content.classList.add('hidden');
         }
       });
     }
 
-    // Ma'lumotlarni tahrirlash
-    function handleMasterUpdateProfile(e) {
+    async function handleUpdateMasterProfile(e) {
       e.preventDefault();
       const price = document.getElementById('editMasterPrice').value.trim();
       const exp = parseInt(document.getElementById('editMasterExp').value, 10);
       const bio = document.getElementById('editMasterBio').value.trim();
       const districtsStr = document.getElementById('editMasterDistricts').value;
+      const districtsServed = districtsStr.split(',').map(s => s.trim()).filter(Boolean);
 
-      activeMasterUser.startingPrice = price + " so'mdan";
-      activeMasterUser.experience = exp;
-      activeMasterUser.bio = bio;
-      activeMasterUser.districtsServed = districtsStr.split(',').map(s => s.trim()).filter(Boolean);
+      const res = await updateUserProfile(activeMasterUser.id, {
+        startingPrice: price + " so‘m",
+        experience: exp,
+        bio,
+        districtsServed
+      });
 
-      saveUser(activeMasterUser);
-
-      // Ro'yxatdagi yangi ustalarda ham yangilash
-      const regMasters = safeStorage.getJSON('registered_masters', []);
-      const idx = regMasters.findIndex(m => m.id === activeMasterUser.id);
-      if (idx >= 0) {
-        regMasters[idx] = activeMasterUser;
-        safeStorage.setItem('registered_masters', regMasters);
+      if (res.success) {
+        activeMasterUser = res.user;
+        renderMasterHeader();
+        showToast("✓ Usta ma’lumotlari saqlandi", "success");
       }
-
-      showToast("✓ Profil ma’lumotlaringiz muvaffaqiyatli saqlandi!", "success");
     }
 
-    // TAB 2: Xabarlar (Mijozlardan kelgan murojaatlar va javob berish)
+    // TAB 2: Xabarlarim
     function renderMasterInboxTab() {
       const container = document.getElementById('masterInboxList');
       const badge = document.getElementById('mInboxCountBadge');
       if (!container) return;
 
       const allChats = safeStorage.getJSON('user_chats', {});
-      const myChatMessages = allChats[activeMasterUser.id] || [];
+      const msgs = allChats[activeMasterUser.id] || [];
+      if (badge) badge.textContent = msgs.length > 0 ? 1 : 0;
 
-      if (badge) badge.textContent = myChatMessages.length;
-
-      if (myChatMessages.length === 0) {
+      if (msgs.length === 0) {
         container.innerHTML = `
-          <div class="py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
-            <span class="text-4xl block mb-2">💬</span>
-            <h4 class="font-bold text-slate-800 dark:text-white">Hozircha xabarlar yo‘q</h4>
-            <p class="text-xs text-slate-500 mt-1">Mijozlar profilingiz orqali murojaat qilganda barcha xabarlar shu yerda ko‘rinadi.</p>
+          <div class="py-12 text-center text-slate-400 text-xs">
+            Hozircha mijozlardan yangi xabarlar yo‘q.
           </div>
         `;
         return;
       }
 
       container.innerHTML = `
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-          <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
-            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Mijozlar bilan suhbat tarixi</h4>
-            <span class="text-xs text-slate-400">${myChatMessages.length} ta xabar</span>
-          </div>
-
-          <div class="space-y-3 max-h-[360px] overflow-y-auto pr-1">
-            ${myChatMessages.map(msg => `
-              <div class="flex flex-col ${msg.sender === 'master' ? 'items-end' : 'items-start'}">
-                <span class="text-[10px] font-bold text-slate-400 mb-0.5 px-1">${msg.sender === 'master' ? 'Siz (Usta)' : 'Mijoz'}</span>
-                <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm ${
-                  msg.sender === 'master' 
-                    ? 'bg-[#1E3A8A] text-white rounded-br-sm' 
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-bl-sm border border-slate-200/60 dark:border-slate-700'
+        <div class="space-y-3">
+          <div class="max-h-60 overflow-y-auto space-y-2 p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700">
+            ${msgs.map(m => `
+              <div class="flex ${m.sender === 'master' ? 'justify-end' : 'justify-start'}">
+                <div class="max-w-[80%] rounded-xl px-3 py-1.5 text-xs ${
+                  m.sender === 'master' 
+                    ? 'bg-[#1E3A8A] text-white' 
+                    : 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-600'
                 }">
-                  <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
+                  <span class="block font-bold text-[10px] opacity-75">${m.sender === 'master' ? 'Siz' : 'Mijoz'}:</span>
+                  <p class="leading-relaxed">${escapeHtml(m.text)}</p>
+                  <span class="block text-[9px] text-right opacity-60 mt-0.5">${m.time}</span>
                 </div>
-                <span class="text-[10px] text-slate-400 mt-1 px-1">${escapeHtml(msg.time || '')}</span>
               </div>
             `).join('')}
           </div>
 
-          <!-- Tezkor javob yozish formasi -->
-          <form onsubmit="handleMasterReplySubmit(event)" class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+          <form onsubmit="handleMasterReply(event)" class="flex gap-2">
             <input 
               type="text" 
               id="masterReplyInput" 
-              required 
-              placeholder="Mijozga javob yozish..." 
-              class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-[#1E3A8A]"
+              placeholder="Mijozga javob yozing..." 
+              required
+              class="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-[#1E3A8A]"
             >
-            <button 
-              type="submit" 
-              class="bg-[#1E3A8A] hover:bg-[#172554] text-white px-5 py-2.5 rounded-xl font-bold text-xs shadow transition active:scale-95 cursor-pointer"
-            >
-              Javob qaytarish
+            <button type="submit" class="btn-primary px-4 py-2 rounded-xl text-xs font-bold">
+              Yuborish
             </button>
           </form>
         </div>
       `;
     }
 
-    function handleMasterReplySubmit(e) {
+    function handleMasterReply(e) {
       e.preventDefault();
       const input = document.getElementById('masterReplyInput');
       if (!input || !input.value.trim()) return;
@@ -670,30 +658,30 @@
 
       if (reviews.length === 0) {
         container.innerHTML = `
-          <div class="py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
-            <span class="text-4xl block mb-2">⭐</span>
-            <h4 class="font-bold text-slate-800 dark:text-white">Hozircha sharhlar yo‘q</h4>
-            <p class="text-xs text-slate-500 mt-1">Mijozlaringiz siz haqingizda fikr va baho qoldirganda shu yerda jamlanadi.</p>
+          <div class="py-12 text-center bg-white dark:bg-[#111827] rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6">
+            <span class="text-3xl block mb-2">⭐</span>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-white">Hozircha sharhlar yo‘q</h4>
+            <p class="text-xs text-slate-400 mt-1">Mijozlaringiz siz haqingizda fikr va baho qoldirganda shu yerda jamlanadi.</p>
           </div>
         `;
         return;
       }
 
       container.innerHTML = reviews.map(r => `
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-sm text-slate-900 dark:text-white">${escapeHtml(r.author)}</span>
+        <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">${escapeHtml(r.author)}</span>
             <div class="flex items-center text-amber-500 text-xs font-bold">
               ★ <span>${r.rating} yulduz</span>
             </div>
           </div>
           <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic">"${escapeHtml(r.text)}"</p>
-          <span class="text-[10px] text-slate-400 block mt-2">${escapeHtml(r.date || '')}</span>
+          <span class="text-[10px] text-slate-400 block mt-1.5">${escapeHtml(r.date || '')}</span>
         </div>
       `).join('');
     }
 
-    // TAB 4: Buyurtmalar birjasi (Usta buyurtmalarni ko'radi va narx taklif qiladi)
+    // TAB 4: Buyurtmalar birjasi
     function renderMasterOrdersTab() {
       const container = document.getElementById('masterOrdersList');
       const badge = document.getElementById('mOrdersCountBadge');
@@ -704,10 +692,10 @@
 
       if (orders.length === 0) {
         container.innerHTML = `
-          <div class="py-16 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8">
-            <span class="text-4xl block mb-2">📋</span>
-            <h4 class="font-bold text-slate-800 dark:text-white">Hozircha yangi e’lonlar yo‘q</h4>
-            <p class="text-xs text-slate-500 mt-1">Mijozlar yangi buyurtma joylashtirishi bilan shu yerda ko‘rinadi.</p>
+          <div class="py-12 text-center bg-white dark:bg-[#111827] rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6">
+            <span class="text-3xl block mb-2">📋</span>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-white">Hozircha yangi e’lonlar yo‘q</h4>
+            <p class="text-xs text-slate-400 mt-1">Mijozlar yangi buyurtma joylashtirishi bilan shu yerda ko‘rinadi.</p>
           </div>
         `;
         return;
@@ -716,21 +704,21 @@
       container.innerHTML = orders.map(o => {
         const alreadyBid = o.bids && o.bids.some(b => b.masterId === activeMasterUser.id);
         return `
-          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+          <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-2.5">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-3 py-1 rounded-xl">
+              <span class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-2.5 py-0.5 rounded-md">
                 ${escapeHtml(o.categoryName || 'Xizmat')}
               </span>
-              <span class="text-xs text-slate-400">${escapeHtml(o.createdAt)}</span>
+              <span class="text-[11px] text-slate-400">${escapeHtml(o.createdAt)}</span>
             </div>
 
-            <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${escapeHtml(o.title)}</h4>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">${escapeHtml(o.title)}</h4>
             <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(o.description)}</p>
 
             <div class="flex flex-wrap items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
               <span class="font-bold text-emerald-600 dark:text-emerald-400">Byudjet: ${escapeHtml(o.budget)}</span>
-              <span class="text-slate-500">📍 ${escapeHtml(o.district)} (${escapeHtml(o.address)})</span>
-              <span class="text-slate-500">🕒 ${escapeHtml(o.timeNeeded)}</span>
+              <span class="text-slate-400">📍 ${escapeHtml(o.district)} (${escapeHtml(o.address)})</span>
+              <span class="text-slate-400">🕒 ${escapeHtml(o.timeNeeded)}</span>
             </div>
 
             <div class="flex items-center justify-between pt-2">
@@ -740,7 +728,7 @@
 
               <a 
                 href="elon-berish.html" 
-                class="px-4 py-2 rounded-xl bg-[#1E3A8A] hover:bg-[#172554] text-white text-xs font-bold transition shadow-sm"
+                class="btn-primary px-3.5 py-1.5 rounded-lg text-xs font-bold"
               >
                 ${alreadyBid ? 'Taklifni yangilash' : 'Narx taklif qilish →'}
               </a>
