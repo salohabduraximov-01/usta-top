@@ -29,53 +29,76 @@
 <body class="bg-[#FBFBFA] dark:bg-[#0C0E12] text-[#0F1115] dark:text-[#F3F4F6] antialiased min-h-screen flex flex-col transition-colors duration-200">
 
   <!-- ==========================================
-       1. HEADER / NAVIGATION (Linear/Apple Style)
+       1. HEADER / NAVIGATION
        ========================================== -->
-  <header class="sticky top-0 z-40 w-full bg-[#FFFFFF]/90 dark:bg-[#0C0E12]/90 backdrop-blur-md border-b border-[#E8E8E5] dark:border-[#1F242F] transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+  <header class="site-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Brand Logo -->
       <a href="index.html" class="flex items-center space-x-2.5 group">
-        <div class="w-8 h-8 rounded-lg bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-bold text-sm tracking-tight transition-transform group-hover:scale-95">
-          <span class="text-[#FF5512]">U</span>T
+        <div class="w-8 h-8 rounded-lg bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-black text-sm tracking-tighter transition-transform group-hover:scale-95 shadow-xs">
+          UT
         </div>
         <div class="flex items-baseline space-x-1">
-          <span class="font-display font-extrabold text-base tracking-tight text-[#0F1115] dark:text-white">Usta-Top</span>
-          <span class="text-[10px] font-semibold text-[#FF5512]">.uz</span>
+          <span class="font-display text-base font-extrabold tracking-tight text-[#0F1115] dark:text-white">
+            Usta-Top<span class="text-[#FF5512]">.uz</span>
+          </span>
+          <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider hidden sm:inline">
+            Toshkent
+          </span>
         </div>
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Bosh sahifa</a>
-        <a href="elon-berish.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">E’lon berish</a>
-        <a href="ustalar.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Ustalar</a>
-        <a href="kalkulyator.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Kalkulyator</a>
-        <a href="xarita.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Xarita</a>
+      <nav class="hidden md:flex items-center space-x-1">
+        <a href="index.html" class="nav-link">Bosh sahifa</a>
+        <a href="elon-berish.html" class="nav-link">E’lon berish</a>
+        <a href="ustalar.html" class="nav-link">Ustalar katalogi</a>
+        <a href="kalkulyator.html" class="nav-link">Kalkulyator</a>
+        <a href="xarita.html" class="nav-link">Xarita</a>
       </nav>
 
-      <!-- O'ng qism: Tungi rejim va Kirish -->
-      <div class="hidden md:flex items-center space-x-2.5">
+      <!-- Desktop O'ng qism: Tungi rejim va Kirish -->
+      <div class="hidden md:flex items-center space-x-2.5" id="headerAuthDesktop">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-black dark:hover:text-white transition cursor-pointer"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] transition shadow-xs cursor-pointer flex items-center justify-center"
           title="Tungi / Kunduzgi rejim"
         >
-          <span class="theme-toggle-icon"></span>
+          <span class="theme-toggle-icon flex items-center justify-center"></span>
         </button>
 
-        <a href="kirish.html" class="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition">
+        <a 
+          href="kirish.html" 
+          class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-2.5 py-1.5 transition"
+        >
           Kirish
         </a>
+
+        <div class="flex items-center space-x-2">
+          <a 
+            href="royxat-mijoz.html" 
+            class="nav-link active text-xs font-semibold py-2 px-3.5 rounded-xl cursor-pointer"
+          >
+            Mijoz bo‘lish
+          </a>
+
+          <a 
+            href="royxat-usta.html" 
+            class="btn-primary text-xs font-bold py-2 px-3.5 rounded-xl cursor-pointer"
+          >
+            + Usta bo‘lish
+          </a>
+        </div>
       </div>
 
       <!-- Mobil burger -->
-      <div class="flex items-center space-x-2 md:hidden">
-        <button type="button" onclick="toggleTheme()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
+      <div class="flex items-center space-x-1.5 md:hidden">
+        <button type="button" onclick="toggleTheme()" class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition">
           <span class="theme-toggle-icon"></span>
         </button>
-        <button type="button" onclick="toggleMobileMenu()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+        <button type="button" onclick="toggleMobileMenu()" class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
@@ -83,12 +106,16 @@
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#0C0E12] px-4 pt-2.5 pb-4 space-y-1 text-xs font-semibold">
-      <a href="index.html" class="block py-2 text-slate-700 dark:text-slate-300">Bosh sahifa</a>
-      <a href="elon-berish.html" class="block py-2 text-slate-700 dark:text-slate-300">E’lon berish</a>
-      <a href="ustalar.html" class="block py-2 text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
-      <a href="kalkulyator.html" class="block py-2 text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
-      <a href="xarita.html" class="block py-2 text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--border-subtle)] bg-[var(--surface)] px-4 py-3 space-y-1 shadow-lg">
+      <a href="index.html" class="mobile-nav-link">Bosh sahifa</a>
+      <a href="elon-berish.html" class="mobile-nav-link">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="mobile-nav-link">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="mobile-nav-link">Narx kalkulyatori</a>
+      <a href="xarita.html" class="mobile-nav-link">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-[var(--border-subtle)] flex gap-2">
+        <a href="kirish.html" class="flex-1 btn-secondary text-center py-2 rounded-xl text-xs font-bold">Kirish</a>
+        <a href="royxat-usta.html" class="flex-1 btn-primary text-center py-2 rounded-xl text-xs font-bold">+ Usta bo‘lish</a>
+      </div>
     </div>
   </header>
 

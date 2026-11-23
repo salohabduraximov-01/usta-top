@@ -1,31 +1,53 @@
 /* ==========================================================================
-   USTA-TOP.UZ — MODERN EDITORIAL & SAAS DESIGN SYSTEM
-   Inspired by: Linear, Apple, Stripe, Airbnb
-   Palette: Warm Neutral (#FBFBFA), Crisp White (#FFFFFF), Charcoal (#0F1115), 
-            Sophisticated Accent Orange (#FF5512), Subtle Borders (#E5E5E2)
+   USTA-TOP.UZ — UNIFIED DESIGN SYSTEM
+   Editorial, Clean, Modern Uzbek Service Marketplace
+   Palette: Warm Neutrals, Deep Charcoal, Signature International Orange (#FF5512)
+   Strict rule: ZERO blue anywhere in the design.
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-warm: #FBFBFA;
+  /* Warm Neutral Surfaces */
+  --bg-warm: #FAF9F6;
   --surface: #FFFFFF;
-  --surface-subtle: #F4F4F1;
+  --surface-subtle: #F4F3F0;
   --surface-elevated: #FFFFFF;
-  --text-primary: #0F1115;
-  --text-secondary: #5E6472;
-  --text-tertiary: #8E95A5;
-  --border-subtle: #E8E8E5;
-  --border-strong: #D1D1CD;
+  
+  /* Text Hierarchy */
+  --text-primary: #121316;
+  --text-secondary: #585D69;
+  --text-tertiary: #8C92A0;
+  --text-muted: #A0A5B2;
+  
+  /* Architectural Borders */
+  --border-subtle: #E7E6E2;
+  --border-strong: #CFCFC8;
+  
+  /* Premium Orange Accent */
   --accent-orange: #FF5512;
-  --accent-orange-hover: #EA4606;
-  --accent-orange-soft: #FFF2EC;
-  --charcoal-button: #0F1115;
-  --charcoal-button-hover: #1E2229;
+  --accent-orange-hover: #E84605;
+  --accent-orange-soft: rgba(255, 85, 18, 0.08);
+  --accent-orange-border: rgba(255, 85, 18, 0.24);
+  --accent-orange-glow: rgba(255, 85, 18, 0.18);
+  
+  /* Charcoal & Neutrals */
+  --charcoal-button: #121316;
+  --charcoal-button-hover: #22242B;
+  
+  /* System Radiuses */
+  --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
 }
 
 html {
@@ -40,27 +62,30 @@ body {
   background-color: var(--bg-warm);
   color: var(--text-primary);
   min-height: 100vh;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ==========================================================================
-   DARK MODE PALETTE (Deep Obsidian / Graphite)
+   DARK MODE PALETTE (Refined Graphite & Warm Dark Slate)
    ========================================================================== */
 html.dark {
   --bg-warm: #0C0E12;
-  --surface: #14171D;
-  --surface-subtle: #1B1F27;
-  --surface-elevated: #181C23;
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --text-tertiary: #6B7280;
-  --border-subtle: #242832;
-  --border-strong: #333846;
+  --surface: #14171E;
+  --surface-subtle: #1C202A;
+  --surface-elevated: #181C25;
+  --text-primary: #F4F5F7;
+  --text-secondary: #9DA3AF;
+  --text-tertiary: #6E7585;
+  --text-muted: #565C6B;
+  --border-subtle: #242936;
+  --border-strong: #363C4E;
   --accent-orange: #FF5512;
-  --accent-orange-hover: #FF6A30;
-  --accent-orange-soft: rgba(255, 85, 18, 0.12);
-  --charcoal-button: #F3F4F6;
+  --accent-orange-hover: #FF682E;
+  --accent-orange-soft: rgba(255, 85, 18, 0.14);
+  --accent-orange-border: rgba(255, 85, 18, 0.32);
+  --accent-orange-glow: rgba(255, 85, 18, 0.25);
+  --charcoal-button: #F4F5F7;
   --charcoal-button-hover: #FFFFFF;
 }
 
@@ -70,7 +95,7 @@ html.dark body {
 }
 
 /* ==========================================================================
-   TYPOGRAPHY SYSTEM
+   TYPOGRAPHY HIERARCHY
    ========================================================================== */
 .font-display {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -78,95 +103,202 @@ html.dark body {
 }
 
 .eyebrow {
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-tertiary);
+  color: var(--accent-orange);
 }
 
 /* ==========================================================================
-   MINIMALIST PRECISION BUTTONS
+   NAVBAR & NAVIGATION SYSTEM
    ========================================================================== */
-/* Primary Action Button (Modern High-Contrast Charcoal) */
-.btn-primary {
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(250, 249, 246, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+html.dark .site-header {
+  background-color: rgba(12, 14, 18, 0.92);
+  border-bottom-color: var(--border-subtle);
+}
+
+/* Unified Desktop Nav Link */
+.nav-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background-color: var(--charcoal-button);
-  color: #FFFFFF;
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.625rem 1.25rem;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.8rem;
   border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: all 0.16s ease;
-  cursor: pointer;
+  text-decoration: none;
   white-space: nowrap;
+  transition: all 0.16s ease;
+  line-height: 1.25;
 }
-.btn-primary:hover {
-  background-color: var(--charcoal-button-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+.nav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--surface-subtle);
 }
-.btn-primary:active {
-  transform: translateY(0);
+.nav-link:active {
+  transform: scale(0.98);
 }
-html.dark .btn-primary {
-  background-color: #F3F4F6;
-  color: #0F1115;
-}
-html.dark .btn-primary:hover {
-  background-color: #FFFFFF;
-  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.15);
+/* Active Page: Subtle orange background highlight + orange text */
+.nav-link.active {
+  color: var(--accent-orange);
+  background-color: var(--accent-orange-soft);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--accent-orange-border);
 }
 
-/* Accent Action Button (Signature International Orange) */
+/* Mobile Dropdown Nav Link */
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.mobile-nav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--surface-subtle);
+}
+.mobile-nav-link.active {
+  color: var(--accent-orange);
+  background-color: var(--accent-orange-soft);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px var(--accent-orange-border);
+}
+
+/* Mobile Bottom Fixed Bar */
+.mobile-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.45rem 0.5rem calc(0.45rem + env(safe-area-inset-bottom, 0px));
+}
+html.dark .mobile-bottom-bar {
+  background-color: rgba(20, 23, 30, 0.95);
+  border-top-color: var(--border-subtle);
+}
+
+.mobile-bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  min-width: 54px;
+}
+.mobile-bottom-item svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.15s ease;
+}
+.mobile-bottom-item span {
+  font-size: 0.625rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  letter-spacing: -0.01em;
+}
+.mobile-bottom-item:hover {
+  color: var(--text-primary);
+}
+.mobile-bottom-item.active {
+  color: var(--accent-orange);
+}
+.mobile-bottom-item.active svg {
+  transform: translateY(-1px);
+}
+
+/* ==========================================
+   BUTTON SYSTEM (Primary = Consistent Orange)
+   ========================================== */
+/* Primary Brand Orange Button */
+.btn-primary,
 .btn-accent {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background-color: var(--accent-orange);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   font-weight: 600;
   font-size: 0.875rem;
+  line-height: 1.25;
   padding: 0.625rem 1.25rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 1px 3px rgba(255, 85, 18, 0.25);
-  transition: all 0.16s ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 1px 3px rgba(255, 85, 18, 0.22);
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   white-space: nowrap;
+  text-decoration: none;
 }
+.btn-primary:hover,
 .btn-accent:hover {
   background-color: var(--accent-orange-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(255, 85, 18, 0.35);
+  box-shadow: 0 4px 14px rgba(255, 85, 18, 0.32);
 }
+.btn-primary:active,
 .btn-accent:active {
   transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(255, 85, 18, 0.2);
+}
+.btn-primary:focus-visible,
+.btn-accent:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-orange-glow);
 }
 
-/* Secondary Button (Clean architectural outline) */
+/* Secondary Neutral Surface Button */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background-color: var(--surface);
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.625rem 1.15rem;
+  line-height: 1.25;
+  padding: 0.625rem 1.25rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  transition: all 0.16s ease;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   white-space: nowrap;
+  text-decoration: none;
 }
 .btn-secondary:hover {
   border-color: var(--border-strong);
@@ -175,6 +307,41 @@ html.dark .btn-primary:hover {
 }
 .btn-secondary:active {
   transform: translateY(0);
+}
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+html.dark .btn-secondary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Charcoal / Dark Contrast Button */
+.btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--charcoal-button);
+  color: #FFFFFF !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.16s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-dark:hover {
+  background-color: var(--charcoal-button-hover);
+  transform: translateY(-1px);
+}
+html.dark .btn-dark {
+  color: #0F1115 !important;
 }
 
 /* Ghost Button */
@@ -187,33 +354,45 @@ html.dark .btn-primary:hover {
   color: var(--text-secondary);
   font-weight: 600;
   font-size: 0.875rem;
-  padding: 0.5rem 0.875rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--radius-md);
   border: none;
   transition: all 0.15s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 .btn-ghost:hover {
   color: var(--text-primary);
   background-color: var(--surface-subtle);
 }
 
+/* Button Sizes */
+.btn-sm {
+  padding: 0.4rem 0.85rem !important;
+  font-size: 0.75rem !important;
+  border-radius: var(--radius-sm) !important;
+}
+.btn-lg {
+  padding: 0.8rem 1.6rem !important;
+  font-size: 0.9375rem !important;
+  border-radius: var(--radius-lg) !important;
+}
+
 /* ==========================================================================
-   SURFACE CARDS (Clean Architectural 1px Border)
+   CARDS & SURFACE CONTAINERS
    ========================================================================== */
 .card-editorial {
   background-color: var(--surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-xs);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 .card-editorial:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
-/* Bento Item */
 .bento-card {
   background-color: var(--surface);
   border: 1px solid var(--border-subtle);
@@ -221,89 +400,132 @@ html.dark .btn-primary:hover {
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
 }
 .bento-card:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 /* ==========================================================================
-   STATUS INDICATORS (Minimal, Clear)
+   STATUS & BADGE SYSTEM (Zero Blue)
    ========================================================================== */
-.status-pill-free {
+.status-pill-free,
+.status-badge-free {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   font-size: 0.6875rem;
   font-weight: 700;
   background-color: #ECFDF5;
   color: #065F46;
   border: 1px solid #A7F3D0;
 }
-html.dark .status-pill-free {
+html.dark .status-pill-free,
+html.dark .status-badge-free {
   background-color: rgba(16, 185, 129, 0.12);
   color: #34D399;
   border-color: rgba(16, 185, 129, 0.3);
 }
 
-.status-pill-busy {
+.status-pill-busy,
+.status-badge-busy {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   font-size: 0.6875rem;
   font-weight: 600;
-  background-color: #F3F4F6;
-  color: #4B5563;
-  border: 1px solid #E5E7EB;
+  background-color: #F4F4F3;
+  color: #555A66;
+  border: 1px solid var(--border-subtle);
 }
-html.dark .status-pill-busy {
+html.dark .status-pill-busy,
+html.dark .status-badge-busy {
   background-color: rgba(156, 163, 175, 0.1);
   color: #9CA3AF;
   border-color: rgba(156, 163, 175, 0.2);
 }
 
-/* ==========================================================================
-   NAVBAR (Minimalist Sticky Header)
-   ========================================================================== */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background-color: rgba(251, 251, 250, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-subtle);
-  transition: all 0.2s ease;
-}
-html.dark .site-header {
-  background-color: rgba(12, 14, 18, 0.88);
-}
-
-.nav-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  padding: 0.35rem 0.65rem;
-  border-radius: var(--radius-sm);
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-.nav-link:hover {
-  color: var(--text-primary);
-  background-color: var(--surface-subtle);
-}
-.nav-link.active {
-  color: var(--text-primary);
+/* Verified Badge (Clean Emerald or Warm Neutral, NO BLUE) */
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+  font-size: 0.6875rem;
   font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+html.dark .verified-badge {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+/* Urgent Badge */
+.urgent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #FFFBEB;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+html.dark .urgent-badge {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #FBBF24;
+  border-color: rgba(245, 158, 11, 0.25);
 }
 
 /* ==========================================================================
-   CUSTOM COLUMN SELECT POPOVER (Modern Linear/Apple Dropdown)
+   FORM INPUTS & SELECTS (Crisp Focus & Spacing)
    ========================================================================== */
+input[type="text"],
+input[type="tel"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-orange) !important;
+  box-shadow: 0 0 0 3px var(--accent-orange-glow) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Custom Select Popover */
 .custom-select-wrapper {
   position: relative;
   user-select: none;
@@ -333,13 +555,13 @@ html.dark .site-header {
 
 .custom-select-trigger:focus-visible,
 .custom-select-wrapper.is-open .custom-select-trigger {
-  border-color: var(--text-primary);
-  box-shadow: 0 0 0 1px var(--text-primary);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 3px var(--accent-orange-glow);
 }
 
 .custom-select-arrow {
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  color: var(--text-muted);
+  color: var(--text-tertiary);
 }
 
 .custom-select-wrapper.is-open .custom-select-arrow {
@@ -358,7 +580,7 @@ html.dark .site-header {
   max-height: 260px;
   overflow-y: auto;
   z-index: 60;
-  padding: 0.3rem;
+  padding: 0.35rem;
   animation: fadeIn 0.14s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -372,15 +594,12 @@ html.dark .site-header {
   background: var(--border-subtle);
   border-radius: 9999px;
 }
-.custom-select-dropdown::-webkit-scrollbar-thumb:hover {
-  background: var(--border-strong);
-}
 
 .custom-select-option {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
+  padding: 0.55rem 0.75rem;
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -395,7 +614,7 @@ html.dark .site-header {
 }
 
 .custom-select-option.selected {
-  background-color: var(--surface-subtle);
+  background-color: var(--accent-orange-soft);
   color: var(--accent-orange);
   font-weight: 700;
 }
@@ -410,7 +629,7 @@ html.dark .site-header {
 
 @keyframes pulseSubtle {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.45; }
 }
 
 .animate-pulse-subtle {
@@ -444,13 +663,25 @@ html.dark .skeleton-shimmer {
 
 /* Leaflet Overrides */
 .leaflet-popup-content-wrapper {
-  border-radius: var(--radius-md) !important;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.12) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.14) !important;
   padding: 0 !important;
   border: 1px solid var(--border-subtle) !important;
   background-color: var(--surface) !important;
   color: var(--text-primary) !important;
+  overflow: hidden;
 }
 .leaflet-popup-tip {
   background-color: var(--surface) !important;
+}
+
+/* Scrollbar-none utility for smooth swipe filters */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

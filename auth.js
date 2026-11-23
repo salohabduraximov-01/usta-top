@@ -289,7 +289,7 @@ function updateNavbarAuthUI() {
       <button 
         type="button" 
         onclick="toggleTheme()" 
-        class="p-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition shadow-sm cursor-pointer"
+        class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] transition shadow-xs cursor-pointer flex items-center justify-center"
         title="Tungi / Kunduzgi rejim"
       >
         <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -305,10 +305,11 @@ function updateNavbarAuthUI() {
         ${themeBtnHTML}
         
         <!-- Foydalanuvchi profil tugmasi va menyusi -->
-        <div class="relative group">
+        <div class="relative group" id="profileDropdownWrapper">
           <a 
             href="${profileLink}" 
-            class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-2xl bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm hover:border-[var(--accent)] transition cursor-pointer"
+            id="profileDropdownTrigger"
+            class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-xl bg-[var(--surface)] border border-[var(--border-subtle)] shadow-xs hover:border-[var(--accent-orange)] transition cursor-pointer"
           >
             ${user.avatar ? `
               <img src="${escapeHtml(user.avatar)}" class="w-8 h-8 rounded-full object-cover">
@@ -328,27 +329,34 @@ function updateNavbarAuthUI() {
             <svg class="w-4 h-4 text-[var(--text-tertiary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
 
-          <!-- Hover Dropdown -->
-          <div class="absolute right-0 top-full mt-1.5 w-48 bg-[var(--surface)] rounded-2xl shadow-xl border border-[var(--border-subtle)] p-2 hidden group-hover:block animate-fade-in z-50">
-            <a href="${profileLink}" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition">
-              ${getSvgIcon('user', 'w-4 h-4 text-[var(--text-tertiary)]')}
-              <span>Profilim</span>
-            </a>
-            <div class="my-1 border-t border-[var(--border-subtle)]"></div>
-            <button onclick="logoutUser()" class="w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition text-left cursor-pointer">
-              ${getSvgIcon('logout', 'w-4 h-4 text-rose-500')}
-              <span>Chiqish</span>
-            </button>
+          <!-- Uzluksiz hover maydoni (0px oraliq) va Dropdown Menyusi -->
+          <div 
+            id="profileDropdownMenu" 
+            class="absolute right-0 top-full pt-1.5 w-48 hidden group-hover:block z-50 animate-fade-in"
+          >
+            <div class="bg-[var(--surface)] rounded-xl shadow-lg border border-[var(--border-subtle)] p-1.5 relative">
+              <a href="${profileLink}" class="flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-semibold text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition">
+                ${getSvgIcon('user', 'w-4 h-4 text-[var(--text-tertiary)]')}
+                <span>Profilim</span>
+              </a>
+              <div class="my-1 border-t border-[var(--border-subtle)]"></div>
+              <button onclick="logoutUser()" class="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition text-left cursor-pointer">
+                ${getSvgIcon('logout', 'w-4 h-4 text-rose-500')}
+                <span>Chiqish</span>
+              </button>
+            </div>
           </div>
         </div>
       `;
+
+      setupProfileDropdownController();
     } else {
       navContainer.innerHTML = `
         ${themeBtnHTML}
         
         <a 
           href="kirish.html" 
-          class="text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-3 py-2 transition"
+          class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-2.5 py-1.5 transition"
         >
           Kirish
         </a>
@@ -356,14 +364,14 @@ function updateNavbarAuthUI() {
         <div class="flex items-center space-x-2">
           <a 
             href="royxat-mijoz.html" 
-            class="text-xs font-bold text-[var(--text-primary)] bg-[var(--surface-subtle)] border border-[var(--border-subtle)] px-3.5 py-2.5 rounded-xl hover:bg-[var(--surface)] hover:border-[var(--border-strong)] transition"
+            class="btn-secondary text-xs font-semibold py-2 px-3.5 rounded-xl cursor-pointer"
           >
-            Ro‘yxatdan o‘tish
+            Mijoz bo‘lish
           </a>
 
           <a 
             href="royxat-usta.html"
-            class="bg-[#FF5512] hover:bg-[#EA4606] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-orange-500/20 active:scale-95 transition flex items-center space-x-1.5 cursor-pointer"
+            class="btn-primary text-xs font-bold py-2 px-3.5 rounded-xl cursor-pointer"
           >
             <span>+ Usta bo‘lish</span>
           </a>
@@ -403,19 +411,66 @@ function updateNavbarAuthUI() {
     } else {
       bottomDiv.innerHTML = `
         <div class="flex gap-2">
-          <a href="kirish.html" class="flex-1 text-center py-2.5 rounded-xl border border-[var(--border-subtle)] font-bold text-sm text-[var(--text-primary)]">
+          <a href="kirish.html" class="flex-1 btn-secondary text-center py-2.5 rounded-xl font-bold text-xs">
             Kirish
           </a>
-          <a href="royxat-mijoz.html" class="flex-1 text-center py-2.5 rounded-xl bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] font-bold text-sm shadow">
+          <a href="royxat-mijoz.html" class="flex-1 btn-secondary text-center py-2.5 rounded-xl font-bold text-xs">
             Mijoz bo‘lish
           </a>
         </div>
-        <a href="royxat-usta.html" class="block mt-2 w-full text-center py-2.5 rounded-xl bg-[#FF5512] text-white font-bold text-sm shadow">
+        <a href="royxat-usta.html" class="block mt-2 w-full btn-primary text-center py-2.5 rounded-xl font-bold text-xs">
           + Usta bo‘lib qo‘shilish
         </a>
       `;
     }
   }
+}
+
+// Profil dropdown menyusi uchun silliq hover va kechiktirilgan yopilish boshqaruvchisi
+let profileDropdownCloseTimer = null;
+
+function setupProfileDropdownController() {
+  const wrapper = document.getElementById('profileDropdownWrapper');
+  const menu = document.getElementById('profileDropdownMenu');
+  if (!wrapper || !menu) return;
+
+  function showDropdown() {
+    if (profileDropdownCloseTimer) {
+      clearTimeout(profileDropdownCloseTimer);
+      profileDropdownCloseTimer = null;
+    }
+    menu.classList.remove('hidden');
+    menu.classList.add('block');
+  }
+
+  function hideDropdownWithDelay() {
+    if (profileDropdownCloseTimer) {
+      clearTimeout(profileDropdownCloseTimer);
+    }
+    // 280ms kechikish: sichqonchani pastga sekin harakatlantirganda uzilish bo'lmaydi
+    profileDropdownCloseTimer = setTimeout(() => {
+      menu.classList.add('hidden');
+      menu.classList.remove('block');
+    }, 280);
+  }
+
+  wrapper.addEventListener('mouseenter', showDropdown);
+  wrapper.addEventListener('mouseleave', hideDropdownWithDelay);
+  wrapper.addEventListener('focusin', showDropdown);
+  wrapper.addEventListener('focusout', (e) => {
+    if (!wrapper.contains(e.relatedTarget)) {
+      hideDropdownWithDelay();
+    }
+  });
+
+  // Tashqariga bosilganda darhol yopish
+  document.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target)) {
+      if (profileDropdownCloseTimer) clearTimeout(profileDropdownCloseTimer);
+      menu.classList.add('hidden');
+      menu.classList.remove('block');
+    }
+  });
 }
 
 // Boshlang'ich navbarni yangilash

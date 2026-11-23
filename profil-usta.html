@@ -55,20 +55,20 @@
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-1 text-sm font-medium">
+      <nav class="hidden md:flex items-center space-x-1">
         <a href="index.html" class="nav-link">Bosh sahifa</a>
-        <a href="elon-berish.html" class="nav-link">E’lonlar birjasi</a>
-        <a href="ustalar.html" class="nav-link">Ustalar</a>
+        <a href="elon-berish.html" class="nav-link">E’lon berish</a>
+        <a href="ustalar.html" class="nav-link">Ustalar katalogi</a>
         <a href="kalkulyator.html" class="nav-link">Kalkulyator</a>
         <a href="xarita.html" class="nav-link">Xarita</a>
       </nav>
 
       <!-- Desktop O'ng qism: Dark Mode & Chiqish -->
-      <div class="hidden md:flex items-center space-x-3">
+      <div class="hidden md:flex items-center space-x-2.5" id="headerAuthDesktop">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] transition shadow-xs cursor-pointer flex items-center justify-center"
           title="Tungi / Kunduzgi rejim"
         >
           <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -76,18 +76,18 @@
 
         <button 
           onclick="logoutUser()" 
-          class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-3 py-1.5 rounded-lg transition cursor-pointer"
+          class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-3 py-1.5 rounded-xl transition cursor-pointer"
         >
           Chiqish
         </button>
       </div>
 
       <!-- Mobil burger -->
-      <div class="flex items-center space-x-2 md:hidden">
+      <div class="flex items-center space-x-1.5 md:hidden">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <span class="theme-toggle-icon"></span>
         </button>
@@ -95,7 +95,7 @@
         <button 
           type="button" 
           onclick="toggleMobileMenu()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -104,13 +104,13 @@
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#14171D] px-4 pt-3 pb-5 space-y-2">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-900 dark:text-white">Bosh sahifa</a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">E’lon berish (Buyurtmalar)</a>
-      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
-      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--border-subtle)] bg-[var(--surface)] px-4 py-3 space-y-1 shadow-lg">
+      <a href="index.html" class="mobile-nav-link">Bosh sahifa</a>
+      <a href="elon-berish.html" class="mobile-nav-link">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="mobile-nav-link">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="mobile-nav-link">Narx kalkulyatori</a>
+      <a href="xarita.html" class="mobile-nav-link">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-[var(--border-subtle)]">
         <button onclick="logoutUser()" class="w-full text-center py-2 text-xs font-bold text-rose-600">
           Chiqish
         </button>
@@ -138,7 +138,7 @@
               <h1 id="masterNameHeader" class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 Usta
               </h1>
-              <span id="masterVerifiedBadge" class="inline-flex items-center gap-1 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full text-[10px] font-bold">
+              <span id="masterVerifiedBadge" class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 px-2.5 py-0.5 rounded-full text-[10px] font-bold">
                 ✓ Tasdiqlangan
               </span>
             </div>
@@ -178,12 +178,12 @@
 
 
     <!-- Tablar navigatsiyasi -->
-    <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto scrollbar-none pb-px text-xs font-semibold">
+    <div class="flex items-center space-x-2 border-b border-[var(--border-subtle)] mb-6 overflow-x-auto scrollbar-none pb-px text-xs font-semibold">
       <button 
         type="button" 
         onclick="switchMasterTab('info')" 
         id="mTabBtn-info"
-        class="py-2.5 px-4 rounded-t-xl transition text-black dark:text-white border-b-2 border-black dark:border-white font-bold whitespace-nowrap cursor-pointer"
+        class="py-2.5 px-4 rounded-t-xl transition text-[#FF5512] border-b-2 border-[#FF5512] font-bold whitespace-nowrap cursor-pointer"
       >
         Ma’lumotlarim
       </button>
@@ -192,7 +192,7 @@
         type="button" 
         onclick="switchMasterTab('messages')" 
         id="mTabBtn-messages"
-        class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
+        class="py-2.5 px-4 rounded-t-xl transition text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent font-medium whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Xabarlar</span>
         <span id="mInboxCountBadge" class="bg-[#FF5512] text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
@@ -202,17 +202,17 @@
         type="button" 
         onclick="switchMasterTab('reviews')" 
         id="mTabBtn-reviews"
-        class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
+        class="py-2.5 px-4 rounded-t-xl transition text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent font-medium whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Sharhlarim</span>
-        <span id="mReviewsCountBadge" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        <span id="mReviewsCountBadge" class="bg-[var(--surface-subtle)] text-[var(--text-secondary)] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
       </button>
 
       <button 
         type="button" 
         onclick="switchMasterTab('orders')" 
         id="mTabBtn-orders"
-        class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
+        class="py-2.5 px-4 rounded-t-xl transition text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent font-medium whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Buyurtmalar birjasi</span>
         <span id="mOrdersCountBadge" class="bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">Yangi</span>
@@ -222,7 +222,7 @@
         type="button" 
         onclick="switchMasterTab('stats')" 
         id="mTabBtn-stats"
-        class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer"
+        class="py-2.5 px-4 rounded-t-xl transition text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent font-medium whitespace-nowrap cursor-pointer"
       >
         Statistika
       </button>
@@ -428,6 +428,30 @@
     © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
   </footer>
 
+  <!-- Mobil Pastki Qotirilgan Navigatsiya Bar -->
+  <div class="mobile-bottom-bar md:hidden">
+    <a href="index.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Asosiy</span>
+    </a>
+    <a href="elon-berish.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>E’lon</span>
+    </a>
+    <a href="ustalar.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <span>Ustalar</span>
+    </a>
+    <a href="kalkulyator.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      <span>Hisob</span>
+    </a>
+    <a href="profil-usta.html" class="mobile-bottom-item active">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>Profil</span>
+    </a>
+  </div>
+
   <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
 
   <!-- Skriptlar -->
@@ -451,26 +475,29 @@
     function renderMasterHeader() {
       if (!activeMasterUser) return;
 
-      document.getElementById('masterNameHeader').textContent = activeMasterUser.name || 'Usta';
-      document.getElementById('masterProfessionHeader').textContent = activeMasterUser.profession || 'Professional mutaxassis';
-      document.getElementById('masterPhoneHeader').textContent = activeMasterUser.phone || '';
-      document.getElementById('masterDistrictHeader').textContent = '📍 ' + (activeMasterUser.district || 'Toshkent');
-      document.getElementById('masterExpHeader').textContent = `★ ${activeMasterUser.rating || 5.0} (${activeMasterUser.experience || 5} yil tajriba)`;
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : [];
+      const freshMaster = allMasters.find(m => m.id === activeMasterUser.id) || activeMasterUser;
+
+      document.getElementById('masterNameHeader').textContent = freshMaster.name || 'Usta';
+      document.getElementById('masterProfessionHeader').textContent = freshMaster.profession || 'Professional mutaxassis';
+      document.getElementById('masterPhoneHeader').textContent = freshMaster.phone || '';
+      document.getElementById('masterDistrictHeader').textContent = '📍 ' + (freshMaster.district || 'Toshkent');
+      document.getElementById('masterExpHeader').textContent = `★ ${freshMaster.rating || 5.0} (${freshMaster.experience || 5} yil tajriba)`;
 
       const avatarBox = document.getElementById('masterAvatarBox');
       if (avatarBox) {
-        avatarBox.innerHTML = renderAvatar(activeMasterUser, 'w-16 h-16 text-xl font-bold', 'rounded-2xl');
+        avatarBox.innerHTML = renderAvatar(freshMaster, 'w-16 h-16 text-xl font-bold', 'rounded-2xl');
       }
 
       // Status
-      const isFree = activeMasterUser.status !== 'busy';
+      const isFree = freshMaster.status !== 'busy';
       const toggle = document.getElementById('masterStatusToggle');
       if (toggle) toggle.checked = isFree;
       updateStatusLabelUI(isFree);
 
       // Statistika
-      document.getElementById('statCompletedOrders').textContent = `${activeMasterUser.completedOrders || 0} ta`;
-      document.getElementById('statRatingScore').textContent = `★ ${activeMasterUser.rating || 5.0}`;
+      document.getElementById('statCompletedOrders').textContent = `${freshMaster.completedOrders || 0} ta`;
+      document.getElementById('statRatingScore').textContent = `★ ${freshMaster.rating || 5.0}`;
     }
 
     function toggleMasterOnlineStatus(isFree) {
@@ -557,10 +584,10 @@
         const content = document.getElementById(`mTabContent-${t}`);
         if (btn && content) {
           if (t === tabName) {
-            btn.className = "py-2.5 px-4 rounded-t-xl transition text-black dark:text-white border-b-2 border-black dark:border-white font-bold whitespace-nowrap cursor-pointer";
+            btn.className = "py-2.5 px-4 rounded-t-xl transition text-[#FF5512] border-b-2 border-[#FF5512] font-bold whitespace-nowrap cursor-pointer";
             content.classList.remove('hidden');
           } else {
-            btn.className = "py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer";
+            btn.className = "py-2.5 px-4 rounded-t-xl transition text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent font-medium whitespace-nowrap cursor-pointer";
             content.classList.add('hidden');
           }
         }
@@ -641,7 +668,9 @@
       const badge = document.getElementById('mReviewsCountBadge');
       if (!container) return;
 
-      const reviews = activeMasterUser.reviews || [];
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : [];
+      const freshMaster = allMasters.find(m => m.id === activeMasterUser.id) || activeMasterUser;
+      const reviews = freshMaster.reviews || [];
       if (badge) badge.textContent = reviews.length;
 
       if (reviews.length === 0) {
@@ -687,7 +716,7 @@
         return `
           <div class="card-editorial p-4 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-2 py-0.5 rounded-md">
+              <span class="text-[11px] font-bold text-[#FF5512] bg-[var(--accent-orange-soft)] px-2 py-0.5 rounded-md">
                 ${escapeHtml(o.categoryName || 'Xizmat')}
               </span>
               <span class="text-[10px] text-slate-400">${escapeHtml(o.createdAt)}</span>

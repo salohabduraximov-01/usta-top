@@ -52,10 +52,10 @@ function initCategoryPills() {
       <button 
         type="button" 
         onclick="setCategoryFilter('${escapeHtml(cat.id)}')"
-        class="category-pill flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer select-none ${
+        class="category-pill flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap cursor-pointer select-none ${
           isActive 
-            ? 'bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] shadow-xs' 
-            : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] border border-[var(--border-subtle)] shadow-2xs'
+            ? 'bg-[#FF5512] text-white shadow-sm font-bold' 
+            : 'bg-white dark:bg-[#0C0E12] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#14171E] border border-slate-200 dark:border-slate-800 shadow-xs'
         }"
         data-cat-id="${escapeHtml(cat.id)}"
       >
@@ -102,15 +102,15 @@ function initDistrictChips() {
         class="group flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer select-none ${
           isActive 
             ? 'bg-[#FF5512] text-white shadow-xs border border-transparent' 
-            : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] border border-[var(--border-subtle)] shadow-2xs'
+            : 'bg-white dark:bg-[#0C0E12] text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 border border-slate-200 dark:border-slate-800 shadow-2xs'
         }"
       >
-        <span class="${isActive ? 'text-white' : 'text-[var(--text-tertiary)]'}">📍</span>
+        <span class="${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'}">📍</span>
         <span>${safeDistrict}</span>
         <span class="ml-1 text-[10px] px-1.5 py-0.2 rounded-md ${
           isActive 
             ? 'bg-white/20 text-white' 
-            : 'bg-[var(--surface-subtle)] text-[var(--text-tertiary)] group-hover:bg-[var(--border-subtle)]'
+            : 'bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-800'
         }">${count}</span>
       </button>
     `;
@@ -144,9 +144,9 @@ function updateSortButtonsUI() {
     if (!btn) return;
     const isActive = currentFilter.sortBy === opt;
     if (isActive) {
-      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-[#0F172A] text-white dark:bg-white dark:text-[#0F172A] shadow-md scale-105 cursor-pointer";
+      btn.className = "sort-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 bg-[#FF5512] text-white shadow-xs cursor-pointer";
     } else {
-      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition cursor-pointer";
+      btn.className = "sort-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition cursor-pointer";
     }
   });
 }
@@ -167,13 +167,13 @@ function updateUrgentButtonUI() {
   if (!btn) return;
 
   if (currentFilter.urgentOnly) {
-    btn.className = "flex items-center space-x-1.5 px-3.5 py-2 rounded-2xl text-xs font-extrabold bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/30 scale-105 border border-transparent transition-all cursor-pointer";
+    btn.className = "btn-primary py-1.5 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer";
     btn.innerHTML = `
-      <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+      <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
       <span>⚡ Shoshilinch: Yoqildi</span>
     `;
   } else {
-    btn.className = "flex items-center space-x-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-orange-400 hover:text-orange-600 dark:hover:text-orange-400 transition-all cursor-pointer";
+    btn.className = "btn-secondary py-1.5 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer";
     btn.innerHTML = `
       <span class="w-2 h-2 rounded-full bg-slate-400"></span>
       <span>⚡ Shoshilinch (25 daq)</span>

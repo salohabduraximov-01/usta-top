@@ -1362,6 +1362,42 @@ function getAllMasters(applyOverrides = true) {
   // O'chirilgan ustalarni filtrlash
   combined = combined.filter(m => !deletedIds.includes(m.id));
 
+  // Foydalanuvchilar qoldirgan yangi sharhlarni (user_reviews) ustalarga birlashtirish
+  try {
+    const rawRev = typeof safeStorage !== 'undefined'
+      ? safeStorage.getItem('user_reviews')
+      : localStorage.getItem('user_reviews');
+    if (rawRev) {
+      const storedReviews = JSON.parse(rawRev) || {};
+      Object.keys(storedReviews).forEach(mId => {
+        const masterId = parseInt(mId, 10);
+        const master = combined.find(m => m.id === masterId);
+        if (master && Array.isArray(storedReviews[mId])) {
+          if (!master.reviews) master.reviews = [];
+          else master.reviews = master.reviews.map(r => ({ ...r }));
+
+          storedReviews[mId].forEach(rev => {
+            const exists = master.reviews.some(r => 
+              (rev.id && r.id === rev.id) || 
+              (r.text === rev.text && (r.author === rev.author || (rev.userId && r.userId === rev.userId)))
+            );
+            if (!exists) {
+              master.reviews.unshift(rev);
+            }
+          });
+
+          if (master.reviews.length > 0) {
+            const totalRating = master.reviews.reduce((sum, r) => sum + (Number(r.rating) || 5), 0);
+            master.rating = parseFloat((totalRating / master.reviews.length).toFixed(1));
+            master.reviewsCount = master.reviews.length;
+          }
+        }
+      });
+    }
+  } catch (err) {
+    console.warn('Sharhlarni sinxronlashda xatolik:', err);
+  }
+
   // Status va verified xususiyatlarini xavfsiz yangilash
   if (applyOverrides) {
     try {

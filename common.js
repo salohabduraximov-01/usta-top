@@ -69,11 +69,11 @@ function getAvatarColor(name) {
   const colors = [
     'bg-[#0F172A] text-white',
     'bg-emerald-600 text-white',
-    'bg-indigo-600 text-white',
+    'bg-amber-700 text-white',
     'bg-amber-600 text-white',
     'bg-rose-600 text-white',
     'bg-teal-600 text-white',
-    'bg-violet-600 text-white',
+    'bg-stone-700 text-white',
     'bg-slate-700 text-white',
     'bg-[#FF5512] text-white'
   ];
@@ -293,7 +293,26 @@ function showToast(message, type = 'success') {
 
 // 5. SEVIMLI USTALAR (Favorites) BOSHQARUVI
 function getFavoritesList() {
-  return safeStorage.getJSON('favorite_masters', []);
+  const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+  const storageKey = user ? `favorite_masters_${user.id}` : 'favorite_masters';
+  let favs = safeStorage.getJSON(storageKey, null);
+
+  // Fallback: Agar foydalanuvchiga xos ro'yxat bo'lmasa, umumiy ro'yxatni yuklash
+  if (favs === null) {
+    favs = safeStorage.getJSON('favorite_masters', []);
+    if (user && Array.isArray(favs) && favs.length > 0) {
+      safeStorage.setItem(storageKey, favs);
+    }
+  }
+
+  if (!Array.isArray(favs)) favs = [];
+  // Dublikatlardan tozalash va sonlarga keltirish
+  return [...new Set(favs.map(id => Number(id)).filter(id => !isNaN(id)))];
+}
+
+// Qulaylik va xavfsizlik uchun sinonim funksiya
+function getFavoriteMasters() {
+  return getFavoritesList();
 }
 
 function isMasterFavorite(masterId) {
@@ -307,6 +326,10 @@ function toggleFavoriteMaster(masterId, e) {
     e.preventDefault();
   }
   const id = Number(masterId);
+  if (isNaN(id)) return;
+
+  const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+  const storageKey = user ? `favorite_masters_${user.id}` : 'favorite_masters';
   let favs = getFavoritesList();
   let added = false;
 
@@ -318,22 +341,42 @@ function toggleFavoriteMaster(masterId, e) {
     added = true;
   }
 
+  // Dublikatlardan tozalash
+  favs = [...new Set(favs)];
+
+  // Saqlash: Foydalanuvchiga xos kalitga va umumiy kalitga
+  safeStorage.setItem(storageKey, favs);
   safeStorage.setItem('favorite_masters', favs);
 
-  // Yurakcha ikonlarini yangilash
+  // Agar foydalanuvchi tizimda bo'lsa, uning ob'ektida ham saqlash
+  if (user && typeof saveUser === 'function') {
+    user.favorites = favs;
+    saveUser(user);
+  }
+
+  // Yurakcha ikonlarini sahifaning barcha joyida sinxron yangilash
   document.querySelectorAll(`[data-fav-master-id="${id}"]`).forEach(btn => {
     btn.innerHTML = added 
       ? getSvgIcon('heart', 'w-5 h-5 text-rose-500 fill-current')
       : getSvgIcon('heartOutline', 'w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-rose-500');
     btn.setAttribute('title', added ? "Sevimlilardan o‘chirish" : "Sevimlilarga saqlash");
+    btn.setAttribute('aria-pressed', added ? 'true' : 'false');
   });
+
+  // Modal ichidagi yurakcha
+  const modalFavBtn = document.querySelector(`.detail-modal-fav-btn[data-fav-master-id="${id}"]`) || document.getElementById(`modalFavBtn_${id}`);
+  if (modalFavBtn) {
+    modalFavBtn.innerHTML = added 
+      ? getSvgIcon('heart', 'w-5 h-5 text-rose-500 fill-current')
+      : getSvgIcon('heartOutline', 'w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-rose-500');
+  }
 
   showToast(
     added ? "❤️ Usta sevimlilar ro‘yxatiga qo‘shildi" : "🤍 Usta sevimlilardan olib tashlandi", 
     added ? "success" : "info"
   );
 
-  // Agar mijoz profilida bo'lsa
+  // Agar mijoz profilida bo'lsa, tabni darhol yangilash
   if (typeof renderCustomerFavoritesTab === 'function') {
     renderCustomerFavoritesTab();
   }
@@ -674,15 +717,42 @@ function handleReviewSubmit(e, masterId) {
 
   const author = authorInput.value.trim();
   const text = textInput.value.trim();
+  if (!author || !text) {
+    showToast("Iltimos, ismingiz va fikringizni yozing", "warning");
+    return;
+  }
+
   const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
   const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
+  const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+  const userId = currentUser ? currentUser.id : null;
+
+  // Dublikat tekshiruvi: bir foydalanuvchi bir ustaga qayta sharh yubormasligi uchun
+  const stored = safeStorage.getJSON('user_reviews', {});
+  if (!stored[masterId]) stored[masterId] = [];
+  
+  const alreadyReviewed = stored[masterId].some(r => 
+    (userId && r.userId && r.userId === userId) || 
+    (r.text.trim().toLowerCase() === text.toLowerCase() && r.author.trim().toLowerCase() === author.toLowerCase())
+  );
+
+  if (alreadyReviewed) {
+    showToast("⚠️ Siz ushbu ustaga allaqachon sharh qoldirgansiz!", "warning");
+    return;
+  }
+
   const newReview = {
+    id: 'rev_' + Date.now(),
+    userId: userId,
+    masterId: Number(masterId),
     author: author,
+    authorPhone: currentUser ? currentUser.phone : '',
     date: 'Hozir',
-    rating: currentSelectedRating,
-    district: master.district || 'Toshkent',
+    timestamp: Date.now(),
+    rating: Number(currentSelectedRating) || 5,
+    district: (currentUser && currentUser.district) || master.district || 'Toshkent',
     text: text
   };
 
@@ -691,15 +761,25 @@ function handleReviewSubmit(e, masterId) {
   master.reviews.unshift(newReview);
 
   // 2. LocalStorage ga saqlash
-  const stored = safeStorage.getJSON('user_reviews', {});
-  if (!stored[masterId]) stored[masterId] = [];
   stored[masterId].unshift(newReview);
   safeStorage.setItem('user_reviews', stored);
 
   // 3. Reytingni qayta hisoblash
-  const total = master.reviews.reduce((acc, r) => acc + r.rating, 0);
-  master.rating = (total / master.reviews.length).toFixed(1);
+  const total = master.reviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+  master.rating = parseFloat((total / master.reviews.length).toFixed(1));
   master.reviewsCount = master.reviews.length;
+
+  // 4. Ro'yxatdan o'tgan ustalarda ham saqlash
+  const regMasters = safeStorage.getJSON('registered_masters', []);
+  const regIdx = regMasters.findIndex(m => m.id === Number(masterId));
+  if (regIdx >= 0) {
+    if (!regMasters[regIdx].reviews) regMasters[regIdx].reviews = [];
+    regMasters[regIdx].reviews.unshift(newReview);
+    const regTotal = regMasters[regIdx].reviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+    regMasters[regIdx].rating = parseFloat((regTotal / regMasters[regIdx].reviews.length).toFixed(1));
+    regMasters[regIdx].reviewsCount = regMasters[regIdx].reviews.length;
+    safeStorage.setItem('registered_masters', regMasters);
+  }
 
   closeDetailModal();
   showToast("🎉 Rahmat! Sharhingiz va bahoingiz muvaffaqiyatli saqlandi!", "success");
@@ -707,6 +787,13 @@ function handleReviewSubmit(e, masterId) {
   // Agar sahifada renderMastersGrid bo'lsa yangilash
   if (typeof renderMastersGrid === 'function') {
     renderMastersGrid();
+  }
+  // Agar mijoz yoki usta profilida bo'lsa
+  if (typeof renderCustomerReviewsTab === 'function') {
+    renderCustomerReviewsTab();
+  }
+  if (typeof renderMasterReviewsTab === 'function') {
+    renderMasterReviewsTab();
   }
 }
 
@@ -749,7 +836,7 @@ function openDetailModal(masterId) {
         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 border-b border-slate-100 dark:border-slate-800 pb-6 pr-14">
           <div class="relative flex-shrink-0">
             ${renderAvatar(master, 'w-24 h-24 text-2xl', '')}
-            <span class="absolute -bottom-1 -right-1 bg-blue-600 text-white p-1 rounded-full border-2 border-white dark:border-slate-900" title="Tasdiqlangan usta">
+            <span class="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-1 rounded-full border-2 border-white dark:border-slate-900" title="Tasdiqlangan usta">
               ${getSvgIcon('checkBadge', 'w-4 h-4')}
             </span>
           </div>
@@ -758,8 +845,8 @@ function openDetailModal(masterId) {
             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
               <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">${escapeHtml(master.name)}</h3>
               
-              <span class="inline-flex items-center space-x-1 bg-blue-100 dark:bg-blue-900/40 text-[#1E3A8A] dark:text-blue-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
-                ${getSvgIcon('checkBadge', 'w-3.5 h-3.5 text-blue-600 dark:text-blue-400')}
+              <span class="inline-flex items-center space-x-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                ${getSvgIcon('checkBadge', 'w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400')}
                 <span>Tasdiqlangan</span>
               </span>
 
@@ -792,7 +879,7 @@ function openDetailModal(masterId) {
           <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2">Mutaxassis haqida:</h4>
           <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(master.bio || 'Professional usta xizmatlari.')}</p>
           <div class="mt-3 flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
-            ${getSvgIcon('mapPin', 'w-4 h-4 text-rose-500')}
+            ${getSvgIcon('mapPin', 'w-4 h-4 text-[#FF5512]')}
             <span><strong>Xizmat ko‘rsatadigan hududlar:</strong> ${escapeHtml(Array.isArray(master.districtsServed) ? master.districtsServed.join(', ') : master.district)}</span>
           </div>
         </div>
@@ -814,7 +901,7 @@ function openDetailModal(masterId) {
                   <tr>
                     <td class="py-2.5 px-4 font-medium">${escapeHtml(item.service || item.name)}</td>
                     <td class="py-2.5 px-4 text-slate-400 text-xs">${escapeHtml(item.time || 'Kelishiladi')}</td>
-                    <td class="py-2.5 px-4 text-right font-bold text-[#1E3A8A] dark:text-blue-400">${escapeHtml(item.price)}</td>
+                    <td class="py-2.5 px-4 text-right font-bold text-[#FF5512]">${escapeHtml(item.price)}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -831,7 +918,7 @@ function openDetailModal(masterId) {
             <button 
               type="button" 
               onclick="closeDetailModal(); openReviewModal(${master.id});" 
-              class="text-xs font-bold text-[#F97316] hover:underline flex items-center space-x-1 cursor-pointer"
+              class="text-xs font-bold text-[#FF5512] hover:underline flex items-center space-x-1 cursor-pointer"
             >
               <span>+ Sharh va baho qoldirish</span>
             </button>
@@ -866,7 +953,7 @@ function openDetailModal(masterId) {
           <button 
             type="button" 
             onclick="closeDetailModal(); openChatModal(${master.id});" 
-            class="flex-1 bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-900/20 flex items-center justify-center space-x-2 transition active:scale-95 cursor-pointer text-sm"
+            class="flex-1 btn-primary py-3 px-4 rounded-xl flex items-center justify-center space-x-2 cursor-pointer text-sm font-bold"
           >
             ${getSvgIcon('chat', 'w-5 h-5')}
             <span>Usta bilan bog‘lanish (Chat)</span>
@@ -875,9 +962,9 @@ function openDetailModal(masterId) {
           <button 
             type="button" 
             onclick="closeDetailModal(); openReviewModal(${master.id});" 
-            class="sm:flex-initial bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-amber-500/20 flex items-center justify-center space-x-2 transition active:scale-95 cursor-pointer text-sm"
+            class="sm:flex-initial btn-secondary py-3 px-6 rounded-xl flex items-center justify-center space-x-2 cursor-pointer text-sm font-bold"
           >
-            ${getSvgIcon('star', 'w-5 h-5')}
+            ${getSvgIcon('star', 'w-5 h-5 text-amber-500')}
             <span>Baho berish</span>
           </button>
         </div>
@@ -1017,10 +1104,15 @@ function getOrders() {
 
 function saveOrder(orderData) {
   const orders = getOrders();
+  const currentUser = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+  const userId = orderData.userId || (currentUser ? currentUser.id : null);
+
   const newOrder = {
     id: 'ord_' + Date.now(),
-    customerName: orderData.customerName || 'Mijoz',
-    customerPhone: orderData.customerPhone || '',
+    userId: userId,
+    customerId: userId,
+    customerName: orderData.customerName || (currentUser ? currentUser.name : 'Mijoz'),
+    customerPhone: orderData.customerPhone || (currentUser ? currentUser.phone : ''),
     category: orderData.category || 'universal',
     categoryName: orderData.categoryName || 'Boshqa xizmat',
     district: orderData.district || 'Chilonzor',
@@ -1030,7 +1122,7 @@ function saveOrder(orderData) {
     budget: orderData.budget || 'Kelishuv asosida',
     timeNeeded: orderData.timeNeeded || 'Qisqa vaqtda',
     image: orderData.image || null,
-    status: 'active',
+    status: orderData.status || 'active', // 'active', 'in_progress', 'completed'
     createdAt: 'Hozir',
     createdAtTimestamp: Date.now(),
     bids: []
@@ -1038,6 +1130,12 @@ function saveOrder(orderData) {
 
   orders.unshift(newOrder);
   safeStorage.setItem('app_orders', orders);
+
+  // Agar mijoz profilida bo'lsa darhol e'lonlar ro'yxatini yangilash
+  if (typeof renderCustomerOrdersTab === 'function') {
+    renderCustomerOrdersTab();
+  }
+
   return newOrder;
 }
 
@@ -1191,7 +1289,7 @@ function initCustomSelects() {
 
         // Tanlangan klassni yangilash
         dropdown.querySelectorAll('.custom-select-option').forEach(o => {
-          o.classList.remove('selected', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+          o.classList.remove('selected');
         });
         option.classList.add('selected');
 
@@ -1245,7 +1343,7 @@ function setCustomSelectValue(inputId, value) {
     if (labelSpan) labelSpan.textContent = text;
     if (iconSpan && icon) iconSpan.innerHTML = icon;
     dropdown.querySelectorAll('.custom-select-option').forEach(o => {
-      o.classList.remove('selected', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+      o.classList.remove('selected');
     });
     matchingOption.classList.add('selected');
   }

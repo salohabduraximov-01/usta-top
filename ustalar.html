@@ -56,23 +56,20 @@
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-1 text-sm font-medium">
+      <nav class="hidden md:flex items-center space-x-1">
         <a href="index.html" class="nav-link">Bosh sahifa</a>
-        <a href="elon-berish.html" class="nav-link flex items-center gap-1.5">
-          <span>E’lon berish</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#FF5512]"></span>
-        </a>
+        <a href="elon-berish.html" class="nav-link">E’lon berish</a>
         <a href="ustalar.html" class="nav-link active">Ustalar katalogi</a>
         <a href="kalkulyator.html" class="nav-link">Kalkulyator</a>
         <a href="xarita.html" class="nav-link">Xarita</a>
       </nav>
 
       <!-- Desktop O'ng qism: Dark Mode & Auth Buttons -->
-      <div class="hidden md:flex items-center space-x-3">
+      <div class="hidden md:flex items-center space-x-2.5" id="headerAuthDesktop">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] transition shadow-xs cursor-pointer flex items-center justify-center"
           title="Tungi / Kunduzgi rejim"
         >
           <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -80,25 +77,34 @@
 
         <a 
           href="kirish.html" 
-          class="text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white px-2.5 py-1.5 transition"
+          class="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-2.5 py-1.5 transition"
         >
           Kirish
         </a>
 
-        <a 
-          href="royxat-usta.html"
-          class="btn-accent text-xs font-bold py-2 px-3.5 rounded-xl cursor-pointer"
-        >
-          + Usta bo‘lish
-        </a>
+        <div class="flex items-center space-x-2">
+          <a 
+            href="royxat-mijoz.html" 
+            class="btn-secondary text-xs font-semibold py-2 px-3.5 rounded-xl cursor-pointer"
+          >
+            Mijoz bo‘lish
+          </a>
+
+          <a 
+            href="royxat-usta.html"
+            class="btn-primary text-xs font-bold py-2 px-3.5 rounded-xl cursor-pointer"
+          >
+            + Usta bo‘lish
+          </a>
+        </div>
       </div>
 
       <!-- Mobil burger -->
-      <div class="flex items-center space-x-2 md:hidden">
+      <div class="flex items-center space-x-1.5 md:hidden">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <span class="theme-toggle-icon"></span>
         </button>
@@ -106,7 +112,7 @@
         <button 
           type="button" 
           onclick="toggleMobileMenu()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -115,15 +121,15 @@
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#14171D] px-4 pt-3 pb-5 space-y-2">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-900 dark:text-white">Bosh sahifa</a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">E’lon berish (Buyurtmalar)</a>
-      <a href="ustalar.html" class="block py-2 text-sm font-bold text-[#FF5512]">Ustalar katalogi</a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
-      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
-        <a href="kirish.html" class="flex-1 text-center py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold">Kirish</a>
-        <a href="royxat-usta.html" class="flex-1 text-center py-2 rounded-xl btn-accent text-white text-xs font-bold">+ Usta bo‘lish</a>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--border-subtle)] bg-[var(--surface)] px-4 py-3 space-y-1 shadow-lg">
+      <a href="index.html" class="mobile-nav-link">Bosh sahifa</a>
+      <a href="elon-berish.html" class="mobile-nav-link">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="mobile-nav-link active">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="mobile-nav-link">Narx kalkulyatori</a>
+      <a href="xarita.html" class="mobile-nav-link">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-[var(--border-subtle)] flex gap-2">
+        <a href="kirish.html" class="flex-1 btn-secondary text-center py-2 rounded-xl text-xs font-bold">Kirish</a>
+        <a href="royxat-usta.html" class="flex-1 btn-primary text-center py-2 rounded-xl text-xs font-bold">+ Usta bo‘lish</a>
       </div>
     </div>
   </header>
@@ -312,26 +318,26 @@
   </footer>
 
   <!-- Mobil pastki qotirilgan menyu -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#14171D]/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 md:hidden flex justify-around items-center py-2 px-1">
-    <a href="index.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-      <span class="text-[10px] font-semibold mt-0.5">Asosiy</span>
+  <div class="mobile-bottom-bar md:hidden">
+    <a href="index.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Asosiy</span>
     </a>
-    <a href="elon-berish.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      <span class="text-[10px] font-semibold mt-0.5">E’lon</span>
+    <a href="elon-berish.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>E’lon</span>
     </a>
-    <a href="ustalar.html" class="flex flex-col items-center p-1 text-[#FF5512]">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-      <span class="text-[10px] font-semibold mt-0.5">Ustalar</span>
+    <a href="ustalar.html" class="mobile-bottom-item active">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <span>Ustalar</span>
     </a>
-    <a href="kalkulyator.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-      <span class="text-[10px] font-semibold mt-0.5">Kalkulyator</span>
+    <a href="kalkulyator.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      <span>Kalkulyator</span>
     </a>
-    <a href="xarita.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-      <span class="text-[10px] font-semibold mt-0.5">Xarita</span>
+    <a href="xarita.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+      <span>Xarita</span>
     </a>
   </div>
 

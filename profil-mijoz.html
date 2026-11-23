@@ -55,7 +55,7 @@
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-1 text-sm font-medium">
+      <nav class="hidden md:flex items-center space-x-1">
         <a href="index.html" class="nav-link">Bosh sahifa</a>
         <a href="elon-berish.html" class="nav-link">E’lon berish</a>
         <a href="ustalar.html" class="nav-link">Ustalar katalogi</a>
@@ -64,11 +64,11 @@
       </nav>
 
       <!-- Desktop O'ng qism -->
-      <div class="hidden md:flex items-center space-x-3">
+      <div class="hidden md:flex items-center space-x-2.5" id="headerAuthDesktop">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)] transition shadow-xs cursor-pointer flex items-center justify-center"
           title="Tungi / Kunduzgi rejim"
         >
           <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -76,18 +76,18 @@
 
         <button 
           onclick="logoutUser()" 
-          class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-3 py-1.5 rounded-lg transition cursor-pointer"
+          class="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 px-3 py-1.5 rounded-xl transition cursor-pointer"
         >
           Chiqish
         </button>
       </div>
 
       <!-- Mobil burger -->
-      <div class="flex items-center space-x-2 md:hidden">
+      <div class="flex items-center space-x-1.5 md:hidden">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <span class="theme-toggle-icon"></span>
         </button>
@@ -95,7 +95,7 @@
         <button 
           type="button" 
           onclick="toggleMobileMenu()" 
-          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+          class="p-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -104,13 +104,13 @@
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#14171D] px-4 pt-3 pb-5 space-y-2">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-900 dark:text-white">Bosh sahifa</a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">E’lon berish (Buyurtmalar)</a>
-      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
-      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--border-subtle)] bg-[var(--surface)] px-4 py-3 space-y-1 shadow-lg">
+      <a href="index.html" class="mobile-nav-link">Bosh sahifa</a>
+      <a href="elon-berish.html" class="mobile-nav-link">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="mobile-nav-link">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="mobile-nav-link">Narx kalkulyatori</a>
+      <a href="xarita.html" class="mobile-nav-link">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-[var(--border-subtle)]">
         <button onclick="logoutUser()" class="w-full text-center py-2 text-xs font-bold text-rose-600">
           Chiqish
         </button>
@@ -153,12 +153,12 @@
     </div>
 
     <!-- Tablar navigatsiyasi -->
-    <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto scrollbar-none pb-px text-xs font-semibold">
+    <div class="flex items-center space-x-2 border-b border-[var(--border-subtle)] mb-6 overflow-x-auto scrollbar-none pb-px text-xs font-semibold">
       <button 
         type="button" 
         onclick="switchProfileTab('info')" 
         id="tabBtn-info"
-        class="py-2.5 px-4 rounded-t-xl transition text-black dark:text-white border-b-2 border-black dark:border-white font-bold whitespace-nowrap cursor-pointer"
+        class="py-2.5 px-4 rounded-t-xl transition text-[#FF5512] border-b-2 border-[#FF5512] font-bold whitespace-nowrap cursor-pointer"
       >
         Ma’lumotlarim
       </button>
@@ -170,7 +170,7 @@
         class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Sevimli ustalar</span>
-        <span id="favoritesCountBadge" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        <span id="favoritesCountBadge" class="bg-orange-50 dark:bg-orange-950/40 text-[#FF5512] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
       </button>
 
       <button 
@@ -180,7 +180,7 @@
         class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Sharhlarim</span>
-        <span id="reviewsCountBadge" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        <span id="reviewsCountBadge" class="bg-orange-50 dark:bg-orange-950/40 text-[#FF5512] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
       </button>
 
       <button 
@@ -190,7 +190,7 @@
         class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Xabarlarim</span>
-        <span id="chatsCountBadge" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        <span id="chatsCountBadge" class="bg-orange-50 dark:bg-orange-950/40 text-[#FF5512] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
       </button>
 
       <button 
@@ -200,7 +200,7 @@
         class="py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer flex items-center gap-1.5"
       >
         <span>Mening e’lonlarim</span>
-        <span id="myOrdersCountBadge" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        <span id="myOrdersCountBadge" class="bg-orange-50 dark:bg-orange-950/40 text-[#FF5512] text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
       </button>
     </div>
 
@@ -406,6 +406,30 @@
     © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
   </footer>
 
+  <!-- Mobil Pastki Qotirilgan Navigatsiya Bar -->
+  <div class="mobile-bottom-bar md:hidden">
+    <a href="index.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Asosiy</span>
+    </a>
+    <a href="elon-berish.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>E’lon</span>
+    </a>
+    <a href="ustalar.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <span>Ustalar</span>
+    </a>
+    <a href="kalkulyator.html" class="mobile-bottom-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      <span>Hisob</span>
+    </a>
+    <a href="profil-mijoz.html" class="mobile-bottom-item active">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>Profil</span>
+    </a>
+  </div>
+
   <div id="chatModalContainer"></div>
   <div id="detailModalContainer"></div>
   <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
@@ -467,7 +491,7 @@
         if (!btn || !content) return;
 
         if (t === tabName) {
-          btn.className = "py-2.5 px-4 rounded-t-xl transition text-black dark:text-white border-b-2 border-black dark:border-white font-bold whitespace-nowrap cursor-pointer";
+          btn.className = "py-2.5 px-4 rounded-t-xl transition text-[#FF5512] border-b-2 border-[#FF5512] font-bold whitespace-nowrap cursor-pointer";
           content.classList.remove('hidden');
         } else {
           btn.className = "py-2.5 px-4 rounded-t-xl transition text-slate-500 hover:text-black dark:hover:text-white border-b-2 border-transparent whitespace-nowrap cursor-pointer";
@@ -495,10 +519,17 @@
       if (!container) return;
 
       const allOrders = typeof getOrders === 'function' ? getOrders() : [];
-      const myOrders = allOrders.filter(o => 
-        (activeClientUser.phone && o.customerPhone === activeClientUser.phone) ||
-        (activeClientUser.name && o.customerName === activeClientUser.name)
-      );
+      const cleanPhone = (p) => String(p || '').replace(/\D/g, '');
+      const userPhoneClean = cleanPhone(activeClientUser.phone);
+      const userNameClean = (activeClientUser.name || '').trim().toLowerCase();
+
+      const myOrders = allOrders.filter(o => {
+        if (o.userId && activeClientUser.id && String(o.userId) === String(activeClientUser.id)) return true;
+        if (o.customerId && activeClientUser.id && String(o.customerId) === String(activeClientUser.id)) return true;
+        if (userPhoneClean && cleanPhone(o.customerPhone) && cleanPhone(o.customerPhone).endsWith(userPhoneClean.slice(-9))) return true;
+        if (userNameClean && o.customerName && o.customerName.trim().toLowerCase() === userNameClean) return true;
+        return false;
+      });
 
       if (badge) badge.textContent = myOrders.length;
 
@@ -517,12 +548,21 @@
 
       container.innerHTML = myOrders.map(order => {
         const bidsCount = order.bids ? order.bids.length : 0;
+        const statusBadge = order.status === 'completed' 
+          ? `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500">✓ Bajarildi</span>`
+          : order.status === 'in_progress'
+          ? `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-600">⏳ Jarayonda</span>`
+          : `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600">🟢 Faol</span>`;
+
         return `
           <div class="card-editorial p-4 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/50 text-blue-600 font-bold text-xs">
-                ${escapeHtml(order.categoryName || 'Xizmat')}
-              </span>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-md bg-[var(--accent-orange-soft)] text-[var(--accent-orange)] font-bold text-xs">
+                  ${escapeHtml(order.categoryName || 'Xizmat')}
+                </span>
+                ${statusBadge}
+              </div>
               <span class="text-xs text-slate-400">${escapeHtml(order.createdAt || 'Hozir')}</span>
             </div>
 
@@ -586,10 +626,10 @@
       const badge = document.getElementById('favoritesCountBadge');
       if (!container) return;
 
-      const favIds = getFavoriteMasters();
+      const favIds = typeof getFavoritesList === 'function' ? getFavoritesList() : (typeof getFavoriteMasters === 'function' ? getFavoriteMasters() : []);
       if (badge) badge.textContent = favIds.length;
 
-      if (favIds.length === 0) {
+      if (!favIds || favIds.length === 0) {
         container.innerHTML = `
           <div class="col-span-full py-10 text-center card-editorial p-6">
             <h4 class="font-bold text-sm text-slate-800 dark:text-white">Sevimli ustalar ro‘yxati bo‘sh</h4>
@@ -600,8 +640,19 @@
         return;
       }
 
-      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : MASTERS_DATA;
-      const favMasters = allMasters.filter(m => favIds.includes(m.id));
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+      const favMasters = allMasters.filter(m => favIds.includes(Number(m.id)));
+
+      if (favMasters.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-10 text-center card-editorial p-6">
+            <h4 class="font-bold text-sm text-slate-800 dark:text-white">Sevimli ustalar ro‘yxati bo‘sh</h4>
+            <p class="text-xs text-slate-400 mt-1 mb-3">Katalogdagi yurakcha tugmasi orqali ustalarni saqlab qo‘ying.</p>
+            <a href="ustalar.html" class="btn-primary inline-block py-2 px-4 text-xs font-bold">Ustalarni ko‘rish</a>
+          </div>
+        `;
+        return;
+      }
 
       container.innerHTML = favMasters.map(m => `
         <div class="card-editorial p-4 flex items-center justify-between gap-3">
@@ -617,9 +668,16 @@
             </div>
           </div>
 
-          <div class="flex items-center space-x-1 shrink-0">
+          <div class="flex items-center space-x-1.5 shrink-0">
             <button onclick="openChatModal(${m.id})" class="btn-primary py-1.5 px-3 text-xs">Chat</button>
-            <button onclick="toggleFavoriteMaster(${m.id}); renderCustomerFavoritesTab();" class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg">✕</button>
+            <button 
+              type="button" 
+              onclick="toggleFavoriteMaster(${m.id}, event)" 
+              title="Sevimlilardan o‘chirish" 
+              class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition cursor-pointer"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
           </div>
         </div>
       `).join('');
@@ -631,14 +689,26 @@
       const badge = document.getElementById('reviewsCountBadge');
       if (!container) return;
 
-      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : MASTERS_DATA;
+      const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
       const myReviews = [];
 
       allMasters.forEach(master => {
         if (Array.isArray(master.reviews)) {
           master.reviews.forEach(r => {
-            if (r.author && r.author.trim().toLowerCase() === activeClientUser.name.trim().toLowerCase()) {
-              myReviews.push({ ...r, masterName: master.name, masterProf: master.profession, masterId: master.id });
+            const matchesUser = 
+              (r.userId && activeClientUser.id && r.userId === activeClientUser.id) ||
+              (r.authorPhone && activeClientUser.phone && r.authorPhone === activeClientUser.phone) ||
+              (r.author && activeClientUser.name && r.author.trim().toLowerCase() === activeClientUser.name.trim().toLowerCase());
+
+            if (matchesUser) {
+              if (!myReviews.some(mr => mr.masterId === master.id && mr.text === r.text)) {
+                myReviews.push({ 
+                  ...r, 
+                  masterName: master.name, 
+                  masterProf: master.profession, 
+                  masterId: master.id 
+                });
+              }
             }
           });
         }
