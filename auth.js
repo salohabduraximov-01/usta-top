@@ -22,9 +22,12 @@ async function hashPasswordWithSalt(password, salt = null) {
 }
 
 async function verifyPassword(inputPassword, storedHash, storedSalt) {
-  if (!storedHash) return true;
-  // To'g'ridan-to'g'ri moslik (oddiy matn yoki demo)
-  if (inputPassword === storedHash) return true;
+  if (!storedHash) return false;
+
+  // DEMO ONLY: demo hisoblar uchun oddiy matnli solishtirish
+  if (storedHash === 'Mijoz1234' || storedHash === 'Usta1234') {
+    if (inputPassword === storedHash) return true;
+  }
 
   if (storedSalt) {
     const result = await hashPasswordWithSalt(inputPassword, storedSalt);
@@ -58,7 +61,7 @@ function evaluatePasswordStrength(password) {
     return { score: 2, label: 'Zaif parol', color: 'bg-amber-500', width: '50%' };
   }
   if (score === 3) {
-    return { score: 3, label: 'O‘rtacha parol', color: 'bg-blue-500', width: '75%' };
+    return { score: 3, label: 'O‘rtacha parol', color: 'bg-amber-600', width: '75%' };
   }
   return { score: 4, label: 'Kuchli parol', color: 'bg-emerald-500', width: '100%' };
 }
@@ -103,7 +106,7 @@ function getAllUsers() {
       name: 'Salohiddin Abduraximov',
       phone: '+998 90 123 45 67',
       district: 'Chilonzor',
-      passwordHash: 'Usta1234',
+      passwordHash: 'Mijoz1234',
       passwordSalt: 'demo_salt_customer_2026',
       createdAt: '1-noyabr, 2026'
     },
@@ -174,11 +177,10 @@ function getRememberedLogin() {
   return safeStorage.getJSON('remembered_login', null);
 }
 
-function setRememberedLogin(phone, password) {
+function setRememberedLogin(phone) {
   if (phone) {
     safeStorage.setItem('remembered_login', {
-      phone: String(phone).trim(),
-      password: String(password || '')
+      phone: String(phone).trim()
     });
   }
 }
@@ -215,6 +217,44 @@ function logoutUser() {
   }, 400);
 }
 
+// Akkauntni butunlay o'chirish (Mijoz va Usta uchun)
+function deleteCurrentAccount() {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const id = Number(user.id);
+
+  // 1. Agar usta bo'lsa deleted_master_ids ga qo'shish
+  if (user.role === 'master' || typeof deleteMasterAccountPermanently === 'function') {
+    let deletedIds = safeStorage.getJSON('deleted_master_ids', []);
+    if (!deletedIds.includes(id)) {
+      deletedIds.push(id);
+      safeStorage.setItem('deleted_master_ids', deletedIds);
+    }
+
+    // registered_masters dan olib tashlash
+    let regList = safeStorage.getJSON('registered_masters', []);
+    regList = regList.filter(m => m.id !== id);
+    safeStorage.setItem('registered_masters', regList);
+  }
+
+  // 2. app_users dan olib tashlash
+  let usersList = safeStorage.getJSON('app_users', []);
+  usersList = usersList.filter(u => u.id !== id);
+  safeStorage.setItem('app_users', usersList);
+
+  // 3. Eslab qolingan loginni ham o'chirish
+  safeStorage.removeItem('remembered_login');
+
+  // 4. Sessiyani tozalash
+  safeStorage.removeItem('current_session');
+
+  showToast("🗑️ Profilingiz va barcha ma’lumotlaringiz butunlay o‘chirildi", "info");
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 700);
+}
+
 // Himoyalangan sahifalar uchun yo'naltirish
 function requireAuth(allowedRole = null) {
   const user = getCurrentUser();
@@ -239,7 +279,7 @@ function requireAuth(allowedRole = null) {
 // 6. NAVBAR AUTH UI YANGILASH (Barcha sahifalar uchun mos)
 function updateNavbarAuthUI() {
   const user = getCurrentUser();
-  const navContainer = document.querySelector('header .hidden.md\\:flex.items-center.space-x-3\\.5');
+  const navContainer = document.querySelector('header div.hidden.md\\:flex.items-center');
   const mobileContainer = document.getElementById('mobileMenu');
 
   // Desktop Navbar
@@ -249,7 +289,7 @@ function updateNavbarAuthUI() {
       <button 
         type="button" 
         onclick="toggleTheme()" 
-        class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-sm cursor-pointer"
+        class="p-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] transition shadow-sm cursor-pointer"
         title="Tungi / Kunduzgi rejim"
       >
         <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -259,7 +299,7 @@ function updateNavbarAuthUI() {
     if (user) {
       const profileLink = user.role === 'master' ? 'profil-usta.html' : 'profil-mijoz.html';
       const initials = typeof getInitials === 'function' ? getInitials(user.name) : 'U';
-      const colorClass = typeof getAvatarColor === 'function' ? getAvatarColor(user.name) : 'bg-blue-600 text-white';
+      const colorClass = typeof getAvatarColor === 'function' ? getAvatarColor(user.name) : 'bg-[#0F172A] text-white';
 
       navContainer.innerHTML = `
         ${themeBtnHTML}
@@ -268,7 +308,7 @@ function updateNavbarAuthUI() {
         <div class="relative group">
           <a 
             href="${profileLink}" 
-            class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shadow-sm hover:border-[#1E3A8A] transition cursor-pointer"
+            class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-2xl bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm hover:border-[var(--accent)] transition cursor-pointer"
           >
             ${user.avatar ? `
               <img src="${escapeHtml(user.avatar)}" class="w-8 h-8 rounded-full object-cover">
@@ -278,23 +318,23 @@ function updateNavbarAuthUI() {
               </div>
             `}
             <div class="text-left">
-              <span class="block text-xs font-bold text-slate-900 dark:text-white truncate max-w-[120px]">
+              <span class="block text-xs font-bold text-[var(--text-primary)] truncate max-w-[120px]">
                 ${escapeHtml(user.name)}
               </span>
-              <span class="block text-[10px] text-slate-400 font-semibold uppercase">
+              <span class="block text-[10px] text-[var(--text-tertiary)] font-semibold uppercase">
                 ${user.role === 'master' ? 'Usta kabineti' : 'Mijoz profili'}
               </span>
             </div>
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="w-4 h-4 text-[var(--text-tertiary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
 
           <!-- Hover Dropdown -->
-          <div class="absolute right-0 top-full mt-1.5 w-48 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 hidden group-hover:block animate-fade-in z-50">
-            <a href="${profileLink}" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              ${getSvgIcon('user', 'w-4 h-4 text-slate-400')}
+          <div class="absolute right-0 top-full mt-1.5 w-48 bg-[var(--surface)] rounded-2xl shadow-xl border border-[var(--border-subtle)] p-2 hidden group-hover:block animate-fade-in z-50">
+            <a href="${profileLink}" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition">
+              ${getSvgIcon('user', 'w-4 h-4 text-[var(--text-tertiary)]')}
               <span>Profilim</span>
             </a>
-            <div class="my-1 border-t border-slate-100 dark:border-slate-800"></div>
+            <div class="my-1 border-t border-[var(--border-subtle)]"></div>
             <button onclick="logoutUser()" class="w-full flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition text-left cursor-pointer">
               ${getSvgIcon('logout', 'w-4 h-4 text-rose-500')}
               <span>Chiqish</span>
@@ -308,7 +348,7 @@ function updateNavbarAuthUI() {
         
         <a 
           href="kirish.html" 
-          class="text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#1E3A8A] dark:hover:text-blue-400 px-3 py-2 transition"
+          class="text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-3 py-2 transition"
         >
           Kirish
         </a>
@@ -316,14 +356,14 @@ function updateNavbarAuthUI() {
         <div class="flex items-center space-x-2">
           <a 
             href="royxat-mijoz.html" 
-            class="text-xs font-bold text-[#1E3A8A] dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 px-3.5 py-2.5 rounded-xl hover:bg-blue-100 transition"
+            class="text-xs font-bold text-[var(--text-primary)] bg-[var(--surface-subtle)] border border-[var(--border-subtle)] px-3.5 py-2.5 rounded-xl hover:bg-[var(--surface)] hover:border-[var(--border-strong)] transition"
           >
             Ro‘yxatdan o‘tish
           </a>
 
           <a 
             href="royxat-usta.html"
-            class="bg-[#F97316] hover:bg-[#EA580C] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-orange-500/20 active:scale-95 transition flex items-center space-x-1.5 cursor-pointer"
+            class="bg-[#FF5512] hover:bg-[#EA4606] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-md shadow-orange-500/20 active:scale-95 transition flex items-center space-x-1.5 cursor-pointer"
           >
             <span>+ Usta bo‘lish</span>
           </a>
@@ -336,40 +376,44 @@ function updateNavbarAuthUI() {
 
   // Mobil menyu
   if (mobileContainer) {
-    const bottomDiv = mobileContainer.querySelector('.pt-2.border-t');
-    if (bottomDiv) {
-      if (user) {
-        const profileLink = user.role === 'master' ? 'profil-usta.html' : 'profil-mijoz.html';
-        bottomDiv.innerHTML = `
-          <div class="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800 mb-2">
-            <div class="flex items-center space-x-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              <span class="text-xs font-bold text-slate-900 dark:text-white">${escapeHtml(user.name)}</span>
-            </div>
-            <span class="text-[10px] text-slate-400 uppercase font-bold">${user.role === 'master' ? 'Usta' : 'Mijoz'}</span>
+    let bottomDiv = mobileContainer.querySelector('.pt-2.border-t, .border-t');
+    if (!bottomDiv) {
+      bottomDiv = document.createElement('div');
+      bottomDiv.className = 'pt-2 border-t border-[var(--border-subtle)] mt-2';
+      mobileContainer.appendChild(bottomDiv);
+    }
+    
+    if (user) {
+      const profileLink = user.role === 'master' ? 'profil-usta.html' : 'profil-mijoz.html';
+      bottomDiv.innerHTML = `
+        <div class="flex items-center justify-between py-2 border-b border-[var(--border-subtle)] mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-bold text-[var(--text-primary)]">${escapeHtml(user.name)}</span>
           </div>
-          <a href="${profileLink}" class="block w-full text-center py-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 font-bold text-sm mb-2">
-            👤 Profilim
+          <span class="text-[10px] text-[var(--text-tertiary)] uppercase font-bold">${user.role === 'master' ? 'Usta' : 'Mijoz'}</span>
+        </div>
+        <a href="${profileLink}" class="block w-full text-center py-2.5 rounded-xl bg-[var(--surface-subtle)] text-[var(--text-primary)] font-bold text-sm mb-2">
+          👤 Profilim
+        </a>
+        <button onclick="logoutUser()" class="block w-full text-center py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 font-bold text-sm">
+          🚪 Chiqish
+        </button>
+      `;
+    } else {
+      bottomDiv.innerHTML = `
+        <div class="flex gap-2">
+          <a href="kirish.html" class="flex-1 text-center py-2.5 rounded-xl border border-[var(--border-subtle)] font-bold text-sm text-[var(--text-primary)]">
+            Kirish
           </a>
-          <button onclick="logoutUser()" class="block w-full text-center py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 font-bold text-sm">
-            🚪 Chiqish
-          </button>
-        `;
-      } else {
-        bottomDiv.innerHTML = `
-          <div class="flex gap-2">
-            <a href="kirish.html" class="flex-1 text-center py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 font-bold text-sm text-slate-800 dark:text-slate-200">
-              Kirish
-            </a>
-            <a href="royxat-mijoz.html" class="flex-1 text-center py-2.5 rounded-xl bg-[#1E3A8A] text-white font-bold text-sm shadow">
-              Mijoz bo‘lish
-            </a>
-          </div>
-          <a href="royxat-usta.html" class="block mt-2 w-full text-center py-2.5 rounded-xl bg-[#F97316] text-white font-bold text-sm shadow">
-            + Usta bo‘lib qo‘shilish
+          <a href="royxat-mijoz.html" class="flex-1 text-center py-2.5 rounded-xl bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] font-bold text-sm shadow">
+            Mijoz bo‘lish
           </a>
-        `;
-      }
+        </div>
+        <a href="royxat-usta.html" class="block mt-2 w-full text-center py-2.5 rounded-xl bg-[#FF5512] text-white font-bold text-sm shadow">
+          + Usta bo‘lib qo‘shilish
+        </a>
+      `;
     }
   }
 }

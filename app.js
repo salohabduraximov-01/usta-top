@@ -51,16 +51,16 @@ function initCategoryPills() {
     return `
       <button 
         type="button" 
-        onclick="setCategoryFilter('${cat.id}')"
+        onclick="setCategoryFilter('${escapeHtml(cat.id)}')"
         class="category-pill flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer select-none ${
           isActive 
-            ? 'bg-[#1E3A8A] text-white shadow-xs' 
-            : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 shadow-2xs'
+            ? 'bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] shadow-xs' 
+            : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:bg-[var(--surface-subtle)] border border-[var(--border-subtle)] shadow-2xs'
         }"
-        data-cat-id="${cat.id}"
+        data-cat-id="${escapeHtml(cat.id)}"
       >
         <span>${getSvgIcon(cat.icon, 'w-4 h-4')}</span>
-        <span>${cat.name}</span>
+        <span>${escapeHtml(cat.name)}</span>
       </button>
     `;
   }).join('');
@@ -94,22 +94,23 @@ function initDistrictChips() {
       ).length;
     }
 
+    const safeDistrict = escapeHtml(districtName);
     return `
       <button 
         type="button" 
-        onclick="setDistrictFilter('${districtName}')"
+        onclick="setDistrictFilter('${safeDistrict}')"
         class="group flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer select-none ${
           isActive 
-            ? 'bg-[#F97316] text-white shadow-xs border border-transparent' 
-            : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600 border border-slate-200 dark:border-slate-700 shadow-2xs'
+            ? 'bg-[#FF5512] text-white shadow-xs border border-transparent' 
+            : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] border border-[var(--border-subtle)] shadow-2xs'
         }"
       >
-        <span class="${isActive ? 'text-white' : 'text-slate-400'}">📍</span>
-        <span>${districtName}</span>
+        <span class="${isActive ? 'text-white' : 'text-[var(--text-tertiary)]'}">📍</span>
+        <span>${safeDistrict}</span>
         <span class="ml-1 text-[10px] px-1.5 py-0.2 rounded-md ${
           isActive 
             ? 'bg-white/20 text-white' 
-            : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:bg-slate-200'
+            : 'bg-[var(--surface-subtle)] text-[var(--text-tertiary)] group-hover:bg-[var(--border-subtle)]'
         }">${count}</span>
       </button>
     `;
@@ -143,9 +144,9 @@ function updateSortButtonsUI() {
     if (!btn) return;
     const isActive = currentFilter.sortBy === opt;
     if (isActive) {
-      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-[#1E3A8A] text-white shadow-md shadow-blue-900/20 scale-105 cursor-pointer";
+      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-[#0F172A] text-white dark:bg-white dark:text-[#0F172A] shadow-md scale-105 cursor-pointer";
     } else {
-      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-700 transition cursor-pointer";
+      btn.className = "sort-btn px-3 sm:px-3.5 py-2 rounded-xl text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-subtle)] transition cursor-pointer";
     }
   });
 }
@@ -329,14 +330,15 @@ function renderMastersGrid() {
 
     if (hasActiveFilters) {
       activeFiltersContainer.classList.remove('hidden');
+      const activeCat = CATEGORIES.find(c => c.id === currentFilter.category);
       activeFiltersContainer.innerHTML = `
-        <div class="p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="p-3 bg-[var(--surface)] rounded-2xl border border-[var(--border-subtle)] shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Faol filtrlar:</span>
-            ${currentFilter.category !== 'barchasi' ? `<span class="inline-flex items-center space-x-1 bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 border border-blue-200/70 dark:border-blue-800/70 px-2.5 py-1 rounded-xl font-bold"><span>Kategoriya:</span> <strong class="underline">${CATEGORIES.find(c => c.id === currentFilter.category)?.name}</strong></span>` : ''}
-            ${currentFilter.district !== 'Barcha tumanlar' ? `<span class="inline-flex items-center space-x-1 bg-orange-50 dark:bg-orange-950/60 text-orange-800 dark:text-orange-300 border border-orange-200/70 dark:border-orange-800/70 px-2.5 py-1 rounded-xl font-bold"><span>📍 Tuman:</span> <strong>${currentFilter.district}</strong></span>` : ''}
-            ${currentFilter.searchQuery ? `<span class="inline-flex items-center space-x-1 bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border border-purple-200/70 dark:border-purple-800/70 px-2.5 py-1 rounded-xl font-bold"><span>Qidiruv:</span> <em>"${escapeHtml(currentFilter.searchQuery)}"</em></span>` : ''}
-            ${currentFilter.urgentOnly ? `<span class="inline-flex items-center space-x-1 bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/70 dark:border-amber-800/70 px-2.5 py-1 rounded-xl font-bold">⚡ Shoshilinch</span>` : ''}
+            <span class="text-[var(--text-tertiary)] font-bold uppercase tracking-wider text-[10px]">Faol filtrlar:</span>
+            ${currentFilter.category !== 'barchasi' && activeCat ? `<span class="inline-flex items-center space-x-1 bg-[var(--surface-subtle)] text-[var(--text-primary)] border border-[var(--border-subtle)] px-2.5 py-1 rounded-xl font-bold"><span>Kategoriya:</span> <strong class="underline">${escapeHtml(activeCat.name)}</strong></span>` : ''}
+            ${currentFilter.district !== 'Barcha tumanlar' ? `<span class="inline-flex items-center space-x-1 bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent)]/30 px-2.5 py-1 rounded-xl font-bold"><span>📍 Tuman:</span> <strong>${escapeHtml(currentFilter.district)}</strong></span>` : ''}
+            ${currentFilter.searchQuery ? `<span class="inline-flex items-center space-x-1 bg-[var(--surface-subtle)] text-[var(--text-primary)] border border-[var(--border-subtle)] px-2.5 py-1 rounded-xl font-bold"><span>Qidiruv:</span> <em>"${escapeHtml(currentFilter.searchQuery)}"</em></span>` : ''}
+            ${currentFilter.urgentOnly ? `<span class="inline-flex items-center space-x-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-xl font-bold">⚡ Shoshilinch</span>` : ''}
           </div>
           
           <button 
@@ -358,19 +360,19 @@ function renderMastersGrid() {
   // 4. BO'SH HOLAT VA XATOLAR (Chiroyli SVG illyustratsiya va tugmalar)
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="col-span-full py-16 px-6 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm animate-fade-in max-w-2xl mx-auto">
-        <div class="w-24 h-24 mx-auto mb-5 rounded-3xl bg-blue-50 dark:bg-slate-800/80 flex items-center justify-center text-[#1E3A8A] dark:text-blue-400">
-          <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="col-span-full py-16 px-6 text-center bg-[var(--surface)] rounded-3xl border border-[var(--border-subtle)] shadow-sm animate-fade-in max-w-2xl mx-auto">
+        <div class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-[var(--surface-subtle)] flex items-center justify-center text-[var(--text-tertiary)]">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 9v3m0 3h.01"/>
           </svg>
         </div>
         
-        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+        <h3 class="text-xl sm:text-2xl font-extrabold text-[var(--text-primary)]">
           ${currentFilter.district !== 'Barcha tumanlar' ? `"${escapeHtml(currentFilter.district)}" tumanida hozircha usta topilmadi` : 'Ushbu parametrlar bo‘yicha usta topilmadi'}
         </h3>
         
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+        <p class="text-xs sm:text-sm text-[var(--text-secondary)] mt-2 max-w-md mx-auto leading-relaxed">
           Kiritilgan qidiruv so‘zi yoki tuman bo‘yicha hozircha bo‘sh mutaxassislar yo‘q. Boshqa tumanlarni ko‘rib chiqing yoki filtrlarni tozalang.
         </p>
         
@@ -378,7 +380,7 @@ function renderMastersGrid() {
           <button 
             type="button" 
             onclick="setDistrictFilter('Barcha tumanlar')" 
-            class="bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-[#1E3A8A] dark:text-blue-300 border border-blue-200 dark:border-blue-800/70 font-bold py-2.5 px-5 rounded-xl text-xs transition cursor-pointer"
+            class="bg-[var(--surface-subtle)] hover:bg-[var(--border-subtle)] text-[var(--text-primary)] border border-[var(--border-subtle)] font-bold py-2.5 px-5 rounded-xl text-xs transition cursor-pointer"
           >
             📍 Boshqa tumanni sinab ko‘ring
           </button>
@@ -386,7 +388,7 @@ function renderMastersGrid() {
           <button 
             type="button" 
             onclick="resetFilters()" 
-            class="bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-md transition cursor-pointer"
+            class="btn-primary py-2.5 px-6 rounded-xl text-xs shadow-md transition cursor-pointer"
           >
             ✕ Filtrni tozalash
           </button>
@@ -396,67 +398,62 @@ function renderMastersGrid() {
     return;
   }
 
-  // USTA KARTOCHKALARINI GENERATSIYA QILISH
+  // USTA KARTOCHKALARINI GENERATSIYA QILISH (Modern Architectural Layout)
   grid.innerHTML = filtered.map((master, idx) => {
     const isFree = master.status !== 'busy';
     const startingPrice = typeof getMasterStartingPrice === 'function' 
       ? getMasterStartingPrice(master) 
       : '40 000 so‘m';
 
-    const fullStars = Math.floor(master.rating);
-    const starIcons = Array.from({ length: 5 }, (_, i) => {
-      return i < fullStars 
-        ? `<svg class="w-3.5 h-3.5 text-amber-400 fill-current inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`
-        : `<svg class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 fill-current inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
-    }).join('');
-
     const latestReview = master.reviews && master.reviews.length > 0 ? master.reviews[0] : null;
     const isFav = typeof isMasterFavorite === 'function' ? isMasterFavorite(master.id) : false;
 
     return `
       <div 
-        class="reveal bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800 card-hover-effect flex flex-col justify-between transition-all duration-200 shadow-2xs"
-        style="transition-delay: ${(idx % 6) * 15}ms;"
+        class="reveal card-editorial p-5 flex flex-col justify-between transition-all duration-200"
+        style="transition-delay: ${(idx % 6) * 20}ms;"
       >
-        
         <div>
-          <!-- Usta bosh qismi: Avatar, ism, kasbi va tuman -->
+          <!-- Yuqori qism: Avatar, Ism, Mutaxassislik va Sevimli -->
           <div class="flex items-start justify-between gap-3">
-            <div class="flex items-center space-x-3">
-              
-              <!-- Katta dumaloq avatar (Rasm bo'lmasa ism harflari rangli fonda) -->
-              <div class="relative flex-shrink-0">
-                ${renderAvatar(master, 'w-14 h-14 text-base font-bold', '')}
-                <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 ${isFree ? 'bg-emerald-500' : 'bg-slate-400'} rounded-full border-2 border-white dark:border-[#111827]" title="${isFree ? 'Bo‘sh' : 'Band'}"></span>
+            <div class="flex items-center space-x-3.5">
+              <div class="relative shrink-0">
+                ${renderAvatar(master, 'w-12 h-12 text-base font-bold', 'rounded-2xl')}
+                <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 ${isFree ? 'bg-emerald-500' : 'bg-slate-400'} rounded-full ring-2 ring-white dark:ring-[#14171D]" title="${isFree ? 'Bo‘sh' : 'Band'}"></span>
               </div>
 
               <div>
-                <div class="flex items-center space-x-1.5">
+                <div class="flex items-center gap-1.5">
                   <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">
                     ${escapeHtml(master.name)}
                   </h3>
+                  <span class="inline-flex text-emerald-500" title="Tasdiqlangan mutaxassis">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  </span>
                 </div>
                 
                 <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
                   ${escapeHtml(master.profession)}
                 </p>
-                
-                <div class="flex items-center space-x-1 text-slate-400 text-xs mt-1">
-                  <span class="text-slate-400">📍</span>
-                  <span class="text-slate-700 dark:text-slate-300 font-medium text-[11px]">${escapeHtml(master.district)}</span>
+
+                <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-400">
+                  <span class="inline-flex items-center gap-0.5">
+                    <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                    <span class="text-slate-600 dark:text-slate-300 font-medium">${escapeHtml(master.district)}</span>
+                  </span>
+                  <span>•</span>
+                  <span>${master.experience} yil tajriba</span>
                 </div>
               </div>
-
             </div>
 
-            <!-- Sevimli (Yurakcha) tugmasi -->
+            <!-- Sevimli tugmasi -->
             <button 
               type="button" 
               onclick="toggleFavoriteMaster(${master.id}, event)"
               data-fav-master-id="${master.id}"
-              class="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer flex-shrink-0"
+              class="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer shrink-0"
               title="${isFav ? 'Sevimlilardan o‘chirish' : 'Sevimlilarga saqlash'}"
-              aria-label="Sevimli"
             >
               ${isFav 
                 ? getSvgIcon('heart', 'w-4 h-4 text-rose-500 fill-current') 
@@ -464,103 +461,71 @@ function renderMastersGrid() {
             </button>
           </div>
 
-          <!-- Belgilar qatori: Holat (Bo'sh/Band), Tasdiqlangan va Narx "dan ... so'm" -->
-          <div class="mt-3.5 flex flex-wrap items-center gap-1.5">
-            
-            <!-- Holat belgisi -->
-            ${isFree ? `
-              <span class="status-badge-free">
-                <span class="status-dot-pulse"></span>
-                <span>Bo‘sh</span>
+          <!-- Metrikalar paneli: Reyting, Holat va Narx -->
+          <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 font-bold text-slate-900 dark:text-white bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-md text-[11px]">
+                <svg class="w-3 h-3 fill-current text-amber-500" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                ${master.rating}
               </span>
-            ` : `
-              <span class="status-badge-busy">
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                <span>Band</span>
-              </span>
-            `}
-
-            <!-- Tasdiqlangan belgisi -->
-            <span class="inline-flex items-center space-x-1 bg-blue-50 dark:bg-blue-950/40 text-[#1E3A8A] dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/40 px-2 py-0.5 rounded-full text-[10px] font-bold">
-              ${getSvgIcon('checkBadge', 'w-3 h-3 text-blue-600 dark:text-blue-400')}
-              <span>Tasdiqlangan</span>
-            </span>
-
-            <!-- Narx: "dan ... so'm" -->
-            <span class="inline-flex items-center text-[11px] font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full ml-auto">
-              dan ${escapeHtml(startingPrice)}
-            </span>
-          </div>
-
-          <!-- Reyting va tajriba ko'rsatkichlari -->
-          <div class="mt-3 flex items-center justify-between text-xs">
-            <div class="flex items-center space-x-1.5">
-              <span class="flex items-center space-x-0.5">${starIcons}</span>
-              <span class="font-bold text-amber-500 text-xs">${master.rating}</span>
-              <span class="text-slate-400 text-[11px]">(${master.reviewsCount || (master.reviews ? master.reviews.length : 0)})</span>
+              <span class="text-[11px] text-slate-400">(${master.reviewsCount || (master.reviews ? master.reviews.length : 0)} ta sharh)</span>
             </div>
 
-            <span class="text-slate-500 dark:text-slate-400 text-[11px] font-medium">
-              ${master.experience} yil tajriba
-            </span>
+            <div class="flex items-center gap-2">
+              ${isFree 
+                ? `<span class="status-pill-free"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Bo‘sh</span>` 
+                : `<span class="status-pill-busy"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>Band</span>`}
+            </div>
           </div>
 
-          <!-- Asosiy xizmatlar namunalari -->
-          <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 space-y-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Xizmatlar:</span>
+          <!-- Asosiy xizmatlar pill-taglar ko'rinishida -->
+          <div class="mt-3 flex flex-wrap gap-1.5">
             ${(master.popularServices || []).slice(0, 2).map(s => `
-              <div class="flex items-center justify-between text-xs">
-                <span class="text-slate-600 dark:text-slate-400 truncate pr-2 text-[11px]">${escapeHtml(s.name)}</span>
-                <span class="font-semibold text-[#1E3A8A] dark:text-blue-400 whitespace-nowrap text-[11px]">${escapeHtml(s.price)}</span>
-              </div>
+              <span class="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-100 dark:border-slate-700">
+                <span class="truncate max-w-[130px]">${escapeHtml(s.name)}</span>
+                <strong class="text-[#FF5512] font-semibold">${escapeHtml(s.price)}</strong>
+              </span>
             `).join('')}
           </div>
 
-          <!-- Mijozning oxirgi sharhi (Komment) preview -->
+          <!-- Mijozning so'nggi sharhi (Minimalist Linear style) -->
           ${latestReview ? `
-            <div class="mt-3 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/80 text-[11px]">
-              <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-0.5">
-                <span class="font-bold text-slate-800 dark:text-slate-200">💬 ${escapeHtml(latestReview.author)}:</span>
-                <span class="text-amber-400 text-[10px]">★ ${latestReview.rating}</span>
+            <div class="mt-3 p-2.5 rounded-xl bg-slate-50/70 dark:bg-slate-800/30 border-l-2 border-[#FF5512] text-[11px]">
+              <p class="text-slate-600 dark:text-slate-400 italic line-clamp-1">"${escapeHtml(latestReview.text)}"</p>
+              <div class="flex items-center justify-between text-slate-400 text-[10px] mt-1">
+                <span>— ${escapeHtml(latestReview.author)}</span>
+                <span class="text-amber-500">★ ${latestReview.rating}</span>
               </div>
-              <p class="text-slate-600 dark:text-slate-400 line-clamp-1 italic text-[11px]">"${escapeHtml(latestReview.text)}"</p>
             </div>
           ` : ''}
-
         </div>
 
-        <!-- Pastki Tugmalar bloki -->
-        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
-          
-          <button 
-            type="button" 
-            onclick="openChatModal(${master.id})" 
-            class="btn-primary w-full py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center space-x-2"
-          >
-            ${getSvgIcon('chat', 'w-4 h-4')}
-            <span>Usta bilan bog‘lanish (Chat)</span>
-          </button>
+        <!-- Pastki qism: Narx va CTA tugmalar -->
+        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+          <div class="flex items-baseline justify-between mb-3">
+            <span class="text-[11px] text-slate-400 font-medium">Boshlang‘ich narx:</span>
+            <span class="text-sm font-extrabold text-slate-900 dark:text-white">dan ${escapeHtml(startingPrice)}</span>
+          </div>
 
           <div class="grid grid-cols-2 gap-2">
             <button 
               type="button" 
-              onclick="openReviewModal(${master.id})" 
-              class="btn-secondary w-full py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1"
+              onclick="openChatModal(${master.id})" 
+              class="btn-primary w-full py-2 px-3 text-xs font-semibold flex items-center justify-center gap-1.5"
             >
-              <svg class="w-3.5 h-3.5 fill-current text-amber-500" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <span>Baho berish</span>
+              ${getSvgIcon('chat', 'w-3.5 h-3.5')}
+              <span>Chat</span>
             </button>
 
             <button 
               type="button" 
               onclick="openDetailModal(${master.id})" 
-              class="btn-secondary w-full py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1"
+              class="btn-secondary w-full py-2 px-3 text-xs font-semibold flex items-center justify-center gap-1.5"
             >
-              ${getSvgIcon('info', 'w-3.5 h-3.5 text-slate-400')}
-              <span>Xizmatlar</span>
+              <span>Profil</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
           </div>
-
         </div>
 
       </div>

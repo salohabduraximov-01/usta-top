@@ -1,4 +1,4 @@
-﻿// Usta-Top.uz - Haqiqiy ma'lumotlar bazasi (Toshkent ustalari va xizmat narxlari)
+// Usta-Top.uz - Haqiqiy ma'lumotlar bazasi (Toshkent ustalari va xizmat narxlari)
 
 const CATEGORIES = [
   { 
@@ -528,7 +528,7 @@ const MASTERS_DATA = [
     reviewsCount: 65,
     completedOrders: 250,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Shkaf-kupe, oshxona, stol-stul yig‘ish. Furnituralarni sozlash.",
     popularServices: [
       { name: 'Shkaf yig‘ish', price: "180 000 so'm" },
@@ -557,7 +557,7 @@ const MASTERS_DATA = [
     reviewsCount: 89,
     completedOrders: 310,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Har qanday turdagi mebellarni chizmasi bo‘yicha sifatli yig‘ish: shkaf-kupe, oshxona mebellari, ikki qavatli kravatlar.",
     popularServices: [
       { name: 'Shkaf-kupe yig‘ish', price: "180 000 so'm" },
@@ -668,7 +668,7 @@ const MASTERS_DATA = [
     reviewsCount: 134,
     completedOrders: 490,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Televizorni devorga kronshteynda o‘rnatish, parda kornizlari, polkalar, rasmlar, ko‘zgular osish, eshik qulfini almashtirish.",
     popularServices: [
       { name: 'Televizor kronshteyni', price: "70 000 so'm" },
@@ -723,7 +723,7 @@ const MASTERS_DATA = [
     reviewsCount: 86,
     completedOrders: 330,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Elektr tarmog‘ini noldan tortish, lyustra va avtomatlarni montaj qilish.",
     popularServices: [
       { name: 'Rozetka montaji', price: "35 000 so'm" },
@@ -779,7 +779,7 @@ const MASTERS_DATA = [
     reviewsCount: 178,
     completedOrders: 650,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Ikki konturli isitish qozonlari (Navien, Baxi, Immergas) va issiq pol tizimlari ta'miri va montaji.",
     popularServices: [
       { name: 'Kotyol sozlash', price: "200 000 so'm" },
@@ -1000,7 +1000,7 @@ const MASTERS_DATA = [
     reviewsCount: 155,
     completedOrders: 600,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Dush kabinalari, vanna, unitaz montaji va suv sizishlarini yo‘qotish.",
     popularServices: [
       { name: 'Dush smesiteli montaji', price: "80 000 so'm" },
@@ -1081,7 +1081,7 @@ const MASTERS_DATA = [
     reviewsCount: 84,
     completedOrders: 320,
     urgent: false,
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Oshxona garnituri va shkaf-kupe yig‘ish va sozlash.",
     popularServices: [
       { name: 'Shkaf-kupe montaji', price: "200 000 so'm" }
@@ -1109,7 +1109,7 @@ const MASTERS_DATA = [
     reviewsCount: 112,
     completedOrders: 440,
     urgent: true,
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+    avatar: '',
     bio: "Kran, smesitel, unitaz va isitish batareyalari ta'miri va montaji.",
     popularServices: [
       { name: 'Kran almashtirish', price: "75 000 so'm" },
@@ -1328,7 +1328,17 @@ function syncReviewsFromStorage() {
 
 // Barcha ustalarni (data.js + LocalStorage dagi yangi ro'yxatdan o'tgan ustalar) birlashtirib olish
 function getAllMasters(applyOverrides = true) {
-  let combined = [...MASTERS_DATA];
+  // MASTERS_DATA obyektlarini mutatsiya qilmaslik uchun chuqur bo'lmasa-da, har bir elementning nusxasini olamiz
+  let combined = MASTERS_DATA.map(m => ({ ...m }));
+
+  // O'chirilgan ustalar ro'yxati (deleted_master_ids)
+  let deletedIds = [];
+  try {
+    const rawDel = typeof safeStorage !== 'undefined'
+      ? safeStorage.getItem('deleted_master_ids')
+      : localStorage.getItem('deleted_master_ids');
+    if (rawDel) deletedIds = JSON.parse(rawDel) || [];
+  } catch (_) {}
 
   // LocalStorage dagi ro'yxatdan o'tgan ustalarni qo'shish
   try {
@@ -1339,8 +1349,8 @@ function getAllMasters(applyOverrides = true) {
       const newMasters = JSON.parse(rawNewMasters);
       if (Array.isArray(newMasters)) {
         newMasters.forEach(newM => {
-          if (!combined.some(m => m.id === newM.id)) {
-            combined.unshift(newM);
+          if (!deletedIds.includes(newM.id) && !combined.some(m => m.id === newM.id)) {
+            combined.unshift({ ...newM });
           }
         });
       }
@@ -1349,28 +1359,81 @@ function getAllMasters(applyOverrides = true) {
     console.warn('Yangi ustalarni yuklashda xatolik:', err);
   }
 
-  // Har bir ustaga default status, verified va minimal narx berish
+  // O'chirilgan ustalarni filtrlash
+  combined = combined.filter(m => !deletedIds.includes(m.id));
+
+  // Status va verified xususiyatlarini xavfsiz yangilash
   if (applyOverrides) {
     try {
       const statusOverrides = JSON.parse(
         (typeof safeStorage !== 'undefined' ? safeStorage.getItem('master_status_overrides') : localStorage.getItem('master_status_overrides')) || '{}'
       );
 
-      combined.forEach(m => {
-        // Agar usta panelidan status o'zgartirilgan bo'lsa
-        if (statusOverrides[m.id]) {
-          m.status = statusOverrides[m.id];
-        } else if (!m.status) {
-          // Demo maqsadida bir nechta usta 'busy' (band), qolganlari 'free' (bo'sh)
-          m.status = (m.id === 4 || m.id === 11 || m.id === 24 || m.id === 35) ? 'busy' : 'free';
+      combined = combined.map(m => {
+        const copy = { ...m };
+        if (statusOverrides[copy.id]) {
+          copy.status = statusOverrides[copy.id];
+        } else if (!copy.status) {
+          copy.status = (copy.id === 4 || copy.id === 11 || copy.id === 24 || copy.id === 35) ? 'busy' : 'free';
         }
-
-        m.verified = true;
+        // Yangi ro'yxatdan o'tgan ustalar avtomatik verified bo'lmasin, asl verified qiymatini saqlasin
+        if (copy.verified === undefined) {
+          copy.verified = false;
+        }
+        return copy;
       });
     } catch (_) {}
   }
 
   return combined;
+}
+
+// Usta profilini butunlay o'chirish funksiyasi
+function deleteMasterAccountPermanently(masterId) {
+  try {
+    const id = Number(masterId);
+    
+    // 1. deleted_master_ids ga qo'shish
+    let deletedIds = [];
+    const rawDel = localStorage.getItem('deleted_master_ids');
+    if (rawDel) deletedIds = JSON.parse(rawDel) || [];
+    if (!deletedIds.includes(id)) deletedIds.push(id);
+    localStorage.setItem('deleted_master_ids', JSON.stringify(deletedIds));
+
+    // 2. registered_masters dan olib tashlash
+    const rawReg = localStorage.getItem('registered_masters');
+    if (rawReg) {
+      const regList = JSON.parse(rawReg);
+      if (Array.isArray(regList)) {
+        const filtered = regList.filter(m => m.id !== id);
+        localStorage.setItem('registered_masters', JSON.stringify(filtered));
+      }
+    }
+
+    // 3. app_users dan olib tashlash
+    const rawUsers = localStorage.getItem('app_users');
+    if (rawUsers) {
+      const usersList = JSON.parse(rawUsers);
+      if (Array.isArray(usersList)) {
+        const filteredUsers = usersList.filter(u => u.id !== id);
+        localStorage.setItem('app_users', JSON.stringify(filteredUsers));
+      }
+    }
+
+    // 4. Joriy sessiyani tozalash (agar shu usta kirgan bo'lsa)
+    const rawSession = localStorage.getItem('current_session');
+    if (rawSession) {
+      const session = JSON.parse(rawSession);
+      if (session && session.userId === id) {
+        localStorage.removeItem('current_session');
+      }
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Usta profilini ochirishda xatolik:', err);
+    return false;
+  }
 }
 
 // Usta uchun "dan ... so'm" boshlang'ich narxini hisoblash

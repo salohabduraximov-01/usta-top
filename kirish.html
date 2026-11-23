@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tizimga kirish | Usta-Top.uz</title>
+  <title>Tizimga kirish — Usta-Top.uz</title>
   <meta name="description" content="Usta-Top.uz platformasiga kirish. Toshkent ustalari va mijozlar uchun shaxsiy kabinet.">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,20 +15,9 @@
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            brand: {
-              navy: '#1E3A8A',
-              navyDark: '#142C5C',
-              orange: '#F97316',
-              softOrange: '#FFF1E6',
-              bgLight: '#F8FAFC',
-              border: '#E2E8F0',
-              textPrimary: '#0F172A',
-              textSecondary: '#64748B'
-            }
-          },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
           }
         }
       }
@@ -42,138 +26,84 @@
 
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#0B1120] text-[#0F172A] dark:text-[#F8FAFC] antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-200">
+<body class="bg-[#FBFBFA] dark:bg-[#0C0E12] text-[#0F1115] dark:text-[#F3F4F6] antialiased min-h-screen flex flex-col transition-colors duration-200">
 
   <!-- ==========================================
-       1. HEADER / NAVBAR (Standardized SaaS Layout)
+       1. HEADER / NAVIGATION (Linear/Apple Style)
        ========================================== -->
-  <header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <header class="sticky top-0 z-40 w-full bg-[#FFFFFF]/90 dark:bg-[#0C0E12]/90 backdrop-blur-md border-b border-[#E8E8E5] dark:border-[#1F242F] transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center space-x-3 group">
-        <div class="w-11 h-11 rounded-xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-sm shadow-blue-900/20 group-hover:bg-[#142C5C] transition">
-          <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
+      <a href="index.html" class="flex items-center space-x-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-bold text-sm tracking-tight transition-transform group-hover:scale-95">
+          <span class="text-[#FF5512]">U</span>T
         </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400">
-            Usta-Top<span class="text-[#F97316]">.uz</span>
-          </span>
-          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-0.5">
-            Toshkent ustalari
-          </span>
+        <div class="flex items-baseline space-x-1">
+          <span class="font-display font-extrabold text-base tracking-tight text-[#0F1115] dark:text-white">Usta-Top</span>
+          <span class="text-[10px] font-semibold text-[#FF5512]">.uz</span>
         </div>
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
-          Bosh sahifa
-        </a>
-        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
-          <span>📢</span>
-          <span>E’lon berish</span>
-        </a>
-        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
-          Ustalar
-        </a>
-        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
-          <span>🧮</span>
-          <span>Kalkulyator</span>
-        </a>
-        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
-          <span>🗺️</span>
-          <span>Xarita</span>
-        </a>
+      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Bosh sahifa</a>
+        <a href="elon-berish.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">E’lon berish</a>
+        <a href="ustalar.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Ustalar</a>
+        <a href="kalkulyator.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Kalkulyator</a>
+        <a href="xarita.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Xarita</a>
       </nav>
 
-      <!-- Desktop O'ng qism -->
-      <div class="hidden md:flex items-center space-x-3.5">
+      <!-- O'ng qism: Tungi rejim va Kirish -->
+      <div class="hidden md:flex items-center space-x-2.5">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer shadow-2xs"
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-black dark:hover:text-white transition cursor-pointer"
           title="Tungi / Kunduzgi rejim"
-          aria-label="Mavzuni almashtirish"
         >
-          <span class="theme-toggle-icon flex items-center justify-center"></span>
+          <span class="theme-toggle-icon"></span>
         </button>
 
-        <a 
-          href="royxat-mijoz.html" 
-          class="btn-primary px-4 py-2 text-xs font-bold rounded-xl"
-        >
-          Ro‘yxatdan o‘tish
+        <a href="royxat-usta.html" class="btn-accent px-3.5 py-1.5 text-xs font-bold rounded-lg cursor-pointer">
+          + Usta bo‘lish
         </a>
       </div>
 
       <!-- Mobil burger -->
       <div class="flex items-center space-x-2 md:hidden">
-        <button 
-          type="button" 
-          onclick="toggleTheme()" 
-          class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 shadow-2xs"
-          aria-label="Tungi rejim"
-        >
+        <button type="button" onclick="toggleTheme()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
           <span class="theme-toggle-icon"></span>
         </button>
-
-        <button 
-          type="button" 
-          onclick="toggleMobileMenu()" 
-          class="text-slate-700 dark:text-slate-200 p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs"
-          aria-label="Menyu"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
+        <button type="button" onclick="toggleMobileMenu()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
 
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🏠 Bosh sahifa
-      </a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        📢 E’lon berish (Buyurtmalar)
-      </a>
-      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🔧 Ustalar katalogi
-      </a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🧮 Narx kalkulyatori
-      </a>
-      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🗺️ Toshkent xaritasi
-      </a>
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
-        <a href="kirish.html" class="flex-1 text-center py-2 rounded-xl bg-blue-50 dark:bg-blue-950 font-bold text-xs text-[#1E3A8A] dark:text-blue-300">
-          Kirish
-        </a>
-        <a href="royxat-mijoz.html" class="btn-primary flex-1 text-center py-2 rounded-xl font-bold text-xs">
-          Ro‘yxatdan o‘tish
-        </a>
-      </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#0C0E12] px-4 pt-2.5 pb-4 space-y-1 text-xs font-semibold">
+      <a href="index.html" class="block py-2 text-slate-700 dark:text-slate-300">Bosh sahifa</a>
+      <a href="elon-berish.html" class="block py-2 text-slate-700 dark:text-slate-300">E’lon berish</a>
+      <a href="ustalar.html" class="block py-2 text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="block py-2 text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
+      <a href="xarita.html" class="block py-2 text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
     </div>
   </header>
 
 
   <!-- ==========================================
-       2. KIRISH FORMASI
+       2. KIRISH FORMASI (Minimalist Auth Container)
        ========================================== -->
   <main class="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full bg-white dark:bg-[#111827] rounded-2xl p-6 sm:p-8 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
+    <div class="max-w-md w-full card-editorial p-6 sm:p-8 space-y-6">
       
-      <div class="text-center mb-6">
-        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center mx-auto mb-3">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+      <div class="text-center">
+        <div class="w-10 h-10 rounded-xl bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-bold text-sm mx-auto mb-3">
+          <span class="text-[#FF5512]">U</span>T
         </div>
-        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+        <h1 class="font-display text-xl sm:text-2xl font-extrabold text-[#0F1115] dark:text-white tracking-tight">
           Tizimga kirish
         </h1>
         <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -182,42 +112,39 @@
       </div>
 
       <!-- Xato xabari bloki -->
-      <div id="loginErrorBox" class="hidden mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-600 dark:text-rose-300 text-xs flex items-center space-x-2">
+      <div id="loginErrorBox" class="hidden p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-600 dark:text-rose-300 text-xs flex items-center space-x-2">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/></svg>
         <span id="loginErrorMsg">Telefon raqam yoki parol noto‘g‘ri</span>
       </div>
 
-      <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
         
         <!-- Telefon maydoni -->
         <div>
-          <label for="loginPhone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
+          <label for="loginPhone" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">
             Telefon raqam
           </label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-xs">
-              📞
-            </span>
             <input 
               type="tel" 
               id="loginPhone" 
               required 
               placeholder="+998 90 123 45 67" 
-              class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A] transition"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-[#E8E8E5] dark:border-[#242832] bg-[#FFFFFF] dark:bg-[#14171D] text-[#0F1115] dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#FF5512] transition"
             >
           </div>
         </div>
 
         <!-- Parol maydoni -->
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label for="loginPassword" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="loginPassword" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Parol
             </label>
             <button 
               type="button" 
               onclick="showForgotPasswordDemo()" 
-              class="text-[11px] text-[#F97316] hover:underline font-semibold cursor-pointer"
+              class="text-[11px] text-[#FF5512] hover:underline font-semibold cursor-pointer"
             >
               Parolni unutdingizmi?
             </button>
@@ -229,12 +156,12 @@
               id="loginPassword" 
               required 
               placeholder="••••••••" 
-              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#1E3A8A] pr-10 transition"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-[#E8E8E5] dark:border-[#242832] bg-[#FFFFFF] dark:bg-[#14171D] text-[#0F1115] dark:text-white text-xs sm:text-sm focus:outline-none focus:border-[#FF5512] pr-10 transition"
             >
             <button 
               type="button" 
               onclick="togglePasswordVisibility('loginPassword', this)" 
-              class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-black dark:hover:text-white cursor-pointer"
               title="Ko‘rsatish / Yashirish"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -249,15 +176,15 @@
               type="checkbox" 
               id="rememberMeCheckbox" 
               checked 
-              class="w-4 h-4 rounded text-[#1E3A8A] focus:ring-blue-500 cursor-pointer"
+              class="w-4 h-4 rounded text-[#FF5512] focus:ring-[#FF5512] cursor-pointer"
             >
             <span>Meni eslab qol (Telefon va parolni saqlash)</span>
           </label>
         </div>
 
-        <!-- Tezkor saqlangan demo akkauntlar bloki -->
-        <div id="quickAccountsContainer" class="hidden pt-2.5 border-t border-slate-100 dark:border-slate-800">
-          <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tezkor kirish (1 bosishda):</span>
+        <!-- Tezkor saqlangan akkauntlar bloki -->
+        <div id="quickAccountsContainer" class="hidden pt-3 border-t border-[#E8E8E5] dark:border-[#242832]">
+          <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Tezkor kirish (1 bosishda):</span>
           <div id="quickAccountsList" class="flex flex-wrap gap-1.5"></div>
         </div>
 
@@ -273,16 +200,16 @@
       </form>
 
       <!-- Ro'yxatdan o'tishga havola -->
-      <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center space-y-1.5">
+      <div class="pt-5 border-t border-[#E8E8E5] dark:border-[#242832] text-center space-y-2">
         <p class="text-xs text-slate-500 dark:text-slate-400">
           Akkauntingiz yo‘qmi?
         </p>
         <div class="flex items-center justify-center gap-3 text-xs font-semibold">
-          <a href="royxat-mijoz.html" class="text-[#1E3A8A] dark:text-blue-400 hover:underline">
-            Mijoz bo‘lib ro‘yxatdan o‘tish
+          <a href="royxat-mijoz.html" class="text-[#0F1115] dark:text-white hover:underline">
+            Mijoz sifatida ro‘yxatdan o‘tish
           </a>
           <span class="text-slate-300 dark:text-slate-600">•</span>
-          <a href="royxat-usta.html" class="text-[#F97316] hover:underline">
+          <a href="royxat-usta.html" class="text-[#FF5512] hover:underline">
             Usta sifatida qo‘shilish
           </a>
         </div>
@@ -295,8 +222,8 @@
   <!-- ==========================================
        3. FOOTER
        ========================================== -->
-  <footer class="mt-auto bg-white dark:bg-[#0B1120] border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-400">
-    © 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.
+  <footer class="mt-auto border-t border-[#E8E8E5] dark:border-[#1F242F] bg-[#FFFFFF] dark:bg-[#0C0E12] py-6 text-center text-xs text-slate-400">
+    &copy; 2026 Usta-Top.uz — Barcha huquqlar himoyalangan.
   </footer>
 
   <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
@@ -350,7 +277,6 @@
       container.classList.remove('hidden');
       list.innerHTML = users.slice(0, 4).map(u => {
         const isMaster = u.role === 'master';
-        const roleIcon = isMaster ? '🔧' : '👤';
         const safePhone = escapeHtml(u.phone || '');
         const passToFill = (u.passwordHash === 'Usta1234') ? 'Usta1234' : '';
 
@@ -358,10 +284,10 @@
           <button 
             type="button" 
             onclick="fillLoginCredentials('${safePhone}', '${passToFill}')"
-            class="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:border-blue-500 hover:text-blue-600 transition flex items-center space-x-1 cursor-pointer shadow-2xs"
+            class="px-2.5 py-1 rounded-lg border border-[#E8E8E5] dark:border-[#242832] bg-[#FBFBFA] dark:bg-[#1A1E26] text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:border-[#FF5512] transition flex items-center space-x-1 cursor-pointer"
             title="Telefon: ${safePhone}"
           >
-            <span>${roleIcon}</span>
+            <span class="text-[#FF5512] font-bold">${isMaster ? 'U' : 'M'}</span>
             <span class="truncate max-w-[120px]">${escapeHtml(u.name)}</span>
           </button>
         `;
@@ -381,7 +307,7 @@
       if (!input) return;
       if (input.type === 'password') {
         input.type = 'text';
-        btn.innerHTML = `<svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>`;
+        btn.innerHTML = `<svg class="w-4 h-4 text-[#FF5512]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>`;
       } else {
         input.type = 'password';
         btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`;

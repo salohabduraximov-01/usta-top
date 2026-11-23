@@ -67,15 +67,15 @@ function getInitials(name) {
 // Usta/Foydalanuvchi ismiga qarab deterministik chiroyli rang tanlash
 function getAvatarColor(name) {
   const colors = [
-    'bg-blue-600 text-white',
+    'bg-[#0F172A] text-white',
     'bg-emerald-600 text-white',
     'bg-indigo-600 text-white',
     'bg-amber-600 text-white',
     'bg-rose-600 text-white',
     'bg-teal-600 text-white',
     'bg-violet-600 text-white',
-    'bg-sky-600 text-white',
-    'bg-orange-600 text-white'
+    'bg-slate-700 text-white',
+    'bg-[#FF5512] text-white'
   ];
   if (!name) return colors[0];
   let hash = 0;
@@ -86,28 +86,44 @@ function getAvatarColor(name) {
   return colors[index];
 }
 
-// Katta dumaloq avatar render qilish (Rasm bo'lmasa ism harflari, onerror bo'lsa fallback)
+// Xavfsiz avatar xato tutuvchisi (XSS dan xoli)
+function handleAvatarError(img) {
+  if (!img || !img.parentElement) return;
+  const initials = img.getAttribute('data-initials') || 'U';
+  const colorClass = img.getAttribute('data-color') || 'bg-[#0F172A] text-white';
+  const parent = img.parentElement;
+  parent.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = `w-full h-full rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none`;
+  div.textContent = initials;
+  parent.appendChild(div);
+}
+
+// Katta dumaloq avatar render qilish (Rasm bo'lmasa ism harflari, onerror bo'lsa xavfsiz fallback)
 function renderAvatar(person, sizeClass = "w-16 h-16 text-lg", extraClasses = "") {
+  if (!person) person = {};
   const initials = getInitials(person.name || person.fullName || 'Usta');
   const colorClass = getAvatarColor(person.name || person.fullName || '');
   const escapedName = escapeHtml(person.name || person.fullName || 'Foydalanuvchi');
 
-  if (person.avatar && person.avatar.trim() !== '') {
+  if (person.avatar && String(person.avatar).trim() !== '') {
     const escapedAvatar = escapeHtml(person.avatar);
     return `
-      <div class="relative ${sizeClass} rounded-full overflow-hidden flex-shrink-0 shadow-sm border-2 border-white dark:border-slate-800 ${extraClasses}">
+      <div class="relative ${sizeClass} rounded-full overflow-hidden flex-shrink-0 shadow-sm border border-[var(--border-subtle)] ${extraClasses}">
         <img 
           src="${escapedAvatar}" 
           alt="${escapedName}" 
           class="w-full h-full object-cover"
-          onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'w-full h-full rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none\\'>${initials}</div>';"
+          data-initials="${escapeHtml(initials)}"
+          data-color="${escapeHtml(colorClass)}"
+          onerror="handleAvatarError(this)"
         >
       </div>
     `;
   }
 
   return `
-    <div class="${sizeClass} rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none flex-shrink-0 shadow-sm border-2 border-white dark:border-slate-800 ${extraClasses}">
+    <div class="${sizeClass} rounded-full ${colorClass} flex items-center justify-center font-extrabold select-none flex-shrink-0 shadow-sm border border-[var(--border-subtle)] ${extraClasses}">
       <span>${initials}</span>
     </div>
   `;
@@ -115,10 +131,18 @@ function renderAvatar(person, sizeClass = "w-16 h-16 text-lg", extraClasses = ""
 
 // Telefon raqamini avtomatik +998 XX XXX XX XX formatiga keltirish
 function formatPhoneNumber(value) {
-  let numbers = value.replace(/\D/g, '');
+  if (!value) return '';
+  let numbers = String(value).replace(/\D/g, '');
+  
+  // MDH / milliy 8 prefiksini 998 ga to'g'ri o'tkazish
+  if (numbers.startsWith('8998')) {
+    numbers = numbers.slice(1);
+  } else if (numbers.startsWith('8') && numbers.length === 10 && (numbers[1] === '9' || numbers[1] === '8' || numbers[1] === '3' || numbers[1] === '7')) {
+    numbers = '998' + numbers.slice(1);
+  }
+
   if (!numbers.startsWith('998')) {
-    if (numbers.startsWith('8')) numbers = '998' + numbers.slice(1);
-    else numbers = '998' + numbers;
+    numbers = '998' + numbers;
   }
   numbers = numbers.slice(0, 12); // 998 + 9 raqam
 
@@ -165,6 +189,11 @@ function initTheme() {
 }
 
 function toggleTheme() {
+  // Mavjud toastlarni darhol tozalash (yig'ilib qolmasligi uchun)
+  const toastContainer = document.getElementById('toastContainer');
+  if (toastContainer) {
+    toastContainer.innerHTML = '';
+  }
   const isDark = document.documentElement.classList.toggle('dark');
   safeStorage.setItem('theme', isDark ? 'dark' : 'light');
   updateThemeIcons();
@@ -218,14 +247,27 @@ function toggleMobileMenu() {
 
 // 4. Toast xabarlar
 function showToast(message, type = 'success') {
-  const container = document.getElementById('toastContainer');
-  if (!container) return;
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'fixed bottom-5 right-5 z-50 flex flex-col items-end pointer-events-none max-w-sm';
+    container.setAttribute('aria-live', 'polite');
+    document.body.appendChild(container);
+  }
+
+  // Bir vaqtda ko'pi bilan 2 ta toast ko'rsatish
+  while (container.children.length >= 2) {
+    container.firstElementChild.remove();
+  }
 
   const toast = document.createElement('div');
+  toast.setAttribute('aria-live', 'polite');
+
   const bgColors = {
-    success: 'bg-emerald-600 text-white',
-    info: 'bg-blue-600 text-white',
-    warning: 'bg-amber-600 text-white',
+    success: 'bg-emerald-500 text-white',
+    info: 'bg-[#0F172A] text-white',
+    warning: 'bg-amber-500 text-[#0F172A]',
     error: 'bg-rose-600 text-white'
   };
 
@@ -303,9 +345,15 @@ let activeChatMasterId = null;
 
 function getChatHistory(masterId) {
   const allChats = safeStorage.getJSON('user_chats', {});
-  return allChats[masterId] || [
-    { sender: 'master', text: `Assalomu alaykum! Men bilan bog‘langaningizdan xursandman. Qanday nosozlik bo‘ldi va Toshkentning qaysi manziliga borish kerak?`, time: 'Hozir' }
-  ];
+  if (!allChats[masterId] || !Array.isArray(allChats[masterId]) || allChats[masterId].length === 0) {
+    const initialGreeting = [
+      { sender: 'master', text: `Assalomu alaykum! Men bilan bog‘langaningizdan xursandman. Qanday nosozlik bo‘ldi va Toshkentning qaysi manziliga borish kerak?`, time: 'Hozir', timestamp: Date.now() }
+    ];
+    allChats[masterId] = initialGreeting;
+    safeStorage.setItem('user_chats', allChats);
+    return initialGreeting;
+  }
+  return allChats[masterId];
 }
 
 function saveChatMessage(masterId, sender, text) {
@@ -326,26 +374,30 @@ function openChatModal(masterId) {
   const master = allMasters.find(m => m.id === Number(masterId));
   if (!master) return;
 
-  const container = document.getElementById('chatModalContainer') || document.getElementById('callModalContainer');
-  if (!container) return;
+  let container = document.getElementById('chatModalContainer') || document.getElementById('callModalContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'chatModalContainer';
+    document.body.appendChild(container);
+  }
 
   const history = getChatHistory(masterId);
 
   container.innerHTML = `
     <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onclick="if(event.target === this) closeChatModal()">
-      <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full h-[580px] max-h-[90vh] shadow-2xl border border-slate-200 dark:border-slate-800 animate-slide-up flex flex-col overflow-hidden relative">
+      <div class="bg-white dark:bg-[#1F242D] rounded-3xl max-w-lg w-full h-[580px] max-h-[90vh] shadow-2xl border border-[var(--border-subtle)] animate-slide-up flex flex-col overflow-hidden relative">
         
         <!-- Chat Header -->
-        <div class="p-4 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between">
+        <div class="p-4 bg-[var(--surface-subtle)] border-b border-[var(--border-subtle)] flex items-center justify-between">
           <div class="flex items-center space-x-3">
             <div class="relative">
               ${renderAvatar(master, 'w-12 h-12 text-sm', '')}
-              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900" title="Onlayn"></span>
+              <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-[#1F242D]" title="Onlayn"></span>
             </div>
             <div>
               <div class="flex items-center space-x-1">
                 <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">${escapeHtml(master.name)}</h3>
-                <span class="text-blue-500" title="Tekshirilgan usta">${getSvgIcon('checkBadge', 'w-4 h-4')}</span>
+                <span class="text-emerald-500" title="Tekshirilgan usta">${getSvgIcon('checkBadge', 'w-4 h-4')}</span>
               </div>
               <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">${escapeHtml(master.profession)}</p>
               <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">● Hozir saytda onlayn</span>
@@ -358,7 +410,7 @@ function openChatModal(masterId) {
         </div>
 
         <!-- Chat Xabarlari maydoni -->
-        <div id="chatMessagesBox" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-950/40">
+        <div id="chatMessagesBox" class="flex-1 p-4 overflow-y-auto space-y-3 bg-[var(--surface)]">
           ${history.length === 0 ? `
             <div class="text-center py-12 text-slate-400 text-xs">
               ${getSvgIcon('chat', 'w-8 h-8 mx-auto mb-2 opacity-50')}
@@ -368,8 +420,8 @@ function openChatModal(masterId) {
             <div class="flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}">
               <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm ${
                 msg.sender === 'user' 
-                  ? 'bg-[#1E3A8A] text-white rounded-br-sm' 
-                  : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700/80 rounded-bl-sm shadow-sm'
+                  ? 'bg-[#0F172A] text-white dark:bg-white dark:text-[#0F172A] rounded-br-sm' 
+                  : 'bg-[var(--surface-subtle)] text-[var(--text-primary)] border border-[var(--border-subtle)] rounded-bl-sm shadow-sm'
               }">
                 <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
               </div>
@@ -379,30 +431,30 @@ function openChatModal(masterId) {
         </div>
 
         <!-- Tezkor murojaat namunalari -->
-        <div class="px-3 py-1.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex gap-1.5 overflow-x-auto text-[11px] scrollbar-none">
-          <button type="button" onclick="quickFillMessage('Assalomu alaykum! Kranimdan suv oqyapti, bugun kela olasizmi?')" class="bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 hover:text-[#1E3A8A] dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
+        <div class="px-3 py-1.5 bg-[var(--surface)] border-t border-[var(--border-subtle)] flex gap-1.5 overflow-x-auto text-[11px] scrollbar-none">
+          <button type="button" onclick="quickFillMessage('Assalomu alaykum! Kranimdan suv oqyapti, bugun kela olasizmi?')" class="bg-[var(--surface-subtle)] hover:text-[#FF5512] text-[var(--text-secondary)] px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
             💧 Suv toshdi
           </button>
-          <button type="button" onclick="quickFillMessage('Salom! Rozetka kuydi va chiroq o‘chdi, shoshilinch yordam kerak.')" class="bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 hover:text-[#1E3A8A] dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
+          <button type="button" onclick="quickFillMessage('Salom! Rozetka kuydi va chiroq o‘chdi, shoshilinch yordam kerak.')" class="bg-[var(--surface-subtle)] hover:text-[#FF5512] text-[var(--text-secondary)] px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
             ⚡ Tok o‘chdi
           </button>
-          <button type="button" onclick="quickFillMessage('Konditsionerni yuvish va freon to‘ldirish qancha bo‘ladi?')" class="bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 hover:text-[#1E3A8A] dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
+          <button type="button" onclick="quickFillMessage('Konditsionerni yuvish va freon to‘ldirish qancha bo‘ladi?')" class="bg-[var(--surface-subtle)] hover:text-[#FF5512] text-[var(--text-secondary)] px-2.5 py-1 rounded-xl whitespace-nowrap transition cursor-pointer">
             ❄️ Konditsioner
           </button>
         </div>
 
         <!-- Xabar yuborish formasi -->
-        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200/80 dark:border-slate-800 flex items-center gap-2">
+        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-[var(--surface)] border-t border-[var(--border-subtle)] flex items-center gap-2">
           <input 
             type="text" 
             id="chatInputMessage"
             required 
             placeholder="Xabaringizni yozing (masalan: manzil, muammo)..." 
-            class="flex-1 px-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-[#1E3A8A] dark:focus:border-blue-500"
+            class="flex-1 px-4 py-3 rounded-2xl bg-[var(--surface-subtle)] border border-[var(--border-subtle)] text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-[#FF5512]"
           >
           <button 
             type="submit" 
-            class="bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 dark:hover:bg-blue-700 text-white p-3 rounded-2xl shadow-md transition active:scale-95 flex-shrink-0 cursor-pointer"
+            class="bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] hover:opacity-90 p-3 rounded-2xl shadow-md transition active:scale-95 flex-shrink-0 cursor-pointer"
             title="Yuborish"
           >
             ${getSvgIcon('send', 'w-5 h-5')}
@@ -462,8 +514,8 @@ function appendChatMessageToUI(sender, text) {
   msgEl.innerHTML = `
     <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm ${
       sender === 'user' 
-        ? 'bg-[#1E3A8A] text-white rounded-br-sm' 
-        : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700/80 rounded-bl-sm shadow-sm'
+        ? 'bg-[#0F172A] text-white dark:bg-white dark:text-[#0F172A] rounded-br-sm' 
+        : 'bg-[var(--surface-subtle)] text-[var(--text-primary)] border border-[var(--border-subtle)] rounded-bl-sm shadow-sm'
     }">
       <p class="leading-relaxed whitespace-pre-wrap">${escapeHtml(text)}</p>
     </div>
@@ -550,7 +602,7 @@ function openReviewModal(masterId) {
               required 
               value="${escapeHtml(defaultAuthor)}"
               placeholder="Masalan: Sardorbek" 
-              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+              class="w-full px-4 py-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-subtle)] text-[var(--text-primary)] text-sm focus:outline-none focus:border-[#FF5512]"
             >
           </div>
 
@@ -561,13 +613,13 @@ function openReviewModal(masterId) {
               required 
               rows="3" 
               placeholder="Usta qanday ishladi? Vaqtida keldimi? Narxi ma’qul bo‘ldimi?" 
-              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-[#1E3A8A]"
+              class="w-full px-4 py-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-subtle)] text-[var(--text-primary)] text-sm focus:outline-none focus:border-[#FF5512]"
             ></textarea>
           </div>
 
           <button 
             type="submit" 
-            class="w-full bg-[#1E3A8A] hover:bg-[#172554] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition active:scale-95 text-sm cursor-pointer"
+            class="btn-primary w-full py-3 px-4 rounded-xl shadow-lg transition active:scale-95 text-sm cursor-pointer"
           >
             Sharh va bahoni chop etish
           </button>
@@ -1024,12 +1076,65 @@ function addOrderBid(orderId, bidData) {
 
 // ==========================================
 // 9. MAXSUS USTUN KO'RINISHIDAGI SELECT (Custom Dropdown)
-// Brauzerning standart noqulay <select> menyusi o'rniga
+// Brauzerning standart noqulay <select> menyusi o'rniga zamonaviy popover
 // ==========================================
 
 function initCustomSelects() {
+  // A) Agar sahifada oddiy <select> teglari qolib ketgan bo'lsa, ularni avtomatik o'zgartirish
+  document.querySelectorAll('select:not([data-customized="true"])').forEach(select => {
+    // Hidden bo'lmagan selectlarni aylantirish
+    if (select.offsetParent === null && select.classList.contains('hidden')) return;
+    select.dataset.customized = 'true';
+    select.style.display = 'none';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'custom-select-wrapper relative ' + (select.className || '');
+    wrapper.style.display = 'block';
+
+    const selectedOption = select.options[select.selectedIndex] || select.options[0];
+    const initialVal = selectedOption ? selectedOption.value : '';
+    const initialText = selectedOption ? selectedOption.textContent.trim() : '';
+
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.id = select.id ? select.id + '_customVal' : '';
+    hiddenInput.value = initialVal;
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'custom-select-trigger';
+    trigger.innerHTML = `
+      <span class="custom-select-label truncate">${escapeHtml(initialText)}</span>
+      <svg class="custom-select-arrow w-4 h-4 ml-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    `;
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'custom-select-dropdown hidden';
+
+    Array.from(select.options).forEach(opt => {
+      const optDiv = document.createElement('div');
+      optDiv.className = 'custom-select-option' + (opt.value === initialVal ? ' selected' : '');
+      optDiv.dataset.value = opt.value;
+      optDiv.dataset.label = opt.textContent.trim();
+      optDiv.textContent = opt.textContent.trim();
+      dropdown.appendChild(optDiv);
+    });
+
+    wrapper.appendChild(hiddenInput);
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(dropdown);
+
+    select.parentNode.insertBefore(wrapper, select.nextSibling);
+
+    // Sinxronizatsiya
+    hiddenInput.addEventListener('change', () => {
+      select.value = hiddenInput.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+
+  // B) Barcha custom-select-wrapper larni faollashtirish
   document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
-    // Agar allaqachon initsializatsiya qilingan bo'lsa
     if (wrapper.dataset.initialized === 'true') return;
     wrapper.dataset.initialized = 'true';
 
@@ -1045,11 +1150,13 @@ function initCustomSelects() {
     // Trigger bosilganda ochish/yopish
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      // Boshqa ochiq bo'lgan barcha dropdownlarni yopish
+      // Boshqa barcha ochiq dropdownlarni yopish
       document.querySelectorAll('.custom-select-dropdown').forEach(d => {
         if (d !== dropdown) {
           d.classList.add('hidden');
-          const otherArrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+          const otherWrap = d.closest('.custom-select-wrapper');
+          if (otherWrap) otherWrap.classList.remove('is-open');
+          const otherArrow = otherWrap?.querySelector('.custom-select-arrow');
           if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
         }
       });
@@ -1057,9 +1164,11 @@ function initCustomSelects() {
       const isOpen = !dropdown.classList.contains('hidden');
       if (isOpen) {
         dropdown.classList.add('hidden');
+        wrapper.classList.remove('is-open');
         if (arrow) arrow.style.transform = 'rotate(0deg)';
       } else {
         dropdown.classList.remove('hidden');
+        wrapper.classList.add('is-open');
         if (arrow) arrow.style.transform = 'rotate(180deg)';
       }
     });
@@ -1082,11 +1191,12 @@ function initCustomSelects() {
 
         // Tanlangan klassni yangilash
         dropdown.querySelectorAll('.custom-select-option').forEach(o => {
-          o.classList.remove('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+          o.classList.remove('selected', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
         });
-        option.classList.add('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+        option.classList.add('selected');
 
         dropdown.classList.add('hidden');
+        wrapper.classList.remove('is-open');
         if (arrow) arrow.style.transform = 'rotate(0deg)';
       });
     });
@@ -1096,7 +1206,9 @@ function initCustomSelects() {
   document.addEventListener('click', () => {
     document.querySelectorAll('.custom-select-dropdown').forEach(d => {
       d.classList.add('hidden');
-      const arrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+      const wrap = d.closest('.custom-select-wrapper');
+      if (wrap) wrap.classList.remove('is-open');
+      const arrow = wrap?.querySelector('.custom-select-arrow');
       if (arrow) arrow.style.transform = 'rotate(0deg)';
     });
   });
@@ -1106,7 +1218,9 @@ function initCustomSelects() {
     if (e.key === 'Escape') {
       document.querySelectorAll('.custom-select-dropdown').forEach(d => {
         d.classList.add('hidden');
-        const arrow = d.closest('.custom-select-wrapper')?.querySelector('.custom-select-arrow');
+        const wrap = d.closest('.custom-select-wrapper');
+        if (wrap) wrap.classList.remove('is-open');
+        const arrow = wrap?.querySelector('.custom-select-arrow');
         if (arrow) arrow.style.transform = 'rotate(0deg)';
       });
     }
@@ -1131,9 +1245,9 @@ function setCustomSelectValue(inputId, value) {
     if (labelSpan) labelSpan.textContent = text;
     if (iconSpan && icon) iconSpan.innerHTML = icon;
     dropdown.querySelectorAll('.custom-select-option').forEach(o => {
-      o.classList.remove('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+      o.classList.remove('selected', 'bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
     });
-    matchingOption.classList.add('bg-blue-50', 'dark:bg-blue-900/40', 'text-blue-600', 'dark:text-blue-400', 'font-bold');
+    matchingOption.classList.add('selected');
   }
 }
 

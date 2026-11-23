@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Usta-Top.uz | Toshkentdagi ishonchli ustalar portali</title>
-  <meta name="description" content="Toshkent shahridagi tekshirilgan santexniklar, elektriklar, konditsioner ustalari va ta'mirlovchilar. Sayt ichida to'g'ridan-to'g'ri chat va 5 yulduzli baholash tizimi.">
+  <title>Usta-Top.uz — Toshkent bo‘yicha saralangan usta mutaxassislar</title>
+  <meta name="description" content="Toshkentda ishonchli santexnik, elektrik, konditsioner va maishiy texnika ustalari. To'g'ridan-to'g'ri bog'lanish, narxlar va sharhlar.">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
 
@@ -16,16 +16,10 @@
       theme: {
         extend: {
           colors: {
-            primary: {
-              DEFAULT: '#1E3A8A',
-              hover: '#172554',
-              light: '#EFF6FF',
-              dark: '#0B1120'
-            },
-            accent: {
-              DEFAULT: '#F97316',
-              hover: '#EA580C',
-              light: '#FFF1E6'
+            brand: {
+              orange: '#FF5512',
+              charcoal: '#0F1115',
+              warm: '#FBFBFA'
             }
           },
           fontFamily: {
@@ -38,59 +32,47 @@
 
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-slate-50 dark:bg-[#0B1120] text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-200">
+<body class="bg-[#FBFBFA] dark:bg-[#0C0E12] text-[#0F1115] dark:text-[#F3F4F6] antialiased min-h-screen flex flex-col pb-20 md:pb-0 transition-colors duration-200">
 
   <!-- ==========================================
-       1. HEADER / NAVBAR
+       1. HEADER / NAVBAR (Minimalist Linear style)
        ========================================== -->
-  <header class="sticky top-0 z-40 w-full glass-nav transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <header class="site-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center space-x-3 group">
-        <div class="w-10 h-10 rounded-xl bg-[#1E3A8A] dark:bg-blue-600 flex items-center justify-center text-white shadow-sm group-hover:bg-[#172554] transition">
-          <svg class="w-5 h-5 text-[#F97316] dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-[#0F1115] dark:bg-white flex items-center justify-center text-white dark:text-[#0F1115] font-black text-sm tracking-tighter">
+          UT
         </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-white flex items-center">
-            Usta-Top<span class="text-[#F97316]">.uz</span>
+        <div class="flex items-baseline space-x-1">
+          <span class="text-base font-extrabold tracking-tight text-[#0F1115] dark:text-white">
+            Usta-Top<span class="text-[#FF5512]">.uz</span>
           </span>
-          <span class="text-[10px] font-medium tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-0.5">
-            Toshkent ustalari
+          <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider hidden sm:inline">
+            Toshkent
           </span>
         </div>
       </a>
 
-      <!-- Desktop Navigation (1. Bosh sahifa, 2. E'lon berish, 3. Ustalar, 4. Kalkulyator, 5. Xarita) -->
-      <nav class="hidden md:flex items-center space-x-7 text-sm font-semibold">
-        <a href="index.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold border-b-2 border-[#1E3A8A] dark:border-blue-400 pb-1">
-          Bosh sahifa
-        </a>
-        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
-          <span>📢</span>
+      <!-- Desktop Navigatsiya -->
+      <nav class="hidden md:flex items-center space-x-1 text-sm font-medium">
+        <a href="index.html" class="nav-link active">Bosh sahifa</a>
+        <a href="elon-berish.html" class="nav-link flex items-center gap-1.5">
           <span>E’lon berish</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#FF5512]"></span>
         </a>
-        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1">
-          Ustalar
-        </a>
-        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
-          <span>🧮</span>
-          <span>Kalkulyator</span>
-        </a>
-        <a href="xarita.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition pb-1 flex items-center space-x-1">
-          <span>🗺️</span>
-          <span>Xarita</span>
-        </a>
+        <a href="ustalar.html" class="nav-link">Ustalar katalogi</a>
+        <a href="kalkulyator.html" class="nav-link">Kalkulyator</a>
+        <a href="xarita.html" class="nav-link">Xarita</a>
       </nav>
 
-      <!-- Right Action Area (Theme toggle & Auth) -->
-      <div class="hidden md:flex items-center space-x-3.5">
+      <!-- O'ng tomon: Rejim va Auth -->
+      <div class="hidden md:flex items-center space-x-3">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition shadow-sm cursor-pointer"
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
           title="Tungi / Kunduzgi rejim"
         >
           <span class="theme-toggle-icon flex items-center justify-center"></span>
@@ -98,26 +80,25 @@
 
         <a 
           href="kirish.html" 
-          class="text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-[#1E3A8A] dark:hover:text-blue-400 px-3 py-2 transition"
+          class="text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-black dark:hover:text-white px-2.5 py-1.5 transition"
         >
           Kirish
         </a>
 
         <a 
           href="royxat-usta.html"
-          class="btn-accent text-xs font-bold shadow-sm"
+          class="btn-accent text-xs font-bold py-2 px-3.5 rounded-xl cursor-pointer"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-          <span>Usta bo‘lish</span>
+          + Usta bo‘lish
         </a>
       </div>
 
-      <!-- Mobile Hamburger -->
+      <!-- Mobil burger -->
       <div class="flex items-center space-x-2 md:hidden">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-200 shadow-sm"
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
         >
           <span class="theme-toggle-icon"></span>
         </button>
@@ -125,895 +106,473 @@
         <button 
           type="button" 
           onclick="toggleMobileMenu()" 
-          class="text-slate-700 dark:text-slate-200 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm cursor-pointer"
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
 
     </div>
 
-    <!-- Mobile Drawer Menu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] px-4 pt-3 pb-5 space-y-2 shadow-xl">
-      <a href="index.html" class="block py-2 text-sm font-bold text-[#1E3A8A] dark:text-blue-400">
-        🏠 Bosh sahifa
-      </a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        📢 E’lon berish (Buyurtmalar)
-      </a>
-      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🔧 Ustalar katalogi
-      </a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🧮 Narx kalkulyatori
-      </a>
-      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🗺️ Toshkent xaritasi
-      </a>
-      <div class="pt-3 border-t border-slate-100 dark:border-slate-800">
-        <a 
-          href="royxat-usta.html"
-          class="block w-full bg-[#F97316] text-white py-2.5 rounded-xl text-xs font-bold text-center shadow-sm cursor-pointer"
-        >
-          + Usta sifatida qo‘shilish
-        </a>
+    <!-- Mobil menyu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#14171D] px-4 pt-3 pb-5 space-y-2">
+      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-900 dark:text-white">Bosh sahifa</a>
+      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
+      <a href="xarita.html" class="block py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+        <a href="kirish.html" class="flex-1 text-center py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold">Kirish</a>
+        <a href="royxat-usta.html" class="flex-1 text-center py-2 rounded-xl btn-accent text-white text-xs font-bold">+ Usta bo‘lish</a>
       </div>
     </div>
   </header>
 
 
   <!-- ==========================================
-       2. HERO SECTION (Split Visual Architecture)
+       2. ASYMMETRICAL EDITORIAL HERO SECTION
        ========================================== -->
-  <section class="relative bg-gradient-to-b from-slate-100/60 via-slate-50 to-white dark:from-[#0B1120] dark:via-[#0F172A] dark:to-[#0B1120] pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+  <main class="flex-1">
     
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
-        <!-- CHAP USTUN: Matn va Qidiruv (7 cols) -->
-        <div class="lg:col-span-7 space-y-6 text-left">
+        <!-- Chap tomon: Sarlavha, Tavsif va Qidiruv komandasi -->
+        <div class="lg:col-span-7 space-y-6">
           
-          <!-- Trust Badge -->
-          <div class="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-300 px-3.5 py-1.5 rounded-full text-xs font-semibold border border-blue-200/80 dark:border-blue-800/60">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Toshkentning 10 ta tumanida 40+ tekshirilgan usta</span>
+            <span>Toshkentning 10 ta tumanida 42+ saralangan mutaxassis</span>
           </div>
 
-          <!-- Asosiy Sarlavha -->
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-            Uyingiz uchun ishonchli <br class="hidden sm:inline">
-            <span class="text-[#1E3A8A] dark:text-blue-400">ustani toping</span>
+          <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0F1115] dark:text-white leading-[1.08]">
+            Uyingiz ta’miri uchun <br class="hidden sm:inline">
+            <span class="text-[#FF5512]">professional ustalar.</span>
           </h1>
 
-          <!-- Tavsif matni -->
-          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
-            Santexnika, elektr, konditsioner va maishiy texnika mutaxassislari. Sayt ichida to‘g‘ridan-to‘g‘ri chat orqali bog‘laning yoki o‘z narxingizda e’lon qoldiring.
+          <p class="text-sm sm:text-base text-[#5E6472] dark:text-slate-300 max-w-xl leading-relaxed">
+            Santexnika, elektr, konditsioner va mebel yig‘ish ustalari bilan to‘g‘ridan-to‘g‘ri bog‘laning. Qat’iy tekshirilgan reytinglar, aniq narxlar va kafolatlangan xizmat.
           </p>
 
-          <!-- Interaktiv Qidiruv Kartochkasi -->
-          <div class="bg-white dark:bg-[#111827] p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
-            <form action="ustalar.html" method="GET" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+          <!-- Yagona Qidiruv Paneli (Command Bar style) -->
+          <div class="bg-white dark:bg-[#14171D] p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <form action="ustalar.html" method="GET" class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
               
-              <!-- Custom Select 1: Xizmat turi -->
+              <!-- Xizmat turi -->
               <div class="sm:col-span-5 text-left">
-                <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Xizmat turi</label>
-                <div class="custom-select-wrapper relative" data-name="cat">
+                <div class="custom-select-wrapper" data-name="cat">
                   <input type="hidden" name="cat" value="barchasi">
-                  <button 
-                    type="button" 
-                    class="custom-select-trigger w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 font-semibold text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition cursor-pointer"
-                  >
-                    <div class="flex items-center space-x-2 truncate">
-                      <span class="custom-select-icon text-sm">🛠️</span>
-                      <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha xizmatlar</span>
-                    </div>
-                    <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  <button type="button" class="custom-select-trigger w-full flex items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/80 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="custom-select-label truncate">Barcha xizmatlar</span>
+                    <svg class="custom-select-arrow w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
-                  <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30" data-value="barchasi" data-label="Barcha xizmatlar" data-icon="🛠️">
-                      <span class="flex items-center gap-2"><span>🛠️</span><span>Barcha xizmatlar</span></span>
-                      <span class="text-[10px] text-slate-400">40+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="santexnik" data-label="Santexnik" data-icon="🚰">
-                      <span class="flex items-center gap-2"><span>🚰</span><span>Santexnik</span></span>
-                      <span class="text-[10px] text-slate-400">10+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="elektrik" data-label="Elektrik" data-icon="⚡">
-                      <span class="flex items-center gap-2"><span>⚡</span><span>Elektrik</span></span>
-                      <span class="text-[10px] text-slate-400">8+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="konditsioner" data-label="Konditsioner ustasi" data-icon="❄️">
-                      <span class="flex items-center gap-2"><span>❄️</span><span>Konditsioner ustasi</span></span>
-                      <span class="text-[10px] text-slate-400">6+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="maishiy" data-label="Maishiy texnika" data-icon="🧺">
-                      <span class="flex items-center gap-2"><span>🧺</span><span>Maishiy texnika</span></span>
-                      <span class="text-[10px] text-slate-400">6+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="mebel" data-label="Mebel yig‘uvchi" data-icon="🪑">
-                      <span class="flex items-center gap-2"><span>🪑</span><span>Mebel yig‘uvchi</span></span>
-                      <span class="text-[10px] text-slate-400">5+ usta</span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg flex items-center justify-between text-xs font-semibold" data-value="universal" data-label="Bir soatlik usta" data-icon="🔨">
-                      <span class="flex items-center gap-2"><span>🔨</span><span>Bir soatlik usta</span></span>
-                      <span class="text-[10px] text-slate-400">6+ usta</span>
-                    </div>
+                  <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1 bg-white dark:bg-[#14171D] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1 z-50 max-h-56 overflow-y-auto hidden">
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="barchasi" data-label="Barcha xizmatlar">Barcha xizmatlar</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="santexnik" data-label="Santexnik">Santexnik (Kran, quvur)</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="elektrik" data-label="Elektrik">Elektrik (Rozetka, lyustra)</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="konditsioner" data-label="Konditsioner">Konditsioner (Freon, montaj)</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="maishiy" data-label="Maishiy texnika">Maishiy texnika ta’miri</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="mebel" data-label="Mebel yig‘uvchi">Mebel yig‘uvchi usta</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="universal" data-label="Bir soatlik usta">Bir soatlik usta (Universal)</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Custom Select 2: Toshkent tumani -->
+              <!-- Tuman tanlash -->
               <div class="sm:col-span-4 text-left">
-                <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Toshkent tumani</label>
-                <div class="custom-select-wrapper relative" data-name="district">
+                <div class="custom-select-wrapper" data-name="district">
                   <input type="hidden" name="district" value="Barcha tumanlar">
-                  <button 
-                    type="button" 
-                    class="custom-select-trigger w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 font-semibold text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 hover:border-slate-300 transition cursor-pointer"
-                  >
-                    <div class="flex items-center space-x-2 truncate">
-                      <span class="custom-select-icon text-sm">📍</span>
-                      <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha tumanlar</span>
-                    </div>
-                    <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  <button type="button" class="custom-select-trigger w-full flex items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/80 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="custom-select-label truncate">Barcha tumanlar</span>
+                    <svg class="custom-select-arrow w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
-                  <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30" data-value="Barcha tumanlar" data-label="Barcha tumanlar" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Barcha tumanlar (10 ta)</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Chilonzor" data-label="Chilonzor" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Chilonzor</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Yunusobod" data-label="Yunusobod" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Yunusobod</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Mirzo Ulug‘bek</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Yakkasaroy" data-label="Yakkasaroy" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Yakkasaroy</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Shayxontohur" data-label="Shayxontohur" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Shayxontohur</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Sergeli" data-label="Sergeli" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Sergeli</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Olmazor" data-label="Olmazor" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Olmazor</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Uchtepa" data-label="Uchtepa" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Uchtepa</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Mirobod" data-label="Mirobod" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Mirobod</span></span>
-                    </div>
-                    <div class="custom-select-option px-3 py-2 rounded-lg text-xs font-semibold" data-value="Yashnobod" data-label="Yashnobod" data-icon="📍">
-                      <span class="flex items-center gap-2"><span>📍</span><span>Yashnobod</span></span>
-                    </div>
+                  <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1 bg-white dark:bg-[#14171D] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1 z-50 max-h-56 overflow-y-auto hidden">
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Barcha tumanlar" data-label="Barcha tumanlar">Barcha tumanlar</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Chilonzor" data-label="Chilonzor">Chilonzor</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Yunusobod" data-label="Yunusobod">Yunusobod</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek">Mirzo Ulug‘bek</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Yakkasaroy" data-label="Yakkasaroy">Yakkasaroy</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Shayxontohur" data-label="Shayxontohur">Shayxontohur</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Sergeli" data-label="Sergeli">Sergeli</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Olmazor" data-label="Olmazor">Olmazor</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Uchtepa" data-label="Uchtepa">Uchtepa</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Mirobod" data-label="Mirobod">Mirobod</div>
+                    <div class="custom-select-option px-3 py-1.5 text-xs font-medium" data-value="Yashnobod" data-label="Yashnobod">Yashnobod</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Qidirish Tugmasi -->
-              <div class="sm:col-span-3 pt-1 sm:pt-4">
+              <!-- Topish tugmasi -->
+              <div class="sm:col-span-3">
                 <button 
                   type="submit" 
-                  class="btn-primary w-full py-2.5 text-xs sm:text-sm font-bold shadow-sm"
+                  class="btn-primary w-full py-2.5 px-3 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5"
                 >
-                  <svg class="w-4 h-4 text-[#F97316] dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                  <span>Qidirish</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                  <span>Topish</span>
                 </button>
               </div>
 
             </form>
           </div>
 
-          <!-- Tezkor Harakatlar va Ishonch Qatorlari -->
-          <div class="flex flex-wrap items-center gap-3 pt-1">
-            <a href="elon-berish.html" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300 text-xs font-bold border border-orange-200/80 dark:border-orange-800/60 hover:bg-orange-100 transition">
-              <span>📢</span>
-              <span>+ Yangi e’lon qoldirish</span>
-            </a>
-            <a href="kalkulyator.html" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 transition">
-              <span>🧮</span>
-              <span>Narx kalkulyatori</span>
-            </a>
-            <a href="xarita.html" class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 transition">
-              <span>🗺️</span>
-              <span>Toshkent xaritasi</span>
-            </a>
-          </div>
-
-          <div class="flex items-center space-x-6 pt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-            <span class="flex items-center"><svg class="w-4 h-4 text-emerald-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Shaffof narxlar</span>
-            <span class="flex items-center"><svg class="w-4 h-4 text-emerald-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> 4.9★ reyting</span>
-            <span class="flex items-center"><svg class="w-4 h-4 text-emerald-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Jonli chat</span>
+          <!-- Ishonch ko'rsatkichlari -->
+          <div class="flex flex-wrap items-center gap-6 pt-2 text-xs text-slate-500 dark:text-slate-400">
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>0% vositachilik komissiyasi</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Faqat haqiqiy mijozlar sharhlari</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>To‘g‘ridan-to‘g‘ri ichki chat</span>
+            </div>
           </div>
 
         </div>
 
-
-        <!-- O'NG USTUN: Vizual Kompozitsiya (5 cols) -->
+        <!-- O'ng tomon: Asimmetrik Bento Showcase (Jonli Usta Kartochkasi) -->
         <div class="lg:col-span-5 relative">
           
-          <!-- Orqa fon yumshoq gradient nuri -->
-          <div class="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-orange-100 dark:from-blue-900/20 dark:to-orange-950/20 rounded-3xl blur-2xl -z-10"></div>
-
-          <!-- Markaziy Asosiy Usta Kartochkasi -->
-          <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 shadow-xl space-y-4">
+          <div class="card-editorial p-6 space-y-4">
             
-            <div class="flex items-start justify-between">
-              <div class="flex items-center space-x-3.5">
-                <div class="relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80" 
-                    alt="Akmal Karimov" 
-                    class="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-slate-800 shadow-sm"
-                  >
-                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900" title="Bo‘sh"></span>
-                </div>
-                <div>
-                  <div class="flex items-center space-x-1">
-                    <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Akmal Karimov</h3>
-                    <span class="text-blue-500 font-bold" title="Tasdiqlangan">✓</span>
-                  </div>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Santexnik va isitish mutaxassisi</p>
-                  <div class="flex items-center space-x-2 text-[11px] text-slate-400 mt-0.5">
-                    <span>📍 Chilonzor tumani</span>
-                    <span>•</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-semibold">8 yil tajriba</span>
-                  </div>
-                </div>
-              </div>
-
-              <span class="status-badge-free">
-                <span class="status-dot-pulse"></span>
-                <span>Bo‘sh</span>
-              </span>
+            <div class="flex items-center justify-between">
+              <span class="eyebrow">Hafta tanlovi</span>
+              <span class="status-pill-free"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Hozir bo‘sh</span>
             </div>
 
-            <!-- Ko'rsatkichlar -->
-            <div class="grid grid-cols-3 gap-2 py-3 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-center">
+            <div class="flex items-center space-x-3.5 pt-1">
+              <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=200&q=80" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 shadow-sm" alt="Usta">
               <div>
-                <span class="block text-amber-500 font-extrabold text-sm">4.9 ★</span>
-                <span class="text-[10px] text-slate-400">142 ta sharh</span>
-              </div>
-              <div class="border-x border-slate-200 dark:border-slate-700">
-                <span class="block font-extrabold text-sm text-slate-800 dark:text-slate-100">530+</span>
-                <span class="text-[10px] text-slate-400">Tugallangan</span>
-              </div>
-              <div>
-                <span class="block font-extrabold text-sm text-[#1E3A8A] dark:text-blue-400">dan 80 ming</span>
-                <span class="text-[10px] text-slate-400">Boshlang‘ich</span>
+                <div class="flex items-center gap-1.5">
+                  <h3 class="font-bold text-base text-slate-900 dark:text-white">Baxtiyor Saidov</h3>
+                  <span class="text-blue-500">
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Konditsioner va iqlim texnikasi</p>
+                <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-400">
+                  <span>📍 Mirzo Ulug‘bek</span>
+                  <span>•</span>
+                  <span>9 yil tajriba</span>
+                </div>
               </div>
             </div>
 
-            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic">
-              "Kran, unitaz, quvur va isitish batareyalarini sifatli ta’mirlayman. 6 oylik rasmiy kafolat beraman."
-            </p>
+            <div class="grid grid-cols-2 gap-2 text-xs py-2 border-y border-slate-100 dark:border-slate-800">
+              <div>
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">O‘rtacha reyting</span>
+                <span class="font-extrabold text-amber-500 text-sm">★ 4.9 <span class="text-slate-400 font-normal text-xs">(38 ta sharh)</span></span>
+              </div>
+              <div>
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">Chaqiruv narxi</span>
+                <span class="font-extrabold text-slate-900 dark:text-white text-sm">dan 60 000 so‘m</span>
+              </div>
+            </div>
 
-            <div class="flex gap-2 pt-1">
-              <button 
-                onclick="openChatModal(1)" 
-                class="btn-primary flex-1 py-2 text-xs font-bold"
-              >
-                <span>💬 Chat orqali bog‘lanish</span>
-              </button>
-              <button 
-                onclick="openDetailModal(1)" 
-                class="btn-secondary py-2 px-3 text-xs font-semibold"
-              >
-                Profil
-              </button>
+            <div class="flex items-center gap-2 pt-1">
+              <a href="ustalar.html?q=Baxtiyor" class="btn-primary flex-1 py-2 text-xs font-semibold">
+                Usta bilan bog‘lanish
+              </a>
+              <a href="ustalar.html" class="btn-secondary py-2 text-xs font-semibold">
+                Barcha ustalar →
+              </a>
             </div>
 
           </div>
 
-          <!-- Suzuvchi mikro-kartochka: Shoshilinch Chaqiruv -->
-          <div class="absolute -top-3 -right-2 sm:-right-4 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-lg flex items-center space-x-2 text-xs">
-            <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
-            <span class="font-bold text-slate-800 dark:text-slate-200">⚡ 25 daqiqada yetib kelish</span>
-          </div>
-
-          <!-- Suzuvchi mikro-kartochka: Haqiqiy Sharh -->
-          <div class="hidden sm:flex absolute -bottom-4 -left-4 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-slate-200/90 dark:border-slate-800 shadow-lg items-center space-x-2.5 text-xs">
-            <span class="text-amber-400 text-sm">★★★★★</span>
+          <!-- Kichik yordamchi statistika burchagi -->
+          <div class="absolute -bottom-5 -left-4 bg-white dark:bg-[#14171D] p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md hidden sm:flex items-center gap-3 text-xs">
+            <div class="w-8 h-8 rounded-xl bg-orange-50 dark:bg-orange-950/40 text-[#FF5512] flex items-center justify-center font-bold">
+              ⚡
+            </div>
             <div>
-              <span class="block font-bold text-slate-800 dark:text-slate-200">"Quvurni 30 daqiqada tuzatdi"</span>
-              <span class="text-[10px] text-slate-400">Nodirbek • Chilonzor</span>
+              <span class="block font-bold text-slate-900 dark:text-white">O‘rtacha javob vaqti</span>
+              <span class="text-[11px] text-slate-400">12 daqiqa ichida</span>
             </div>
           </div>
 
         </div>
 
       </div>
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       3. STATISTIKA SANAGICHLARI (Editorial Layout)
+    <!-- ==========================================
+       3. BENTO GRID: KATEGORIYALAR
        ========================================== -->
-  <section class="py-8 bg-white dark:bg-[#111827] border-b border-slate-200/80 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-        
-        <!-- 40+ Usta -->
-        <div class="reveal p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
-          <div class="text-3xl font-extrabold text-[#1E3A8A] dark:text-blue-400">
-            <span data-counter data-target="40" data-suffix="+">0</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">Tekshirilgan usta</p>
-          <span class="text-[11px] text-slate-400">Toshkent bo‘yicha</span>
-        </div>
-
-        <!-- 1200+ Ish -->
-        <div class="reveal p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
-          <div class="text-3xl font-extrabold text-[#F97316]">
-            <span data-counter data-target="1200" data-suffix="+">0</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">Bajarilgan buyurtma</p>
-          <span class="text-[11px] text-slate-400">Muvaffaqiyatli xizmat</span>
-        </div>
-
-        <!-- 4.9 Reyting -->
-        <div class="reveal p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
-          <div class="text-3xl font-extrabold text-amber-500 flex items-center justify-center space-x-1">
-            <span data-counter data-target="4.9" data-decimals="1">0.0</span>
-            <span class="text-2xl">★</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">O‘rtacha reyting</p>
-          <span class="text-[11px] text-slate-400">Mijozlar bahosi</span>
-        </div>
-
-        <!-- 10 ta tuman -->
-        <div class="reveal p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
-          <div class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">
-            <span data-counter data-target="10" data-suffix=" ta">0</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">Toshkent tumani</p>
-          <span class="text-[11px] text-slate-400">Barcha hududlarda</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       4. QANDAY ISHLAYDI? (3 BOSQICH)
-       ========================================== -->
-  <section class="py-14 sm:py-18 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-    
-    <div class="text-center max-w-xl mx-auto mb-12">
-      <span class="text-xs font-bold text-[#F97316] uppercase tracking-wider">Oson va shaffof jarayon</span>
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-        Qanday ishlaydi?
-      </h2>
-      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5">
-        Usta chaqirish 3 oddiy qadamdan iborat
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200/80 dark:border-slate-800">
       
-      <!-- 1-qadam -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
-        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center font-extrabold text-base mb-4">
-          1
-        </div>
-        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1.5">Xizmatni tanlang</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-          Santexnik, elektrik, konditsioner yoki boshqa sohani belgilang va kerakli tumandagi ustalarni filtrlang.
-        </p>
-      </div>
-
-      <!-- 2-qadam -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
-        <div class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-950/60 text-[#F97316] flex items-center justify-center font-extrabold text-base mb-4">
-          2
-        </div>
-        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1.5">Ustani toping yoki e’lon bering</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-          Katalogdan mos reytingdagi ustani tanlang yoki buyurtmalar birjasiga o‘z talab va byudjetingiz bilan e’lon joylashtiring.
-        </p>
-      </div>
-
-      <!-- 3-qadam -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm relative">
-        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center font-extrabold text-base mb-4">
-          3
-        </div>
-        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1.5">Usta bilan bog‘laning</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-          Sayt ichidagi xavfsiz chat orqali bevosita yozing, vaqtni kelishing va ish yakunida xolis 5 yulduzli baho bering.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ==========================================
-       5. XIZMAT KATEGORIYALARI (SaaS Editorial Cards)
-       ========================================== -->
-  <section class="py-12 sm:py-16 bg-slate-100/50 dark:bg-[#0E1526] border-y border-slate-200/80 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
         <div>
-          <span class="text-xs font-bold text-[#F97316] uppercase tracking-wider">Yo‘nalishlar</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-            Xizmat toifalari
+          <span class="eyebrow">Xizmatlar toifasi</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-[#0F1115] dark:text-white tracking-tight mt-1">
+            Qanday usta qidiryapsiz?
           </h2>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Toshkent bo‘yicha kerakli xizmatni tanlang
-          </p>
         </div>
-
-        <a href="ustalar.html" class="mt-3 sm:mt-0 text-xs font-bold text-[#1E3A8A] dark:text-blue-400 hover:underline flex items-center space-x-1">
-          <span>Barcha ustalarni ko‘rish</span>
+        <a href="ustalar.html" class="text-xs font-bold text-[#FF5512] hover:underline flex items-center gap-1">
+          <span>Katalogdagi barcha ustalar</span>
           <span>→</span>
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
-        <!-- Santexnik -->
-        <a href="ustalar.html?cat=santexnik" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&q=80" alt="Santexnika" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              10+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">60 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Santexnik</h3>
-            </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        
+        <!-- 1. Santexnik -->
+        <a href="ustalar.html?cat=santexnik" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Kran, unitaz, quvur montaji, isitish batareyalari va tiqilishlarni ochish.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Santexnika</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">10+ faol mutaxassis</p>
           </div>
         </a>
 
-        <!-- Elektrik -->
-        <a href="ustalar.html?cat=elektrik" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80" alt="Elektrik" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              8+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">35 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Elektrik</h3>
-            </div>
+        <!-- 2. Elektrik -->
+        <a href="ustalar.html?cat=elektrik" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Rozetka, shit yig‘ish, lyustra osish, qisqa tutashuv va kuchlanish relesi.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Elektr ishlari</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">8+ mutaxassis</p>
           </div>
         </a>
 
-        <!-- Konditsioner -->
-        <a href="ustalar.html?cat=konditsioner" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="Konditsioner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              6+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">100 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Konditsioner ustasi</h3>
-            </div>
+        <!-- 3. Konditsioner -->
+        <a href="ustalar.html?cat=konditsioner" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Freon quyish (R410A), dori bilan yuvish, montaj va nosozliklarni tuzatish.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Konditsioner</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">6+ mutaxassis</p>
           </div>
         </a>
 
-        <!-- Maishiy texnika -->
-        <a href="ustalar.html?cat=maishiy" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=600&q=80" alt="Maishiy texnika" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              6+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">50 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Maishiy texnika</h3>
-            </div>
+        <!-- 4. Maishiy texnika -->
+        <a href="ustalar.html?cat=maishiy" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Kir yuvish mashinasi, muzlatgich, gaz plitasi va changyutgich ta’miri.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Maishiy texnika</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">7+ mutaxassis</p>
           </div>
         </a>
 
-        <!-- Mebel yig'uvchi -->
-        <a href="ustalar.html?cat=mebel" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80" alt="Mebel yig'ish" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              5+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">50 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Mebel yig‘uvchi</h3>
-            </div>
+        <!-- 5. Mebel yig'uvchi -->
+        <a href="ustalar.html?cat=mebel" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Shkaf-kupe, oshxona garnituri, kravat yig‘ish va eshik ilmoqlarini sozlash.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Mebel yig‘ish</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">5+ mutaxassis</p>
           </div>
         </a>
 
-        <!-- Bir soatlik usta -->
-        <a href="ustalar.html?cat=universal" class="group block bg-white dark:bg-[#111827] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 card-hover-effect">
-          <div class="relative h-44 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80" alt="Bir soatlik usta" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <span class="absolute top-3 left-3 bg-white/95 dark:bg-[#111827]/95 text-[#1E3A8A] dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm">
-              6+ usta
-            </span>
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="text-[11px] text-orange-400 font-semibold">40 000 so‘mdan</span>
-              <h3 class="text-lg font-bold">Bir soatlik usta</h3>
-            </div>
+        <!-- 6. Bir soatlik usta -->
+        <a href="ustalar.html?cat=universal" class="bento-card group flex flex-col justify-between hover:-translate-y-1">
+          <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
           </div>
-          <div class="p-4">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
-              Televizorni devorga ilish, korniz, qulf almashtirish va mayda ta’mirlash.
-            </p>
-            <span class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 flex items-center justify-between">
-              <span>Ustalarni ko‘rish</span>
-              <span>→</span>
-            </span>
+          <div>
+            <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#FF5512] transition">Universal usta</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">6+ mutaxassis</p>
           </div>
         </a>
 
       </div>
-
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       6. FEATURED MASTERS (Eng yuqori baholangan ustalar)
+    <!-- ==========================================
+       4. INTERACTIVE TOOLS SHOWCASE (Calculator & Map)
        ========================================== -->
-  <section class="py-14 sm:py-18 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-    
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
-      <div>
-        <span class="text-xs font-bold text-[#F97316] uppercase tracking-wider">Tanlangan mutaxassislar</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
-          Sara ustalar bilan bog‘laning
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Kalkulyator promo bento -->
+        <div class="card-editorial p-7 flex flex-col justify-between">
+          <div>
+            <span class="eyebrow text-[#FF5512]">Tezkor narx hisoblash</span>
+            <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-white mt-1">
+              Ta’mir byudjetini oldindan biling
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Kran almashtirish, elektr shiti yig‘ish yoki konditsioner yuvish — barcha xizmatlarni bir necha soniyada hisoblang va mos ustalarni ko‘ring.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">100% bepul hisoblagich</span>
+            <a href="kalkulyator.html" class="btn-primary text-xs font-semibold">
+              Kalkulyatorni ochish →
+            </a>
+          </div>
+        </div>
+
+        <!-- Xarita promo bento -->
+        <div class="card-editorial p-7 flex flex-col justify-between">
+          <div>
+            <span class="eyebrow text-emerald-600 dark:text-emerald-400">Toshkent xaritasi</span>
+            <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-white mt-1">
+              Sizga eng yaqin bo‘sh ustalarni ko‘ring
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Xaritadagi yashil nuqtalar aynan hozir qo‘li bo‘sh va chaqiruvga borishga tayyor ustalarni ko‘rsatadi. Tumaningizdagi nuqtani bosing va chat qiling.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400">Jonli GPS nuqtalar</span>
+            <a href="xarita.html" class="btn-secondary text-xs font-semibold">
+              Xaritaga o‘tish →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+       5. QANDAY ISHLAYDI (Linear Timeline)
+       ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-200/80 dark:border-slate-800">
+      
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span class="eyebrow">Oddiy jarayon</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-[#0F1115] dark:text-white tracking-tight mt-1">
+          3 qadamda muammoni hal qiling
         </h2>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-          Sayt ichidagi chat orqali bevosita yozing va narxni kelishing
-        </p>
       </div>
 
-      <a href="ustalar.html" class="mt-3 sm:mt-0 text-xs font-bold text-[#1E3A8A] dark:text-blue-400 hover:underline">
-        Barcha 40+ ustalarni ko‘rish →
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      <!-- Usta 1: Akmal Karimov -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 card-hover-effect flex flex-col justify-between">
-        <div>
-          <div class="flex items-start space-x-3.5">
-            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80" alt="Akmal Karimov" class="w-14 h-14 rounded-full object-cover border border-slate-200 dark:border-slate-700 shadow-sm">
-            <div>
-              <div class="flex items-center space-x-1">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Akmal Karimov</h3>
-                <span class="text-blue-500">✓</span>
-              </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Santexnik (Chilonzor)</p>
-              <div class="flex items-center space-x-1 mt-1 text-xs">
-                <span class="text-amber-400 font-bold">★★★★★</span>
-                <span class="text-slate-700 dark:text-slate-300 font-bold ml-1">4.9</span>
-                <span class="text-slate-400 text-[11px]">(142 ta sharh)</span>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 line-clamp-2 leading-relaxed">
-            Quvurlar, smesitel, unitaz va isitish batareyalari ta’miri. 6 oylik kafolat beraman.
-          </p>
-          <div class="mt-3 flex items-center justify-between text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-            <span class="status-badge-free"><span class="status-dot-pulse"></span><span>Bo‘sh</span></span>
-            <span class="font-bold text-slate-800 dark:text-slate-200">dan 80 000 so‘m</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-2">
-          <button onclick="openChatModal(1)" class="btn-primary flex-1 py-2 text-xs font-bold">
-            💬 Chat
-          </button>
-          <button onclick="openDetailModal(1)" class="btn-secondary py-2 px-3 text-xs font-semibold">
-            Profil
-          </button>
-        </div>
-      </div>
-
-      <!-- Usta 2: Sardor Toshmatov -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 card-hover-effect flex flex-col justify-between">
-        <div>
-          <div class="flex items-start space-x-3.5">
-            <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=400&q=80" alt="Sardor Toshmatov" class="w-14 h-14 rounded-full object-cover border border-slate-200 dark:border-slate-700 shadow-sm">
-            <div>
-              <div class="flex items-center space-x-1">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Sardor Toshmatov</h3>
-                <span class="text-blue-500">✓</span>
-              </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Elektrik (Mirzo Ulug‘bek)</p>
-              <div class="flex items-center space-x-1 mt-1 text-xs">
-                <span class="text-amber-400 font-bold">★★★★★</span>
-                <span class="text-slate-700 dark:text-slate-300 font-bold ml-1">5.0</span>
-                <span class="text-slate-400 text-[11px]">(98 ta sharh)</span>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 line-clamp-2 leading-relaxed">
-            Elektr shitlari yig‘ish, avtomatika, lyustra montaji va qisqa tutashuvlarni tuzatish.
-          </p>
-          <div class="mt-3 flex items-center justify-between text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-            <span class="status-badge-free"><span class="status-dot-pulse"></span><span>Bo‘sh</span></span>
-            <span class="font-bold text-slate-800 dark:text-slate-200">dan 35 000 so‘m</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-2">
-          <button onclick="openChatModal(9)" class="btn-primary flex-1 py-2 text-xs font-bold">
-            💬 Chat
-          </button>
-          <button onclick="openDetailModal(9)" class="btn-secondary py-2 px-3 text-xs font-semibold">
-            Profil
-          </button>
-        </div>
-      </div>
-
-      <!-- Usta 3: Bobur Alimov -->
-      <div class="bg-white dark:bg-[#111827] rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 card-hover-effect flex flex-col justify-between">
-        <div>
-          <div class="flex items-start space-x-3.5">
-            <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=400&q=80" alt="Bobur Alimov" class="w-14 h-14 rounded-full object-cover border border-slate-200 dark:border-slate-700 shadow-sm">
-            <div>
-              <div class="flex items-center space-x-1">
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Bobur Alimov</h3>
-                <span class="text-blue-500">✓</span>
-              </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Konditsioner ustasi (Yunusobod)</p>
-              <div class="flex items-center space-x-1 mt-1 text-xs">
-                <span class="text-amber-400 font-bold">★★★★★</span>
-                <span class="text-slate-700 dark:text-slate-300 font-bold ml-1">4.9</span>
-                <span class="text-slate-400 text-[11px]">(115 ta sharh)</span>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 line-clamp-2 leading-relaxed">
-            Konditsioner montaji, freon quyish (R410A) va maxsus dori bilan yuvish. 1 yillik kafolat.
-          </p>
-          <div class="mt-3 flex items-center justify-between text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
-            <span class="status-badge-free"><span class="status-dot-pulse"></span><span>Bo‘sh</span></span>
-            <span class="font-bold text-slate-800 dark:text-slate-200">dan 100 000 so‘m</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-2">
-          <button onclick="openChatModal(5)" class="btn-primary flex-1 py-2 text-xs font-bold">
-            💬 Chat
-          </button>
-          <button onclick="openDetailModal(5)" class="btn-secondary py-2 px-3 text-xs font-semibold">
-            Profil
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ==========================================
-       7. INTERAKTIV VOSITALAR BANNERI (Kalkulyator va Xarita)
-       ========================================== -->
-  <section class="py-12 bg-slate-100/50 dark:bg-[#0E1526] border-t border-slate-200/80 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- Kalkulyator kartasi -->
-        <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 flex items-start space-x-4">
-          <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-[#F97316] flex items-center justify-center text-2xl flex-shrink-0">
-            🧮
-          </div>
-          <div class="space-y-2">
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">Narx kalkulyatori</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Kran almashtirish, quvur tozalash yoki freon quyish bo‘yicha aniq byudjetni oldindan bir necha soniyada hisoblang.
-            </p>
-            <a href="kalkulyator.html" class="inline-flex items-center space-x-1 text-xs font-bold text-[#F97316] hover:underline pt-1">
-              <span>Byudjetni hisoblash</span>
-              <span>→</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Xarita kartasi -->
-        <div class="bg-white dark:bg-[#111827] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 flex items-start space-x-4">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center text-2xl flex-shrink-0">
-            🗺️
-          </div>
-          <div class="space-y-2">
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">Toshkent interaktiv xaritasi</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              O‘z tumaningizdagi bo‘sh (🟢) va band (⚪) ustalarni xaritada to‘g‘ridan-to‘g‘ri ko‘ring va bir marta bosish bilan bog‘laning.
-            </p>
-            <a href="xarita.html" class="inline-flex items-center space-x-1 text-xs font-bold text-[#1E3A8A] dark:text-blue-400 hover:underline pt-1">
-              <span>Xaritani ochish</span>
-              <span>→</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       8. YAKUNIY CTA (Minimalist & High-Conversion)
-       ========================================== -->
-  <section class="py-14 sm:py-18 bg-[#1E3A8A] dark:bg-[#142C5C] text-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
-      <span class="inline-block px-3 py-1 rounded-full bg-blue-800/60 text-blue-200 text-xs font-semibold">
-        Tez, ishonchli va kafolatlangan
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
-        Uyingizdagi ta’mirlash ishlarini professionallarga topshiring
-      </h2>
-      <p class="text-xs sm:text-sm text-blue-100 max-w-xl mx-auto leading-relaxed">
-        Toshkentning 40+ eng yaxshi ustalari xizmatingizga tayyor. O‘zingizga mos ustani tanlang yoki buyurtmangizni e’lon qilib qoldiring.
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <a href="ustalar.html" class="btn-accent py-3 px-6 text-xs sm:text-sm font-bold shadow-md">
-          Ustalarni ko‘rish
-        </a>
-        <a href="elon-berish.html" class="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-xl text-xs sm:text-sm transition">
-          + E’lon qoldirish
-        </a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       9. FOOTER
-       ========================================== -->
-  <footer class="mt-auto bg-white dark:bg-[#111827] border-t border-slate-200 dark:border-slate-800 pt-12 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-        
-        <div class="md:col-span-1 space-y-3">
-          <span class="text-xl font-extrabold text-[#1E3A8A] dark:text-white">Usta-Top<span class="text-[#F97316]">.uz</span></span>
+        <div class="card-editorial p-6 space-y-3">
+          <span class="text-3xl font-black text-slate-200 dark:text-slate-800 font-display">01</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Usta tanlang yoki e’lon bering</h3>
           <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Toshkent shahrida uy va ofis xizmatlari uchun zamonaviy marketplace. Tekshirilgan ustalar, shaffof narxlar va jonli chat.
+            Katalogdan o‘zingizga ma’qul reytingdagi usta bilan bog‘laning yoki o‘z narxingiz va rasmingiz bilan e’lon qoldiring.
           </p>
         </div>
 
-        <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Asosiy bo‘limlar</h4>
-          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
-            <li><a href="index.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400">Bosh sahifa</a></li>
-            <li><a href="elon-berish.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400">E’lon berish (Birja)</a></li>
-            <li><a href="ustalar.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400">Ustalar katalogi</a></li>
-            <li><a href="kalkulyator.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400">Narx kalkulyatori</a></li>
-            <li><a href="xarita.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400">Toshkent xaritasi</a></li>
+        <div class="card-editorial p-6 space-y-3">
+          <span class="text-3xl font-black text-slate-200 dark:text-slate-800 font-display">02</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Narx va vaqtni kelishing</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Sayt ichidagi xavfsiz chat orqali usta bilan bog‘laning. Aniq manzil va kelishilgan vaqtni tasdiqlang.
+          </p>
+        </div>
+
+        <div class="card-editorial p-6 space-y-3">
+          <span class="text-3xl font-black text-slate-200 dark:text-slate-800 font-display">03</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Ishni qabul qiling va baholang</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Xizmat ko‘rsatilgach, to‘lovni to‘g‘ridan-to‘g‘ri ustaga to‘lang va boshqa mijozlarga yordam berish uchun sharh qoldiring.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================
+       6. MINIMALIST EDITORIAL FOOTER
+       ========================================== -->
+  <footer class="bg-white dark:bg-[#0C0E12] border-t border-slate-200 dark:border-slate-800 pt-12 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
+        
+        <div class="md:col-span-4 space-y-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-6 h-6 rounded-md bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-black text-xs">
+              UT
+            </div>
+            <span class="font-extrabold text-sm tracking-tight">Usta-Top<span class="text-[#FF5512]">.uz</span></span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+            Toshkent shahri uchun saralangan uy ustalari va xizmatlar birjasi. 0% vositachilik komissiyasi.
+          </p>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="eyebrow mb-3">Bo‘limlar</h4>
+          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+            <li><a href="index.html" class="hover:text-black dark:hover:text-white transition">Bosh sahifa</a></li>
+            <li><a href="elon-berish.html" class="hover:text-black dark:hover:text-white transition">E’lon berish</a></li>
+            <li><a href="ustalar.html" class="hover:text-black dark:hover:text-white transition">Ustalar katalogi</a></li>
+            <li><a href="kalkulyator.html" class="hover:text-black dark:hover:text-white transition">Kalkulyator</a></li>
+            <li><a href="xarita.html" class="hover:text-black dark:hover:text-white transition">Toshkent xaritasi</a></li>
           </ul>
         </div>
 
-        <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Xizmat turlari</h4>
-          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
-            <li><a href="ustalar.html?cat=santexnik" class="hover:text-[#1E3A8A]">Santexnika ta’miri</a></li>
-            <li><a href="ustalar.html?cat=elektrik" class="hover:text-[#1E3A8A]">Elektrik xizmatlari</a></li>
-            <li><a href="ustalar.html?cat=konditsioner" class="hover:text-[#1E3A8A]">Konditsioner montaji & freon</a></li>
-            <li><a href="ustalar.html?cat=maishiy" class="hover:text-[#1E3A8A]">Maishiy texnika ta’miri</a></li>
-            <li><a href="ustalar.html?cat=mebel" class="hover:text-[#1E3A8A]">Mebel yig‘ish va sozlash</a></li>
+        <div class="md:col-span-3">
+          <h4 class="eyebrow mb-3">Xizmatlar</h4>
+          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+            <li><a href="ustalar.html?cat=santexnik" class="hover:text-black dark:hover:text-white transition">Santexnika ishlari</a></li>
+            <li><a href="ustalar.html?cat=elektrik" class="hover:text-black dark:hover:text-white transition">Elektr montaji</a></li>
+            <li><a href="ustalar.html?cat=konditsioner" class="hover:text-black dark:hover:text-white transition">Konditsioner xizmati</a></li>
+            <li><a href="ustalar.html?cat=maishiy" class="hover:text-black dark:hover:text-white transition">Maishiy texnika ta’miri</a></li>
+            <li><a href="ustalar.html?cat=mebel" class="hover:text-black dark:hover:text-white transition">Mebel yig‘ish</a></li>
           </ul>
         </div>
 
-        <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Toshkent tumanlari</h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Chilonzor, Yunusobod, Mirzo Ulug‘bek, Yakkasaroy, Shayxontohur, Sergeli, Olmazor, Uchtepa, Mirobod, Yashnobod.
-          </p>
-          <div class="pt-3">
-            <a href="royxat-usta.html" class="inline-block text-xs font-bold text-[#F97316] hover:underline">
-              Usta bo‘lib qo‘shilish →
-            </a>
-          </div>
+        <div class="md:col-span-3">
+          <h4 class="eyebrow mb-3">Qo‘llab-quvvatlash</h4>
+          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+            <li><a href="tel:+998712000000" class="hover:text-black dark:hover:text-white transition font-medium">+998 (71) 200-00-00</a></li>
+            <li><a href="mailto:info@usta-top.uz" class="hover:text-black dark:hover:text-white transition">info@usta-top.uz</a></li>
+            <li class="text-slate-400">Telegram: @ustatop_uz</li>
+          </ul>
         </div>
 
       </div>
 
-      <div class="pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400">
-        © 2026 Usta-Top.uz — Toshkent shahri uchun maishiy xizmatlar portali. Barcha huquqlar himoyalangan.
+      <div class="pt-6 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>© 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.</p>
+        <p>Toshkent, O‘zbekiston</p>
       </div>
+
     </div>
   </footer>
 
-
-  <!-- Mobil pastki qotirilgan menyu (5 ta bo'lim) -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
-    <a href="index.html" class="flex flex-col items-center text-[#1E3A8A] dark:text-blue-400 font-bold">
-      <span class="text-base mb-0.5">🏠</span>
-      <span>Bosh sahifa</span>
+  <!-- Mobil Pastki Qotirilgan Navigatsiya Bar -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#14171D]/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 md:hidden flex justify-around items-center py-2 px-1">
+    <a href="index.html" class="flex flex-col items-center p-1 text-[#FF5512]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span class="text-[10px] font-semibold mt-0.5">Asosiy</span>
     </a>
-    <a href="elon-berish.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">📢</span>
-      <span>E’lon</span>
+    <a href="elon-berish.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span class="text-[10px] font-semibold mt-0.5">E’lon</span>
     </a>
-    <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🔧</span>
-      <span>Ustalar</span>
+    <a href="ustalar.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <span class="text-[10px] font-semibold mt-0.5">Ustalar</span>
     </a>
-    <a href="kalkulyator.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🧮</span>
-      <span>Kalkulyator</span>
+    <a href="kalkulyator.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      <span class="text-[10px] font-semibold mt-0.5">Kalkulyator</span>
     </a>
-    <a href="xarita.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🗺️</span>
-      <span>Xarita</span>
+    <a href="xarita.html" class="flex flex-col items-center p-1 text-slate-500 dark:text-slate-400">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+      <span class="text-[10px] font-semibold mt-0.5">Xarita</span>
     </a>
   </div>
 
-  <div id="chatModalContainer"></div>
-  <div id="callModalContainer"></div>
-  <div id="detailModalContainer"></div>
-  <div id="registerModalContainer"></div>
   <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
 
-  <script src="data.js"></script>
+  <!-- Skriptlar -->
   <script src="common.js"></script>
-  <script src="animations.js"></script>
+  <script src="data.js"></script>
   <script src="auth.js"></script>
 </body>
 </html>

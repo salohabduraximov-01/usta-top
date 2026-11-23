@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ustalar xaritasi (Toshkent interaktiv xaritasi) | Usta-Top.uz</title>
-  <meta name="description" content="Toshkent ustalari xaritasi. O‘z tumaningizdagi bo‘sh va band ustalarni xaritada ko‘ring, bosing va darhol chat orqali bog‘laning.">
+  <title>Toshkent ustalari interaktiv xaritasi — Usta-Top.uz</title>
+  <meta name="description" content="Toshkent shahridagi bo‘sh va band ustalarni interaktiv xaritada ko‘ring. Chilonzor, Yunusobod va boshqa tumanlardagi santexnik, elektrik ustalar bilan chatda bog‘laning.">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,203 +20,137 @@
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            brand: {
-              navy: '#1E3A8A',
-              navyDark: '#142C5C',
-              orange: '#F97316',
-              softOrange: '#FFF1E6',
-              bgLight: '#F8FAFC',
-              border: '#E2E8F0',
-              textPrimary: '#0F172A',
-              textSecondary: '#64748B'
-            }
-          },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
           }
         }
       }
     }
   </script>
 
-  <!-- Leaflet.js CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
   <link rel="stylesheet" href="styles.css">
-  
   <style>
     #tashkentMap {
-      height: 580px;
       width: 100%;
-      border-radius: 1rem;
+      height: 560px;
       z-index: 10;
     }
-    @media (max-width: 640px) {
-      #tashkentMap {
-        height: 440px;
-      }
+    .leaflet-popup-content-wrapper {
+      background: var(--surface);
+      color: var(--text-primary);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.16);
+      border: 1px solid var(--border-subtle);
+      padding: 0;
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      line-height: 1.4;
+    }
+    .leaflet-popup-tip {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
     }
     .map-marker-free {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       background-color: #10B981;
-      border: 3px solid #FFFFFF;
+      border: 2.5px solid #FFFFFF;
       border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.4), 0 4px 10px rgba(0,0,0,0.25);
-      cursor: pointer;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
       transition: transform 0.18s ease;
+      cursor: pointer;
     }
     .map-marker-free:hover {
       transform: scale(1.3);
     }
     .map-marker-busy {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       background-color: #94A3B8;
-      border: 3px solid #FFFFFF;
+      border: 2px solid #FFFFFF;
       border-radius: 50%;
-      box-shadow: 0 0 0 2.5px rgba(148, 163, 184, 0.3), 0 3px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
+      box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.25);
       transition: transform 0.18s ease;
+      cursor: pointer;
     }
     .map-marker-busy:hover {
       transform: scale(1.3);
     }
   </style>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#0B1120] text-[#0F172A] dark:text-[#F8FAFC] antialiased min-h-screen flex flex-col pb-16 md:pb-0 transition-colors duration-200">
+<body class="bg-[#FBFBFA] dark:bg-[#0C0E12] text-[#0F1115] dark:text-[#F3F4F6] antialiased min-h-screen flex flex-col transition-colors duration-200">
 
   <!-- ==========================================
-       1. HEADER / NAVBAR (Standardized SaaS Layout)
+       1. HEADER / NAVIGATION (Linear/Apple Style)
        ========================================== -->
-  <header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <header class="sticky top-0 z-40 w-full bg-[#FFFFFF]/90 dark:bg-[#0C0E12]/90 backdrop-blur-md border-b border-[#E8E8E5] dark:border-[#1F242F] transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center space-x-3 group">
-        <div class="w-11 h-11 rounded-xl bg-[#1E3A8A] flex items-center justify-center text-white shadow-sm shadow-blue-900/20 group-hover:bg-[#142C5C] transition">
-          <svg class="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
+      <a href="index.html" class="flex items-center space-x-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-bold text-sm tracking-tight transition-transform group-hover:scale-95">
+          <span class="text-[#FF5512]">U</span>T
         </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-extrabold tracking-tight text-[#1E3A8A] dark:text-blue-400">
-            Usta-Top<span class="text-[#F97316]">.uz</span>
-          </span>
-          <span class="text-[10px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase -mt-0.5">
-            Toshkent ustalari
-          </span>
+        <div class="flex items-baseline space-x-1">
+          <span class="font-display font-extrabold text-base tracking-tight text-[#0F1115] dark:text-white">Usta-Top</span>
+          <span class="text-[10px] font-semibold text-[#FF5512]">.uz</span>
         </div>
       </a>
 
       <!-- Desktop Navigatsiya -->
-      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-        <a href="index.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
-          Bosh sahifa
-        </a>
-        <a href="elon-berish.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
-          <span>📢</span>
-          <span>E’lon berish</span>
-        </a>
-        <a href="ustalar.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1">
-          Ustalar
-        </a>
-        <a href="kalkulyator.html" class="text-slate-600 dark:text-slate-300 hover:text-[#1E3A8A] dark:hover:text-blue-400 transition py-1 flex items-center space-x-1.5">
-          <span>🧮</span>
-          <span>Kalkulyator</span>
-        </a>
-        <a href="xarita.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold border-b-2 border-[#1E3A8A] dark:border-blue-400 py-1 flex items-center space-x-1.5">
-          <span>🗺️</span>
-          <span>Xarita</span>
-        </a>
+      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Bosh sahifa</a>
+        <a href="elon-berish.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">E’lon berish</a>
+        <a href="ustalar.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Ustalar</a>
+        <a href="kalkulyator.html" class="px-3 py-1.5 rounded-lg hover:text-black dark:hover:text-white transition">Kalkulyator</a>
+        <a href="xarita.html" class="px-3 py-1.5 rounded-lg text-[#FF5512] font-bold bg-[#FF5512]/5 dark:bg-[#FF5512]/10 transition">Xarita</a>
       </nav>
 
-      <!-- Desktop O'ng qism -->
-      <div class="hidden md:flex items-center space-x-3.5">
+      <!-- O'ng qism: Tungi rejim va Kirish -->
+      <div class="hidden md:flex items-center space-x-2.5">
         <button 
           type="button" 
           onclick="toggleTheme()" 
-          class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer shadow-2xs"
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-black dark:hover:text-white transition cursor-pointer"
           title="Tungi / Kunduzgi rejim"
-          aria-label="Mavzuni almashtirish"
         >
-          <span class="theme-toggle-icon flex items-center justify-center"></span>
+          <span class="theme-toggle-icon"></span>
         </button>
 
-        <div id="desktopAuthNav" class="flex items-center space-x-3">
-          <a 
-            href="kirish.html" 
-            class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-[#1E3A8A] dark:hover:text-blue-400 px-3 py-2 transition"
-          >
+        <div id="desktopAuthNav" class="flex items-center space-x-2">
+          <a href="kirish.html" class="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition">
             Kirish
           </a>
-          <a 
-            href="royxat-usta.html"
-            class="btn-accent px-4 py-2 text-xs font-bold rounded-xl shadow-xs flex items-center space-x-1.5 cursor-pointer"
-          >
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-            <span>Usta bo‘lish</span>
+          <a href="royxat-usta.html" class="btn-accent px-3.5 py-1.5 text-xs font-bold rounded-lg cursor-pointer">
+            + Usta bo‘lish
           </a>
         </div>
       </div>
 
       <!-- Mobil burger -->
       <div class="flex items-center space-x-2 md:hidden">
-        <button 
-          type="button" 
-          onclick="toggleTheme()" 
-          class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 shadow-2xs"
-          aria-label="Tungi rejim"
-        >
+        <button type="button" onclick="toggleTheme()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
           <span class="theme-toggle-icon"></span>
         </button>
-
-        <button 
-          type="button" 
-          onclick="toggleMobileMenu()" 
-          class="text-slate-700 dark:text-slate-200 p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs"
-          aria-label="Menyu"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
+        <button type="button" onclick="toggleMobileMenu()" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
 
     </div>
 
     <!-- Mobil menyu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] px-4 pt-3 pb-5 space-y-2.5 shadow-xl">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🏠 Bosh sahifa
-      </a>
-      <a href="elon-berish.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        📢 E’lon berish (Buyurtmalar)
-      </a>
-      <a href="ustalar.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🔧 Ustalar katalogi
-      </a>
-      <a href="kalkulyator.html" class="block py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-[#1E3A8A]">
-        🧮 Narx kalkulyatori
-      </a>
-      <a href="xarita.html" class="block py-2 text-sm font-bold text-[#1E3A8A] dark:text-blue-400">
-        🗺️ Toshkent xaritasi
-      </a>
-      <div id="mobileAuthNav" class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
-        <a 
-          href="kirish.html" 
-          class="block w-full py-2.5 text-center text-sm font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl"
-        >
-          Kirish
-        </a>
-        <a 
-          href="royxat-usta.html"
-          class="block w-full bg-[#F97316] text-white py-2.5 rounded-xl text-sm font-bold text-center shadow-xs cursor-pointer"
-        >
-          + Usta sifatida ro‘yxatdan o‘tish
-        </a>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 dark:border-slate-800 bg-[#FFFFFF] dark:bg-[#0C0E12] px-4 pt-2.5 pb-4 space-y-1 text-xs font-semibold">
+      <a href="index.html" class="block py-2 text-slate-700 dark:text-slate-300">Bosh sahifa</a>
+      <a href="elon-berish.html" class="block py-2 text-slate-700 dark:text-slate-300">E’lon berish (Buyurtmalar)</a>
+      <a href="ustalar.html" class="block py-2 text-slate-700 dark:text-slate-300">Ustalar katalogi</a>
+      <a href="kalkulyator.html" class="block py-2 text-slate-700 dark:text-slate-300">Narx kalkulyatori</a>
+      <a href="xarita.html" class="block py-2 text-[#FF5512] font-bold">Toshkent xaritasi</a>
+      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+        <a href="kirish.html" class="flex-1 text-center py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold">Kirish</a>
+        <a href="royxat-usta.html" class="flex-1 text-center py-2 rounded-lg btn-accent text-white text-xs font-bold">+ Usta bo‘lish</a>
       </div>
     </div>
   </header>
@@ -227,175 +161,146 @@
        ========================================== -->
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
     
-    <!-- Sarlavha va afsona -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+    <!-- Title & Legend -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
       <div>
-        <div class="inline-flex items-center space-x-1.5 bg-blue-50 dark:bg-blue-950/40 text-[#1E3A8A] dark:text-blue-300 text-xs font-bold px-3 py-1 rounded-full mb-2 border border-blue-200/60 dark:border-blue-800/40">
-          <span>🗺️</span>
-          <span>Interaktiv xarita</span>
+        <div class="flex items-center space-x-2 text-xs font-semibold text-slate-400 mb-1.5">
+          <a href="index.html" class="hover:underline">Bosh sahifa</a>
+          <span>/</span>
+          <span class="text-[#FF5512]">Xarita</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-[#0F1115] dark:text-white tracking-tight">
           Toshkent ustalari xaritasi
         </h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-          O‘z tumaningizdagi nuqtani bosing — usta ma’lumotlari va to‘g‘ridan-to‘g‘ri Chat chiqadi.
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+          Tumaningizdagi nuqtani tanlang — usta profili va to‘g‘ridan-to‘g‘ri ichki Chat orqali bog‘lanish oynasi ochiladi.
         </p>
       </div>
 
       <!-- Afsona (Legend) -->
-      <div class="flex items-center space-x-4 bg-white dark:bg-[#111827] px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs text-xs font-bold">
+      <div class="flex items-center space-x-4 card-editorial px-3.5 py-2 text-xs font-semibold">
         <div class="flex items-center space-x-1.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-xs"></span>
-          <span class="text-slate-700 dark:text-slate-200">🟢 Bo‘sh usta</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span class="text-[#0F1115] dark:text-white font-bold">🟢 Bo‘sh usta</span>
         </div>
         <div class="flex items-center space-x-1.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-slate-400 shadow-xs"></span>
-          <span class="text-slate-500 dark:text-slate-400">⚪ Band usta</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+          <span class="text-slate-400">⚪ Band usta</span>
         </div>
       </div>
     </div>
 
     <!-- Filtrlar paneli -->
-    <div class="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xs mb-5 space-y-3.5">
-      
+    <div class="card-editorial p-4 mb-5 space-y-3">
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
         
-        <!-- Xizmat sohasi filtri (Custom Select) -->
+        <!-- Xizmat sohasi filtri (Custom Column Select) -->
         <div class="sm:col-span-5">
-          <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Mutaxassislik</label>
-          <div class="custom-select-wrapper relative" data-name="mapCategory">
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Mutaxassislik</label>
+          <div class="custom-select-wrapper" data-name="mapCategory">
             <input type="hidden" id="mapCategoryFilter" value="all" onchange="applyMapFilters()">
-            <button type="button" class="custom-select-trigger w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-bold shadow-2xs hover:border-slate-300 dark:hover:border-slate-600 transition cursor-pointer">
+            <button type="button" class="custom-select-trigger">
               <div class="flex items-center space-x-2 truncate">
                 <span class="custom-select-icon text-sm">🛠️</span>
-                <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Barcha xizmatlar</span>
+                <span class="custom-select-label truncate font-bold text-[#0F1115] dark:text-white">Barcha xizmatlar</span>
               </div>
-              <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              <svg class="custom-select-arrow w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/30" data-value="all" data-label="Barcha xizmatlar" data-icon="🛠️">
-                <span class="flex items-center gap-2"><span>🛠️</span><span>Barcha xizmatlar</span></span>
+            <div class="custom-select-dropdown hidden">
+              <div class="custom-select-option selected" data-value="all" data-label="Barcha xizmatlar" data-icon="🛠️">
+                <span>🛠️ Barcha xizmatlar</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="santexnik" data-label="Santexnik" data-icon="🚰">
-                <span class="flex items-center gap-2"><span>🚰</span><span>Santexnik</span></span>
+              <div class="custom-select-option" data-value="santexnik" data-label="Santexnik" data-icon="🚰">
+                <span>🚰 Santexnik</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="elektrik" data-label="Elektrik" data-icon="⚡">
-                <span class="flex items-center gap-2"><span>⚡</span><span>Elektrik</span></span>
+              <div class="custom-select-option" data-value="elektrik" data-label="Elektrik" data-icon="⚡">
+                <span>⚡ Elektrik</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="konditsioner" data-label="Konditsioner ustasi" data-icon="❄️">
-                <span class="flex items-center gap-2"><span>❄️</span><span>Konditsioner ustasi</span></span>
+              <div class="custom-select-option" data-value="konditsioner" data-label="Konditsioner ustasi" data-icon="❄️">
+                <span>❄️ Konditsioner ustasi</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="maishiy" data-label="Maishiy texnika" data-icon="🧺">
-                <span class="flex items-center gap-2"><span>🧺</span><span>Maishiy texnika</span></span>
+              <div class="custom-select-option" data-value="maishiy" data-label="Maishiy texnika" data-icon="🧺">
+                <span>🧺 Maishiy texnika</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="mebel" data-label="Mebel yig‘uvchi" data-icon="🪑">
-                <span class="flex items-center gap-2"><span>🪑</span><span>Mebel yig‘uvchi</span></span>
+              <div class="custom-select-option" data-value="mebel" data-label="Mebel yig‘uvchi" data-icon="🪑">
+                <span>🪑 Mebel yig‘uvchi</span>
               </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="universal" data-label="Bir soatlik usta" data-icon="🔨">
-                <span class="flex items-center gap-2"><span>🔨</span><span>Bir soatlik usta</span></span>
+              <div class="custom-select-option" data-value="universal" data-label="Bir soatlik usta" data-icon="🔨">
+                <span>🔨 Bir soatlik usta</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Tuman bo'yicha tezkor uchish (Custom Select) -->
+        <!-- Tuman bo'yicha tezkor uchish (Custom Column Select) -->
         <div class="sm:col-span-4">
-          <label class="block text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">Toshkent tumani</label>
-          <div class="custom-select-wrapper relative" data-name="mapDistrict">
+          <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Toshkent tumani</label>
+          <div class="custom-select-wrapper" data-name="mapDistrict">
             <input type="hidden" id="mapDistrictFilter" value="all" onchange="flyToDistrict(this.value)">
-            <button type="button" class="custom-select-trigger w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-bold shadow-2xs hover:border-slate-300 dark:hover:border-slate-600 transition cursor-pointer">
+            <button type="button" class="custom-select-trigger">
               <div class="flex items-center space-x-2 truncate">
                 <span class="custom-select-icon text-sm">📍</span>
-                <span class="custom-select-label truncate font-bold text-slate-800 dark:text-slate-100">Butun Toshkent</span>
+                <span class="custom-select-label truncate font-bold text-[#0F1115] dark:text-white">Butun Toshkent</span>
               </div>
-              <svg class="custom-select-arrow w-4 h-4 text-slate-400 transition-transform duration-200 ml-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              <svg class="custom-select-arrow w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div class="custom-select-dropdown absolute left-0 right-0 top-full mt-1.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl p-1.5 z-50 max-h-60 overflow-y-auto hidden">
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/30" data-value="all" data-label="Butun Toshkent" data-icon="📍">
-                <span>📍 Butun Toshkent</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Chilonzor" data-label="Chilonzor tumani" data-icon="📍">
-                <span>📍 Chilonzor</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yunusobod" data-label="Yunusobod tumani" data-icon="📍">
-                <span>📍 Yunusobod</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek tumani" data-icon="📍">
-                <span>📍 Mirzo Ulug‘bek</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yakkasaroy" data-label="Yakkasaroy tumani" data-icon="📍">
-                <span>📍 Yakkasaroy</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Shayxontohur" data-label="Shayxontohur tumani" data-icon="📍">
-                <span>📍 Shayxontohur</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Sergeli" data-label="Sergeli tumani" data-icon="📍">
-                <span>📍 Sergeli</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Olmazor" data-label="Olmazor tumani" data-icon="📍">
-                <span>📍 Olmazor</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Uchtepa" data-label="Uchtepa tumani" data-icon="📍">
-                <span>📍 Uchtepa</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Mirobod" data-label="Mirobod tumani" data-icon="📍">
-                <span>📍 Mirobod</span>
-              </div>
-              <div class="custom-select-option px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between text-slate-700 dark:text-slate-200" data-value="Yashnobod" data-label="Yashnobod tumani" data-icon="📍">
-                <span>📍 Yashnobod</span>
-              </div>
+            <div class="custom-select-dropdown hidden">
+              <div class="custom-select-option selected" data-value="all" data-label="Butun Toshkent" data-icon="📍">📍 Butun Toshkent</div>
+              <div class="custom-select-option" data-value="Chilonzor" data-label="Chilonzor tumani" data-icon="📍">📍 Chilonzor</div>
+              <div class="custom-select-option" data-value="Yunusobod" data-label="Yunusobod tumani" data-icon="📍">📍 Yunusobod</div>
+              <div class="custom-select-option" data-value="Mirzo Ulug‘bek" data-label="Mirzo Ulug‘bek tumani" data-icon="📍">📍 Mirzo Ulug‘bek</div>
+              <div class="custom-select-option" data-value="Yakkasaroy" data-label="Yakkasaroy tumani" data-icon="📍">📍 Yakkasaroy</div>
+              <div class="custom-select-option" data-value="Shayxontohur" data-label="Shayxontohur tumani" data-icon="📍">📍 Shayxontohur</div>
+              <div class="custom-select-option" data-value="Sergeli" data-label="Sergeli tumani" data-icon="📍">📍 Sergeli</div>
+              <div class="custom-select-option" data-value="Olmazor" data-label="Olmazor tumani" data-icon="📍">📍 Olmazor</div>
+              <div class="custom-select-option" data-value="Uchtepa" data-label="Uchtepa tumani" data-icon="📍">📍 Uchtepa</div>
+              <div class="custom-select-option" data-value="Mirobod" data-label="Mirobod tumani" data-icon="📍">📍 Mirobod</div>
+              <div class="custom-select-option" data-value="Yashnobod" data-label="Yashnobod tumani" data-icon="📍">📍 Yashnobod</div>
             </div>
           </div>
         </div>
 
-        <!-- Holat filtri (Faqat bo'sh ustalar) -->
-        <div class="sm:col-span-3 pt-4 sm:pt-4">
-          <label class="inline-flex items-center space-x-2 cursor-pointer bg-slate-50 dark:bg-slate-800 px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 w-full justify-center">
-            <input type="checkbox" id="mapOnlyFreeCheckbox" onchange="applyMapFilters()" class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500 cursor-pointer">
-            <span class="text-xs font-bold text-slate-700 dark:text-slate-200 select-none">Faqat bo‘sh ustalar</span>
+        <!-- Faqat bo'sh ustalar checkbox -->
+        <div class="sm:col-span-3 flex items-center sm:justify-end pt-2 sm:pt-5">
+          <label class="relative inline-flex items-center cursor-pointer select-none">
+            <input 
+              type="checkbox" 
+              id="mapOnlyFreeCheckbox" 
+              onchange="applyMapFilters()" 
+              class="w-4 h-4 text-[#FF5512] rounded border-slate-300 focus:ring-[#FF5512] cursor-pointer"
+            >
+            <span class="ml-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+              Faqat bo‘sh ustalarni ko‘rsatish
+            </span>
           </label>
         </div>
 
       </div>
 
-      <!-- Tezkor tuman tugmalari -->
-      <div class="flex flex-wrap items-center gap-1.5 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
-        <span class="text-slate-400 font-semibold text-[11px] mr-1">Tezkor o‘tish:</span>
-        <button type="button" onclick="flyToDistrict('Chilonzor')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Chilonzor</button>
-        <button type="button" onclick="flyToDistrict('Yunusobod')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Yunusobod</button>
-        <button type="button" onclick="flyToDistrict('Mirzo Ulug‘bek')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Mirzo Ulug‘bek</button>
-        <button type="button" onclick="flyToDistrict('Yakkasaroy')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Yakkasaroy</button>
-        <button type="button" onclick="flyToDistrict('Shayxontohur')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Shayxontohur</button>
-        <button type="button" onclick="flyToDistrict('Sergeli')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 transition cursor-pointer">Sergeli</button>
-        <button type="button" onclick="flyToDistrict('all')" class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950 text-[#1E3A8A] dark:text-blue-300 font-bold hover:bg-blue-100 transition cursor-pointer">Hammasi (Markaz)</button>
+      <div class="pt-2 border-t border-[#E8E8E5] dark:border-[#242832] flex items-center justify-between text-xs text-slate-400">
+        <span id="mapCountDisplay">Xaritada ustalar yuklanmoqda...</span>
+        <span>Xaritadagi nuqtani bosing</span>
       </div>
-
     </div>
 
-    <!-- Xarita konteyneri -->
-    <div class="relative bg-white dark:bg-[#111827] rounded-2xl p-2.5 border border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
+    <!-- Interaktiv Xarita Bloki -->
+    <div class="card-editorial overflow-hidden mb-8 border border-[#E8E8E5] dark:border-[#242832]">
       <div id="tashkentMap"></div>
-      
-      <!-- Pastki hisoblagich overlay -->
-      <div class="absolute bottom-5 left-5 z-20 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-md text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center space-x-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span id="mapCountDisplay">Xaritada 40+ usta ko‘rsatilmoqda</span>
-      </div>
     </div>
 
-    <!-- Xaritadagi faol ustalar ro'yxati -->
-    <div class="mt-8">
-      <div class="flex items-center justify-between mb-3.5">
-        <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-          Xaritadagi faol ustalar ro‘yxati
-        </h3>
-        <a href="ustalar.html" class="text-xs font-bold text-[#1E3A8A] dark:text-blue-400 hover:underline">
-          Katalogda to‘liq ko‘rish →
-        </a>
+    <!-- Xaritadagi saralangan ustalar ro'yxati -->
+    <div>
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="font-display font-extrabold text-base text-[#0F1115] dark:text-white">
+            Xaritadagi ustalar ro‘yxati
+          </h2>
+          <p class="text-xs text-slate-400">Ustani tanlasangiz, xarita avtomatik uning manziliga yaqinlashadi</p>
+        </div>
       </div>
 
       <div id="mapMastersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <!-- JS to'ldiradi -->
+        <!-- JS dinamik to'ldiradi -->
       </div>
     </div>
 
@@ -403,87 +308,64 @@
 
 
   <!-- ==========================================
-       3. FOOTER (Standardized 4-column)
+       3. FOOTER (Minimalist Editorial Footer)
        ========================================== -->
-  <footer class="mt-auto bg-white dark:bg-[#0B1120] border-t border-slate-200 dark:border-slate-800 pt-12 pb-8 transition-colors">
+  <footer class="mt-auto border-t border-[#E8E8E5] dark:border-[#1F242F] bg-[#FFFFFF] dark:bg-[#0C0E12] pt-12 pb-8 transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
         
         <div class="md:col-span-5 space-y-3">
           <div class="flex items-center space-x-2.5">
-            <div class="w-8 h-8 rounded-lg bg-[#1E3A8A] flex items-center justify-center text-white">
-              <svg class="w-4 h-4 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <div class="w-7 h-7 rounded-lg bg-[#0F1115] dark:bg-white text-white dark:text-[#0F1115] flex items-center justify-center font-bold text-xs">
+              <span class="text-[#FF5512]">U</span>T
             </div>
-            <span class="text-lg font-extrabold text-[#1E3A8A] dark:text-blue-400">Usta-Top<span class="text-[#F97316]">.uz</span></span>
+            <span class="font-display font-extrabold text-base tracking-tight text-[#0F1115] dark:text-white">Usta-Top.uz</span>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
-            Toshkent shahrida professional va tekshirilgan ustalarni topish portali. Har bir tuman uchun bo‘sh va band ustalar, kafolatlangan xizmatlar va bepul e’lon berish imkoniyati.
+          <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+            Toshkent bo‘ylab malakali va ishonchli ustalarni topish, narxlarni solishtirish va to‘g‘ridan-to‘g‘ri ichki chat orqali bog‘lanish platformasi.
           </p>
         </div>
 
-        <div class="md:col-span-3">
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Asosiy sahifalar</h4>
-          <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-            <li><a href="index.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Bosh sahifa</a></li>
-            <li><a href="elon-berish.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">E’lon berish (Buyurtmalar birjasi)</a></li>
-            <li><a href="ustalar.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Ustalar katalogi</a></li>
-            <li><a href="kalkulyator.html" class="hover:text-[#1E3A8A] dark:hover:text-blue-400 transition">Narx kalkulyatori</a></li>
-            <li><a href="xarita.html" class="text-[#1E3A8A] dark:text-blue-400 font-bold">Toshkent xaritasi</a></li>
+        <div class="md:col-span-3 space-y-2.5">
+          <h4 class="text-xs font-bold text-[#0F1115] dark:text-white uppercase tracking-wider">Bo‘limlar</h4>
+          <ul class="space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <li><a href="index.html" class="hover:text-black dark:hover:text-white transition">Bosh sahifa</a></li>
+            <li><a href="elon-berish.html" class="hover:text-black dark:hover:text-white transition">E’lon berish (Buyurtmalar)</a></li>
+            <li><a href="ustalar.html" class="hover:text-black dark:hover:text-white transition">Ustalar katalogi</a></li>
+            <li><a href="kalkulyator.html" class="hover:text-black dark:hover:text-white transition">Xizmatlar kalkulyatori</a></li>
+            <li><a href="xarita.html" class="hover:text-black dark:hover:text-white transition">Toshkent xaritasi</a></li>
           </ul>
         </div>
 
-        <div class="md:col-span-4">
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-3">Toshkent tumanlari</h4>
+        <div class="md:col-span-4 space-y-2.5">
+          <h4 class="text-xs font-bold text-[#0F1115] dark:text-white uppercase tracking-wider">Toshkent tumanlari</h4>
           <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Chilonzor, Yunusobod, Mirzo Ulug‘bek, Yakkasaroy, Shayxontohur, Sergeli, Olmazor, Uchtepa, Mirobod, Yashnobod. Har bir tumanda kamida 4 ta professional mutaxassis mavjud.
+            Chilonzor, Yunusobod, Mirzo Ulug‘bek, Yakkasaroy, Shayxontohur, Sergeli, Olmazor, Uchtepa, Mirobod, Yashnobod. Har bir tumanda faol ustalar mavjud.
           </p>
+          <div class="pt-1">
+            <span class="text-[11px] text-slate-400">Qo‘llab-quvvatlash: support@usta-top.uz</span>
+          </div>
         </div>
 
       </div>
 
-      <div class="pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <span>© 2026 Usta-Top.uz. Barcha huquqlar himoyalangan.</span>
-        <span>Toshkent, O‘zbekiston</span>
+      <div class="pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+        <div>&copy; 2026 Usta-Top.uz — Barcha huquqlar himoyalangan.</div>
+        <div class="flex items-center space-x-4">
+          <a href="index.html" class="hover:underline">Maxfiylik siyosati</a>
+          <a href="index.html" class="hover:underline">Foydalanish qoidalari</a>
+        </div>
       </div>
-
     </div>
   </footer>
 
-
-  <!-- Mobil pastki qotirilgan menyu -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-2 md:hidden text-[10px] font-semibold text-slate-600 dark:text-slate-400">
-    <a href="index.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🏠</span>
-      <span>Bosh sahifa</span>
-    </a>
-    <a href="elon-berish.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">📢</span>
-      <span>E’lon</span>
-    </a>
-    <a href="ustalar.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🔧</span>
-      <span>Ustalar</span>
-    </a>
-    <a href="kalkulyator.html" class="flex flex-col items-center hover:text-[#1E3A8A]">
-      <span class="text-base mb-0.5">🧮</span>
-      <span>Kalkulyator</span>
-    </a>
-    <a href="xarita.html" class="flex flex-col items-center text-[#1E3A8A] dark:text-blue-400 font-bold">
-      <span class="text-base mb-0.5">🗺️</span>
-      <span>Xarita</span>
-    </a>
-  </div>
-
-  <div id="chatModalContainer"></div>
-  <div id="detailModalContainer"></div>
   <div id="toastContainer" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end pointer-events-none"></div>
 
   <!-- Skriptlar -->
   <script src="data.js"></script>
   <script src="common.js"></script>
-  <script src="animations.js"></script>
   <script src="auth.js"></script>
+  <script src="app.js"></script>
 
   <script>
     let map = null;
@@ -491,6 +373,8 @@
     let currentFilteredMasters = [];
 
     document.addEventListener('DOMContentLoaded', () => {
+      if (typeof updateAuthUI === 'function') updateAuthUI();
+      if (typeof initCustomSelects === 'function') initCustomSelects();
       initTashkentMap();
     });
 
@@ -504,7 +388,7 @@
       });
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 18
       }).addTo(map);
 
@@ -551,29 +435,29 @@
         });
 
         const popupContent = `
-          <div class="p-2 max-w-[220px] text-left">
+          <div class="p-3 max-w-[230px] text-left">
             <div class="flex items-center space-x-2.5 mb-2">
-              <div class="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
+              <div class="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-[#0F1115] text-white font-bold flex items-center justify-center text-xs">
                 ${master.avatar ? `<img src="${master.avatar}" class="w-full h-full object-cover">` : getInitials(master.name)}
               </div>
               <div class="truncate">
                 <div class="flex items-center space-x-1">
-                  <h4 class="font-bold text-xs text-slate-900 dark:text-white truncate">${escapeHtml(master.name)}</h4>
-                  <span class="text-blue-500">✓</span>
+                  <h4 class="font-bold text-xs text-[#0F1115] dark:text-white truncate">${escapeHtml(master.name)}</h4>
+                  <span class="text-[#FF5512]">✓</span>
                 </div>
                 <p class="text-[10px] text-slate-500 truncate">${escapeHtml(master.profession)}</p>
               </div>
             </div>
 
-            <div class="flex items-center justify-between py-1 border-t border-b border-slate-100 dark:border-slate-800 text-[10px] font-semibold my-1.5">
-              <span class="text-amber-500 font-bold">★ ${master.rating} (${master.reviewsCount || 0})</span>
+            <div class="flex items-center justify-between py-1 border-t border-b border-[#E8E8E5] dark:border-[#242832] text-[10px] font-semibold my-1.5">
+              <span class="text-[#FF5512] font-bold">★ ${master.rating} (${master.reviewsCount || 0})</span>
               <span class="${isFree ? 'text-emerald-600 font-bold' : 'text-slate-400'}">
                 ${isFree ? '🟢 Bo‘sh' : '⚪ Band'}
               </span>
             </div>
 
             <div class="text-[10px] text-slate-500 mb-2">
-              Narx: <span class="font-bold text-slate-800 dark:text-slate-200">dan ${startingPrice}</span>
+              Narx: <span class="font-bold text-[#0F1115] dark:text-white">dan ${startingPrice}</span>
             </div>
 
             <div class="flex gap-1.5 pt-1">
@@ -627,7 +511,7 @@
       const master = allMasters.find(m => m.id === Number(masterId));
       if (!master || !map) return;
 
-      const coords = getMasterCoordinates(master);
+      const coords = typeof getMasterCoordinates === 'function' ? getMasterCoordinates(master) : [41.2995, 69.2401];
       map.flyTo(coords, 15, { duration: 1.2 });
       window.scrollTo({ top: document.getElementById('tashkentMap').offsetTop - 100, behavior: 'smooth' });
     }
@@ -649,18 +533,19 @@
 
       grid.innerHTML = slice.map(master => {
         const isFree = (master.status !== 'busy');
+        const startingPrice = typeof getMasterStartingPrice === 'function' ? getMasterStartingPrice(master) : '40 000 so‘m';
 
         return `
-          <div class="bg-white dark:bg-[#111827] rounded-xl p-3 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex items-center justify-between gap-2.5 hover:border-blue-400 dark:hover:border-blue-500 transition cursor-pointer" onclick="focusMasterOnMap(${master.id})">
+          <div class="card-editorial p-3 flex items-center justify-between gap-3 hover:border-[#FF5512] transition cursor-pointer" onclick="focusMasterOnMap(${master.id})">
             <div class="flex items-center space-x-2.5 truncate">
               <div class="relative flex-shrink-0">
-                <div class="w-9 h-9 rounded-full overflow-hidden bg-blue-600 text-white font-bold flex items-center justify-center text-xs">
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-[#0F1115] text-white font-bold flex items-center justify-center text-xs">
                   ${master.avatar ? `<img src="${master.avatar}" class="w-full h-full object-cover">` : getInitials(master.name)}
                 </div>
-                <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-[#111827] ${isFree ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
+                <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white dark:border-[#14171D] ${isFree ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
               </div>
               <div class="truncate">
-                <span class="block font-bold text-xs text-slate-900 dark:text-white truncate">${escapeHtml(master.name)}</span>
+                <span class="block font-bold text-xs text-[#0F1115] dark:text-white truncate">${escapeHtml(master.name)}</span>
                 <span class="block text-[10px] text-slate-400 truncate">📍 ${escapeHtml(master.district)}</span>
               </div>
             </div>
@@ -668,7 +553,7 @@
             <button 
               type="button" 
               onclick="event.stopPropagation(); openChatModal(${master.id})" 
-              class="btn-primary p-2 rounded-lg text-xs flex-shrink-0"
+              class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#0F1115] dark:text-white hover:bg-[#FF5512] hover:text-white transition cursor-pointer flex-shrink-0 text-xs"
               title="Chat"
             >
               💬
