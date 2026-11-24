@@ -519,6 +519,246 @@ function quickFillMessage(text) {
   }
 }
 
+// Manzil mavjudligini aniqlash yordamchi funksiyasi
+function detectAddressInText(text) {
+  if (!text || typeof text !== 'string') return null;
+  const lower = text.toLowerCase();
+
+  // 1. Toshkent tumanlari
+  const districts = [
+    { key: 'chilonzor', name: 'Chilonzor' },
+    { key: 'chilanzar', name: 'Chilonzor' },
+    { key: 'yunusobod', name: 'Yunusobod' },
+    { key: 'yunusabad', name: 'Yunusobod' },
+    { key: 'mirzo ulug‘bek', name: 'Mirzo Ulug‘bek' },
+    { key: 'mirzo ulugbek', name: 'Mirzo Ulug‘bek' },
+    { key: 'mirzo-ulugbek', name: 'Mirzo Ulug‘bek' },
+    { key: 'yakkasaroy', name: 'Yakkasaroy' },
+    { key: 'yashnobod', name: 'Yashnobod' },
+    { key: 'yashnabad', name: 'Yashnobod' },
+    { key: 'mirobod', name: 'Mirobod' },
+    { key: 'mirabad', name: 'Mirobod' },
+    { key: 'sergeli', name: 'Sergeli' },
+    { key: 'sirgali', name: 'Sergeli' },
+    { key: 'yangihayot', name: 'Yangihayot' },
+    { key: 'shayxontohur', name: 'Shayxontohur' },
+    { key: 'shayxontoxur', name: 'Shayxontohur' },
+    { key: 'shayxantaxur', name: 'Shayxontohur' },
+    { key: 'olmazor', name: 'Olmazor' },
+    { key: 'almazar', name: 'Olmazor' },
+    { key: 'uchtepa', name: 'Uchtepa' },
+    { key: 'bektemir', name: 'Bektemir' }
+  ];
+
+  for (const d of districts) {
+    if (lower.includes(d.key)) {
+      return { type: 'district', name: d.name };
+    }
+  }
+
+  // 2. Mashhur mavzelar, mahallalar va mo'ljallar
+  const famousPlaces = [
+    'qoraqamish', 'karakamish', 'chig‘atoy', 'chigatoy', 'beshyog‘och', 'beshyogoch', 'sebzor',
+    'chorsu', 'oloy', 'novza', 'bunyodkor', 'beruniy', 'qo‘yliq', 'qoyliq', 'ttz', 'c-1', 'c-2',
+    'ts-1', 'ts-2', 'ganga', 'xadra', 'oqtepa', 'ibn sino', 'buyuk ipak', 'darxon', 'toshmi',
+    'drujba', 'paxtakor', 'oybek', 'bodomzor', 'minor', 'qorasuv', 'aviasozlar', 'lisunova',
+    'aeroport', 'farhod', 'o‘rikzor', 'urikzor', 'tuzel', 'qodiriy', 'shahriston'
+  ];
+
+  for (const place of famousPlaces) {
+    if (new RegExp(`\\b${place}\\b`, 'i').test(lower)) {
+      return { type: 'landmark', name: place.charAt(0).toUpperCase() + place.slice(1) };
+    }
+  }
+
+  // 3. Ko'cha, massiv, kvartal, uy, xonadon kabi manzil belgilari
+  const patterns = [
+    /ko['‘`]?cha/i,
+    /kvartal/i,
+    /massiv/i,
+    /mavze/i,
+    /daha/i,
+    /\bdom\b/i,
+    /\buy\b/i,
+    /\bxonadon\b/i,
+    /\bkvartira\b/i,
+    /\bkv\b/i,
+    /\bmo['‘`]?ljal/i,
+    /\bmoljal/i,
+    /\borientir/i,
+    /\bmanzil/i,
+    /\d+[- ]*(mavze|kvartal|daha|massiv|ko['‘`]?cha|dom|uy|xonadon|kvartira)/i,
+    /(dom|uy|xonadon|kvartira|kv)[- :]*\d+/i,
+    /\b\d+[-/]\d+\b/
+  ];
+
+  for (const pat of patterns) {
+    if (pat.test(lower)) {
+      return { type: 'address_pattern', name: '' };
+    }
+  }
+
+  return null;
+}
+
+// Savol tahlili va usta tomonidan professional javob generatori
+function generateMasterChatReply(userMessage, master, chatHistory) {
+  const text = (userMessage || '').trim();
+  const lower = text.toLowerCase();
+
+  // Manzil bor yoki yo'qligini aniqlash (joriy xabar yoki oldingi xabarlardan)
+  const currentAddress = detectAddressInText(text);
+  const historyAddress = (chatHistory || []).find(m => m.sender === 'user' && detectAddressInText(m.text));
+  const hasAddress = !!currentAddress || !!historyAddress;
+  const addressInfo = currentAddress || (historyAddress ? detectAddressInText(historyAddress.text) : null);
+  const addressMention = addressInfo && addressInfo.name ? `${addressInfo.name} bo‘yicha ` : '';
+
+  // 1. FAQAT MANZIL YOZILGAN BO'LSA
+  const isAddressOnly = currentAddress && !/(narx|qancha|qachon|kela olasiz|suv|elektr|rozetka|konditsioner|ishlaydimi|kafolat|salom)/i.test(lower);
+  if (isAddressOnly) {
+    return `Katta rahmat! ${addressMention}manzilingizni qabul qildim. Hozir barcha kerakli asboblarni olib yo‘lga chiqyapman, taxminan 25-30 daqiqa ichida aytilgan manzilga yetib boraman. Borgach telefoningizga qo‘ng‘iroq qilaman.`;
+  }
+
+  // 2. NARX VA TO'LOV BO'YICHA SAVOLLAR
+  const isPriceQuery = /(narx|qancha|necha pul|nechpul|summa|summasi|qimmat|arzon|to['‘`]?lov|tolov|xizmat haqi|baho)/i.test(lower);
+  if (isPriceQuery) {
+    const popular = master && master.popularServices && master.popularServices[0] ? master.popularServices[0] : null;
+    const priceText = popular 
+      ? `Xizmat narxlarimiz o‘rtacha ${popular.price} atrofida (masalan, ${popular.name}: ${popular.price}).` 
+      : `Boshlang‘ich xizmat narxlarimiz 40 000 - 60 000 so‘mdan boshlanadi.`;
+
+    if (!hasAddress) {
+      return `Assalomu alaykum! ${priceText} Aniq narx ishning hajmi va nosozlik holatiga qarab joyida halol va ortiqcha xarajatlarsiz kelishiladi. Oldingizga borib, aniq hisoblab berishim uchun, iltimos, Toshkentning qaysi tumani va manzilingizdaligingizni (ko‘cha/mo‘ljal) yozib yuborsangiz.`;
+    } else {
+      return `Assalomu alaykum! ${priceText} ${addressMention}ko‘rsatilgan manzilga borib, ishni ko‘zdan kechirib eng ma'qul narxda kelishamiz va darhol ishni boshlaymiz.`;
+    }
+  }
+
+  // 3. SHOSHILINCH / AVARIYA / NOSOZLIK TO'SATDAN YUZ BERGANDA
+  const isEmergency = /(avariya|shoshilinch|tezda|tezroq|zudlik|sos|suv toshdi|oqyapti|oqmoqda|kuydi|tutayapti|chaqnash|portladi|muzlab|tok urdi|chiroq o['‘`]?chdi|ochib qoldi|toshqin|yorildi|yonib ketdi|yondi|kuchlanish|uchqun)/i.test(lower);
+  if (isEmergency) {
+    if (!hasAddress) {
+      return `Tushundim, bu juda shoshilinch holat! Men barcha kerakli asboblar va ehtiyot qismlarni zudlik bilan yig‘ishtirib yo‘lga chiqishga tayyorman. Tezda yetib borishim uchun, iltimos, zudlik bilan aniq manzilingiz (tuman, ko‘cha, uy/xonadon yoki mo‘ljal)ni yozib yuboring!`;
+    } else {
+      return `Tushundim, bu shoshilinch holat! ${addressMention}aytilgan manzilga maksimal 20-25 daqiqa ichida yetib boraman. Asboblarni oldim, yo‘lga chiqyapman, borgach qo‘ng‘iroq qilaman!`;
+    }
+  }
+
+  // 4. VAQT / QACHON KELISH BO'YICHA SAVOLLAR
+  const isTimeQuery = /(qachon|bugun|hozir|vaqtingiz|kela olasizmi|kelolasizmi|bo['‘`]?shmisiz|yetib kelasiz|erta|ertaga|soat|kechqurun|vaqtida|chiqa olasizmi)/i.test(lower);
+  if (isTimeQuery) {
+    const isBusy = master && master.status === 'busy';
+    const statusNote = isBusy
+      ? `Hozir bitta buyurtma ustidaman, lekin 35-45 daqiqa ichida tugatib yo‘lga chiqa olaman.`
+      : `Ha, hozir qo‘lim bo‘sh va chaqiruvga chiqishga tayyorman. Yo‘l holatiga qarab 25-30 daqiqada yetib boraman.`;
+
+    if (!hasAddress) {
+      return `Assalomu alaykum! ${statusNote} Sizga qulay vaqtda borishim uchun, iltimos, Toshkentning qaysi manziliga borish kerakligini (tuman, ko‘cha yoki mo‘ljal) yozib yuboring.`;
+    } else {
+      return `Assalomu alaykum! ${statusNote} ${addressMention}aytilgan manzilga belgilangan vaqtda aniq yetib boraman.`;
+    }
+  }
+
+  // 5. KAFOLAT VA SIFAT SAVOLLARI
+  const isWarrantyQuery = /(kafolat|garantiya|sifat|ishonchli|hujjat|chek)/i.test(lower);
+  if (isWarrantyQuery) {
+    if (!hasAddress) {
+      return `Albatta! Bajargan barcha ishlarimga va o‘rnatilgan ehtiyot qismlarga 6 oydan 1 yilgacha rasmiy kafolat beraman. Sifatiga to‘liq javob beramiz. Buyurtmani qabul qilib borishim uchun, iltimos, manzilingizni (tuman, ko‘cha yoki mo‘ljal) yozib yuboring.`;
+    } else {
+      return `Albatta! Bajargan barcha ishlarimga 6 oydan 1 yilgacha to‘liq kafolat beraman. ${addressMention}aytilgan manzilga borib, barchasini yuqori sifatda bajarib topshiraman.`;
+    }
+  }
+
+  // 6. TELEFON RAQAM VA BOG'LANISH
+  const isContactQuery = /(telefon|nomer|nomeringiz|raqam|kontakt|qo['‘`]?ng['‘`]?roq|qongiroq|tel)/i.test(lower);
+  if (isContactQuery) {
+    const phone = master && master.phone ? master.phone : '+998 (90) 123-45-67';
+    if (!hasAddress) {
+      return `Mening telefon raqamim: ${phone}. Bevosita qo‘ng‘iroq qilishingiz ham mumkin. Shuningdek, oldingizga yetib borishim uchun aniq manzilingizni (tuman, ko‘cha yoki mo‘ljal) yozib qoldirishingizni so‘rayman.`;
+    } else {
+      return `Mening telefon raqamim: ${phone}. ${addressMention}aytilgan manzilga yaqinlashganda o‘zim ham telefoningizga qo‘ng‘iroq qilaman.`;
+    }
+  }
+
+  // 7. SOHAVIY NOSOZLIKLAR
+  // 7.1 Santexnika
+  const isPlumbing = /(kran|smestitel|suv|truba|quvur|unitaz|vanna|sifon|oqish|tiqilib|kanalizatsiya|filtr|ariston|boyler|radiator|isitish|dush|klapan|santexnik)/i.test(lower);
+  if (isPlumbing) {
+    if (!hasAddress) {
+      return `Kran, quvurlar va santexnika tizimidagi nosozliklarni yaxshi bilaman. Barcha zarur rezina qistirmalar, germetik va maxsus kalitlar yonimda bor. Borib sozlab berishim uchun, iltimos, Toshkentning qaysi manzilidasiz? (Tuman, ko‘cha, uy yoki mo‘ljalni yozing).`;
+    } else {
+      return `Santexnika bo‘yicha nosozlikni tezda hal qilamiz, barcha zarur ehtiyot qismlar yonimda bor. ${addressMention}aytilgan manzilga borib, suv va kranlarni darhol sozlab beraman.`;
+    }
+  }
+
+  // 7.2 Elektr
+  const isElectric = /(tok|elektr|rozetka|lyustra|shit|avtomat|sim|provodka|chiroq|sveta|schyotchik|qisqa tutashuv|kuchlanish|elektrik|uchqun)/i.test(lower);
+  if (isElectric) {
+    if (!hasAddress) {
+      return `Elektrdagi nosozliklar xavfli, iltimos, o‘zingiz tegmang. Men professional tester va asboblar bilan borib, qisqa tutashuv yoki nosozlikni aniqlab, xavfsiz holatga keltirib beraman. Borishim uchun, iltimos, aniq manzilingizni (tuman, ko‘cha, dom yoki mo‘ljal) yozib yuborsangiz.`;
+    } else {
+      return `Elektr tizimidagi nosozlikni to‘liq xavfsiz qilib sozlaymiz. ${addressMention}aytilgan manzilga kerakli asboblar bilan tez orada yetib boraman.`;
+    }
+  }
+
+  // 7.3 Konditsioner
+  const isAC = /(konditsioner|konditsaner|freon|sovutmayapti|gaz quyish|yuvish|tozalash|issiq haydayapti|filtr|kondits)/i.test(lower);
+  if (isAC) {
+    if (!hasAddress) {
+      return `Konditsionerni diagnostika qilish, R410A / R22 freon quyish yoki maxsus dori bilan yuvish bo‘yicha hamma apparatlarim bor. Borib yordam berishim uchun konditsioner markasi va Toshkentning qaysi manziliga borish kerakligini (tuman, ko‘cha) yozsangiz, yo‘lga chiqaman.`;
+    } else {
+      return `Konditsionerni tekshirib, freon va tozalash ishlarini sifatli bajarib beraman. ${addressMention}aytilgan manzilga borib yaxshi ishlaydigan holatga keltiraman.`;
+    }
+  }
+
+  // 7.4 Maishiy texnika
+  const isAppliance = /(kir yuvish|kir mashina|muzlatgich|xolodilnik|gaz plita|duxovka|changyutgich|televizor|mikrovolnovka|pech)/i.test(lower);
+  if (isAppliance) {
+    if (!hasAddress) {
+      return `Maishiy texnika nosozligini aniqlash va original ehtiyot qismlarini joyida almashtirish bo‘yicha tajribam yetarli. Borishim uchun texnika modeli va aniq manzilingizni (tuman, ko‘cha yoki mo‘ljal) yozib yuborsangiz, oldingizga boraman.`;
+    } else {
+      return `Texnikadagi muammoni joyida ko‘rib, sifatli sozlab beraman. ${addressMention}aytilgan manzilga tez orada yetib boraman.`;
+    }
+  }
+
+  // 7.5 Eshik, qulf, mebel
+  const isFurnitureOrLock = /(qulf|zamok|kalit|eshik|ochilmayapti|mebel|shkaf|stol|yig['‘`]?ish|rom|akfa|deraza)/i.test(lower);
+  if (isFurnitureOrLock) {
+    if (!hasAddress) {
+      return `Qulfni ehtiyotkorlik bilan ochish/almashtirish yoki mebellarni mustahkam yig‘ish bo‘yicha maxsus asboblarim bor. Borib yordam berishim uchun, iltimos, manzilingizni (tuman, ko‘cha yoki mo‘ljal) yozib yuboring.`;
+    } else {
+      return `Mebel va qulflar bo‘yicha ishlarni ehtiyotkorlik bilan hal qilamiz. ${addressMention}ko‘rsatilgan manzilga tezda yetib boraman.`;
+    }
+  }
+
+  // 8. SALOMLASHISH / BOSH QO'NG'IROQ
+  const isGreeting = /(salom|assalomu alaykum|qalaysiz|yaxshimisiz|hormang|tinchmisiz|privet|alo)/i.test(lower);
+  if (isGreeting) {
+    if (!hasAddress) {
+      return `Vaalaykum assalom! Xizmatga tayyorman. Qanday nosozlik yoki ish yuzasidan murojaat qilyapsiz? Shuningdek, Toshkentning qaysi tumani va manzilidasiz? Yozib yuborsangiz, yo‘lga chiqishga tayyorgarlik ko‘rib turaman.`;
+    } else {
+      return `Vaalaykum assalom! ${addressMention}manzilingizni belgilab oldim. Qanday nosozlik bo‘ldi, batafsilroq yozsangiz, tegishli asboblarni olib darhol yo‘lga chiqaman.`;
+    }
+  }
+
+  // 9. MINNATDORCHILIK / KUTISH
+  const isThanks = /(rahmat|spasibo|tushundim|mayli|kutaman|bo['‘`]?ladi|yaxshi)/i.test(lower);
+  if (isThanks) {
+    if (!hasAddress) {
+      return `Arzimaydi, doimo xizmatingizdamiz! Oldingizga borib yordam berishim uchun aniq manzilingizni (tuman, ko‘cha yoki mo‘ljal) yozib qoldirishni unutmang.`;
+    } else {
+      return `Arzimaydi! ${addressMention}aytilgan manzilga tez orada yetib boraman, borgach aloqaga chiqaman.`;
+    }
+  }
+
+  // 10. ODDIY / UMUMIY JAVOB (FALLBACK)
+  if (!hasAddress) {
+    return `Xabaringizni oldim. Ushbu masalani joyida ko‘rib, sifatli va halol qilib bartaraf etib beraman. Sizga tez yetib borishim uchun, iltimos, Toshkentning qaysi tumani va aniq manzilingiz qayerdaligini (ko‘cha/mo‘ljal) yozib yuborsangiz.`;
+  } else {
+    return `Xabaringizni tushundim. Barcha zaruriy asbob-uskunalarni olib, ${addressMention}aytilgan manzilga taxminan 25-30 daqiqada yetib boraman!`;
+  }
+}
+
 function handleChatSubmit(e) {
   e.preventDefault();
   const input = document.getElementById('chatInputMessage');
@@ -531,20 +771,40 @@ function handleChatSubmit(e) {
   appendChatMessageToUI('user', text);
   scrollChatToBottom();
 
-  // Usta tomonidan avtomatik real-vaqtda javob simulyatsiyasi (1.6 soniya ichida)
+  // Usta yozayotganini ko'rsatish indikatori (typing indicator)
+  const messagesBox = document.getElementById('chatMessagesBox');
+  let typingEl = null;
+  if (messagesBox) {
+    typingEl = document.createElement('div');
+    typingEl.id = 'chatTypingIndicator';
+    typingEl.className = 'flex items-center space-x-1.5 p-3 rounded-2xl bg-[var(--surface-subtle)] text-slate-400 text-xs w-32 animate-pulse';
+    typingEl.innerHTML = `
+      <span class="w-1.5 h-1.5 rounded-full bg-[#FF5512] animate-bounce"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-[#FF5512] animate-bounce" style="animation-delay: 0.15s"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-[#FF5512] animate-bounce" style="animation-delay: 0.3s"></span>
+      <span class="text-[11px] text-slate-500 font-medium ml-1">yozmoqda...</span>
+    `;
+    messagesBox.appendChild(typingEl);
+    scrollChatToBottom();
+  }
+
+  // Usta tomonidan savol va manzilga mos real-vaqtda aqlli javob simulyatsiyasi (1.2 soniya ichida)
   setTimeout(() => {
-    const replies = [
-      "Assalomu alaykum! Xabaringizni oldim. Hozir asboblarni olib 25-30 daqiqada aytilgan manzilga yetib boraman.",
-      "Xabaringiz uchun rahmat. Manzilingizni va xonadon raqamini yozib yuboring, hozir yo‘lga chiqaman.",
-      "Tushundim, muammoni joyida ko‘rib, narxini kelishib tezda bartaraf qilamiz. Hozir chiqyapman!",
-      "Rahmat! Ushbu nosozlikni yaxshi bilaman, zarur ehtiyot qismlar yonimda bor. Tez orada boraman."
-    ];
-    const randomReply = replies[Math.floor(Math.random() * replies.length)];
-    saveChatMessage(activeChatMasterId, 'master', randomReply);
-    appendChatMessageToUI('master', randomReply);
+    if (typingEl && typingEl.parentNode) {
+      typingEl.parentNode.removeChild(typingEl);
+    }
+
+    const history = getChatHistory(activeChatMasterId);
+    const allMasters = typeof getAllMasters === 'function' ? getAllMasters() : (typeof MASTERS_DATA !== 'undefined' ? MASTERS_DATA : []);
+    const master = allMasters.find(m => m.id === Number(activeChatMasterId));
+
+    const smartReply = generateMasterChatReply(text, master, history);
+
+    saveChatMessage(activeChatMasterId, 'master', smartReply);
+    appendChatMessageToUI('master', smartReply);
     scrollChatToBottom();
     showToast("💬 Usta sizga javob qaytardi!", "info");
-  }, 1600);
+  }, 1200);
 }
 
 function appendChatMessageToUI(sender, text) {
